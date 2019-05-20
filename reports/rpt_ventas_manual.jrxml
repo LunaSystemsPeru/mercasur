@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ventas_manual" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ff0445dc-cc94-45c5-94ff-2e544a20a710">
+	<property name="ireport.zoom" value="1.0000000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_periodo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     ventas_manuales.`periodo` AS ventas_manuales_periodo,
+     ventas_manuales.`codigo` AS ventas_manuales_codigo,
+     ventas_manuales.`fecha` AS ventas_manuales_fecha,
+     tipo_documento.`abreviado` AS tipo_documento_abreviado,
+     ventas_manuales.`serie` AS ventas_manuales_serie,
+     ventas_manuales.`numero` AS ventas_manuales_numero,
+     clientes.`documento` AS clientes_documento,
+     clientes.`nombre` AS clientes_nombre,
+     ventas_manuales.`total` AS ventas_manuales_total
+FROM
+     `ventas_manuales` ventas_manuales
+INNER JOIN  `clientes` clientes ON clientes.`codigo` = ventas_manuales.`cliente`
+     INNER JOIN `tipo_documento` tipo_documento ON ventas_manuales.`tipo_documento` = tipo_documento.`id`
+where  ventas_manuales.`periodo` = $P{p_periodo}
+order by ventas_manuales.`fecha` asc , ventas_manuales.`numero` asc]]>
+	</queryString>
+	<field name="ventas_manuales_periodo" class="java.lang.String"/>
+	<field name="ventas_manuales_codigo" class="java.lang.Integer"/>
+	<field name="ventas_manuales_fecha" class="java.sql.Date"/>
+	<field name="tipo_documento_abreviado" class="java.lang.String"/>
+	<field name="ventas_manuales_serie" class="java.lang.Integer"/>
+	<field name="ventas_manuales_numero" class="java.lang.Integer"/>
+	<field name="clientes_documento" class="java.lang.String"/>
+	<field name="clientes_nombre" class="java.lang.String"/>
+	<field name="ventas_manuales_total" class="java.lang.Double"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="1cfad374-ceb2-434c-b198-c85ff162c8ca"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="fecddd1b-ed08-461a-ab4a-f7b44c64e994"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[lubriPOS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="347" y="43" width="228" height="20" forecolor="#FFFFFF" uuid="80faf191-fb5a-42e9-958b-1e4f8ff04dcf"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Lista de Ventas]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Transparent" x="347" y="23" width="228" height="20" forecolor="#FFFFFF" uuid="88f1c6f8-1304-4bb4-a3a6-693b5fc9c1d2"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Periodo: " + $F{ventas_manuales_periodo}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30">
+			<staticText>
+				<reportElement x="51" y="10" width="45" height="20" uuid="22d5dc65-6f2e-43f1-b9c4-fc938d05c1e3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="10" width="67" height="20" uuid="374e3ed2-c7dd-4e97-8cb4-f92f63a3ae05"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="10" width="50" height="20" uuid="433cfe8b-83d1-46b0-98e7-80c12a4a1bba"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="512" y="10" width="43" height="20" uuid="bbb78f4e-1d2d-4888-8e49-851a3426ff5b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="10" width="349" height="20" uuid="c445e696-23c7-4f5b-be68-10f4d55a8e5d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="21" width="555" height="1" uuid="4c7435b2-19cb-40ad-8ed2-8a2f7f589a12"/>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="49" y="0" width="46" height="20" forecolor="#000000" uuid="276d35fc-e4f4-49f6-bd0a-0c91adf9a1ac"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ventas_manuales_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="0" width="67" height="20" forecolor="#000000" uuid="59b22766-6399-497f-a261-572abf399173"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_documento_abreviado} + " / " + $F{ventas_manuales_serie} + " - " + $F{ventas_manuales_numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="0" y="0" width="50" height="20" forecolor="#000000" uuid="6ba92c1f-e949-4f60-b1a5-3035b9e3de77"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ventas_manuales_periodo} + "" + $F{ventas_manuales_codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="0" width="350" height="20" forecolor="#000000" uuid="6c524e15-d3e4-4cf8-adc6-181daa2a0dc3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientes_documento} + " | " + $F{clientes_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="512" y="0" width="43" height="20" forecolor="#000000" uuid="f660cc52-3202-4395-a6b6-e479ca9e6bef"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ventas_manuales_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="e9b779bc-4431-4c7a-9c4e-a38087eb5ba4"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="f92ec687-b53c-40d0-8cee-c7dc2c379982"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="c0fe5829-aeda-4c47-8f39-330dd793399f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
