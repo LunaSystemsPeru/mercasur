@@ -184,13 +184,14 @@ public class cl_cliente {
         return resultado;
     }
 
-    public boolean cargar_datos() {
+    public boolean obtener_datos() {
         boolean existe = false;
 
         try {
             Statement st = c_conectar.conexion();
             String query = "select nombre, documento, nombre_comercial, direccion, telefono, celular, ventas, pagado "
-                    + "from clientes where id_cliente = '" + id_cliente + "' and id_zona = '" + id_zona + "'";
+                    + "from clientes "
+                    + "where id_cliente = '" + id_cliente + "' and id_zona = '" + id_zona + "'";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
@@ -212,7 +213,7 @@ public class cl_cliente {
 
         return existe;
     }
-    
+
     public boolean buscar_cliente_documento() {
         boolean existe = false;
 
@@ -234,6 +235,17 @@ public class cl_cliente {
         }
 
         return existe;
+    }
+
+    public ResultSet ac_clientes_zona() {
+        Statement st = c_conectar.conexion();
+        String query = "select id_cliente, nombre, documento, direccion "
+                + "from clientes "
+                + "where id_zona = '" + this.id_zona + "'";
+        ResultSet rs = c_conectar.consulta(st, query);
+        c_conectar.cerrar(rs);
+        c_conectar.cerrar(st);
+        return rs;
     }
 
     public void ver_clientes(JTable tabla, String query) {

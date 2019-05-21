@@ -3,21 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clases;
+package clases_autocomplete;
 
 /**
  *
  * @author luis
  */
 public class cl_ac_clientes {
+
     private int id_cliente;
     private String nombre;
     private String direccion;
+    private String documento;
 
-    public cl_ac_clientes(int id_cliente, String nombre, String direccion) {
+    public cl_ac_clientes(int id_cliente, String nombre, String direccion, String documento) {
         this.id_cliente = id_cliente;
         this.nombre = nombre;
         this.direccion = direccion;
+        this.documento = documento;
     }
 
     public int getId_cliente() {
@@ -32,10 +35,13 @@ public class cl_ac_clientes {
         return direccion;
     }
 
+    public String getDocumento() {
+        return documento;
+    }
+
     @Override
     public String toString() {
-        return nombre + " | " + direccion;
+        return nombre + " | " + documento + " | " + direccion;
     }
-    
-    
+
 }

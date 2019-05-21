@@ -4,7 +4,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clases;
+package clases_autocomplete;
+
+import clases.cl_conectar;
+import clases.cl_varios;
 
 /*
  clase para cargar productos en txt autocompleter.

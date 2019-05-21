@@ -5,8 +5,8 @@
  */
 package forms;
 
-import clases.cl_ac_productos;
-import clases.cl_ac_proveedor;
+import clases_autocomplete.cl_ac_productos;
+import clases_autocomplete.cl_ac_proveedor;
 import clases.cl_conectar;
 import clases.cl_detalle_ingreso;
 import clases.cl_documento_tienda;

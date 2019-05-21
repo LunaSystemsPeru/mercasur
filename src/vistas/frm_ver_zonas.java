@@ -6,6 +6,9 @@
 package vistas;
 
 import clases.cl_zona;
+import java.awt.event.KeyEvent;
+import models.cl_combobox;
+import models.m_empleados;
 
 /**
  *
@@ -14,13 +17,16 @@ import clases.cl_zona;
 public class frm_ver_zonas extends javax.swing.JInternalFrame {
 
     cl_zona c_zona = new cl_zona();
-    
+
+    m_empleados m_empleados = new m_empleados();
+    String query;
+
     /**
      * Creates new form frm_ver_marcas
      */
     public frm_ver_zonas() {
         initComponents();
-        String query = "select z.id_zona, z.nombre, z.ciudad, e.nick "
+        query = "select z.id_zona, z.nombre, z.ciudad, e.nick "
                 + "from zona as z "
                 + "inner join empleados as e on e.id_empleado = z.id_empleado ";
         c_zona.ver_zonas(t_zonas, query);
@@ -35,11 +41,128 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jd_formulario = new javax.swing.JDialog();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txt_frm_id = new javax.swing.JTextField();
+        txt_frm_nombre = new javax.swing.JTextField();
+        txt_frm_ciudad = new javax.swing.JTextField();
+        cbx_frm_empleado = new javax.swing.JComboBox<>();
+        jToolBar1 = new javax.swing.JToolBar();
+        btn_frm_grabar = new javax.swing.JButton();
+        btn_frm_salir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_zonas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+
+        jLabel1.setText("Id Zona:");
+
+        jLabel2.setText("Nombre:");
+
+        jLabel3.setText("Empleado:");
+
+        jLabel4.setText("Ciudad:");
+
+        txt_frm_id.setEnabled(false);
+
+        txt_frm_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_frm_nombreKeyPressed(evt);
+            }
+        });
+
+        txt_frm_ciudad.setEnabled(false);
+        txt_frm_ciudad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_frm_ciudadKeyPressed(evt);
+            }
+        });
+
+        cbx_frm_empleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbx_frm_empleado.setEnabled(false);
+        cbx_frm_empleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbx_frm_empleadoKeyPressed(evt);
+            }
+        });
+
+        jToolBar1.setFloatable(false);
+        jToolBar1.setBorderPainted(false);
+
+        btn_frm_grabar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/add.png"))); // NOI18N
+        btn_frm_grabar.setText("Grabar");
+        btn_frm_grabar.setEnabled(false);
+        btn_frm_grabar.setFocusable(false);
+        btn_frm_grabar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_frm_grabar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_frm_grabar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_frm_grabarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_frm_grabar);
+
+        btn_frm_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
+        btn_frm_salir.setText("Salir");
+        btn_frm_salir.setFocusable(false);
+        btn_frm_salir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_frm_salir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_frm_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_frm_salirActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_frm_salir);
+
+        javax.swing.GroupLayout jd_formularioLayout = new javax.swing.GroupLayout(jd_formulario.getContentPane());
+        jd_formulario.getContentPane().setLayout(jd_formularioLayout);
+        jd_formularioLayout.setHorizontalGroup(
+            jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_formularioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbx_frm_empleado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jd_formularioLayout.createSequentialGroup()
+                        .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_frm_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_frm_ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_frm_id, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 179, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jd_formularioLayout.setVerticalGroup(
+            jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_formularioLayout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frm_id, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frm_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frm_ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_frm_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         setTitle("Ver Zonas ");
 
@@ -117,15 +240,79 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        jd_formulario.setSize(579, 240);
+        jd_formulario.setModal(true);
+        jd_formulario.setLocationRelativeTo(null);
+        m_empleados.llenar_combobox(cbx_frm_empleado);
+        txt_frm_nombre.requestFocus();
+        jd_formulario.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_frm_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_frm_salirActionPerformed
+        jd_formulario.dispose();
+    }//GEN-LAST:event_btn_frm_salirActionPerformed
+
+    private void txt_frm_nombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_frm_nombreKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_frm_nombre.getText().length() > 0) {
+                txt_frm_ciudad.setEnabled(true);
+                txt_frm_ciudad.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_frm_nombreKeyPressed
+
+    private void txt_frm_ciudadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_frm_ciudadKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_frm_ciudad.getText().length() > 0) {
+                cbx_frm_empleado.setEnabled(true);
+                cbx_frm_empleado.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_frm_ciudadKeyPressed
+
+    private void cbx_frm_empleadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_frm_empleadoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btn_frm_grabar.setEnabled(true);
+            btn_frm_grabar.requestFocus();
+        }
+    }//GEN-LAST:event_cbx_frm_empleadoKeyPressed
+
+    private void btn_frm_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_frm_grabarActionPerformed
+        //
+        c_zona.setNombre(txt_frm_nombre.getText());
+        c_zona.setCiudad(txt_frm_ciudad.getText());
+
+        cl_combobox c_combo = (cl_combobox) cbx_frm_empleado.getSelectedItem();
+        c_zona.setId_empleado(c_combo.getId());
+
+        c_zona.obtener_id();
+
+        if (c_zona.insertar()) {
+            c_zona.ver_zonas(t_zonas, query);
+            jd_formulario.dispose();
+        }
+
+
+    }//GEN-LAST:event_btn_frm_grabarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_frm_grabar;
+    private javax.swing.JButton btn_frm_salir;
+    private javax.swing.JComboBox<String> cbx_frm_empleado;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JDialog jd_formulario;
     private javax.swing.JTable t_zonas;
+    private javax.swing.JTextField txt_frm_ciudad;
+    private javax.swing.JTextField txt_frm_id;
+    private javax.swing.JTextField txt_frm_nombre;
     // End of variables declaration//GEN-END:variables
 }

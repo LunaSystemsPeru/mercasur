@@ -34,12 +34,12 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
      */
     public frm_ver_productos() {
         initComponents();
-        String query = "select p.idproducto, p.descripcion, p.grado, p.marca, p.modelo, p.cant_actual, p.cant_min, u.nombre_corto, p.precio_venta, p.estado "
+      /* String query = "select p.id_producto, p.descripcion, p.grado, p.marca, p.modelo, p.cant_actual, p.cant_min, u.nombre_corto, p.precio_venta, p.estado "
                 + "from productos as p "
                 + "inner join und_medida as u on p.unidad_medida = u.id "
                 + "order by p.descripcion asc, p.marca, p.grado asc "
                 + "limit 0";
-        c_productos.ver_productos(t_productos, query);
+        c_productos.ver_productos(t_productos, query);*/
         lbl_encontrados.setText(t_productos.getRowCount() + "");
     }
 

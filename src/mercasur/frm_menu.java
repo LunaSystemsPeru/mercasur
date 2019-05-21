@@ -137,8 +137,8 @@ public class frm_menu extends javax.swing.JFrame {
         lbl_zona = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem29 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -630,14 +630,6 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenu1.setText("Facturacion y Ventas");
 
-        jMenuItem1.setText("Ver Clientes");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
-
         jMenuItem29.setText("Ver Zonas");
         jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -645,9 +637,17 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem29);
+
+        jMenuItem1.setText("Ver Clientes");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
         jMenu1.add(jSeparator5);
 
-        jMenuItem4.setText("Registrar Ventas");
+        jMenuItem4.setText("Registrar Venta");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);

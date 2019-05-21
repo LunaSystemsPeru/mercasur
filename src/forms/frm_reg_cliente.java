@@ -33,15 +33,15 @@ public class frm_reg_cliente extends javax.swing.JDialog {
     public frm_reg_cliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         if (accion.equals("registrar")) {
             c_cliente.setId_cliente(0);
         }
 
-        if (c_cliente.getId_cliente()!= 0) {
+        if (c_cliente.getId_cliente() != 0) {
             btn_reg.setText("Modificar");
             System.out.println(accion);
-            c_cliente.cargar_datos();
+            c_cliente.obtener_datos();
             txt_ndoc.setText(c_cliente.getDocumento());
             txt_nom.setText(c_cliente.getNombre());
             txt_dir.setText(c_cliente.getDireccion());
@@ -174,6 +174,7 @@ public class frm_reg_cliente extends javax.swing.JDialog {
 
         btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
         btn_cer.setText("Cerrar");
+        btn_cer.setFocusable(false);
         btn_cer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_cerActionPerformed(evt);
@@ -266,6 +267,62 @@ public class frm_reg_cliente extends javax.swing.JDialog {
 
     private void txt_ndocKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ndocKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String documento = txt_ndoc.getText();
+            if (c_varios.esDecimal(documento)) {
+                boolean existe_cliente = false;
+                c_cliente.setDocumento(documento);
+                existe_cliente = c_cliente.buscar_cliente_documento();
+
+                if (existe_cliente == false) {
+                    if (documento.length() == 8) {
+                        //dni
+                        try {
+                            String json = cl_json_entidad.getJSONDNI(documento);
+                            //Lo mostramos
+                            String datos = cl_json_entidad.showJSONDNI(json);
+                            txt_nom.setText(datos.trim());
+                            txt_ndoc.setEnabled(false);
+                            txt_nom.setEnabled(false);
+                            txt_dir.setEnabled(true);
+                            txt_dir.requestFocus();
+
+                        } catch (ParseException e) {
+                            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+                        }
+
+                    }
+                    if (documento.length() == 11) {
+                        //ruc
+                        try {
+                            String json = cl_json_entidad.getJSONRUC(documento);
+                            //Lo mostramos
+                            String[] datos = cl_json_entidad.showJSONRUC(json);
+                            txt_nom.setText(datos[0].trim());
+                            txt_dir.setText(datos[1].trim());
+                            txt_ndoc.setEnabled(false);
+                            txt_nom.setEnabled(false);
+                            txt_dir.setEnabled(false);
+                            txt_tel.setEnabled(true);
+                            txt_tel.requestFocus();
+
+                        } catch (ParseException e) {
+                            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "los datos ingresados ya existen\nEste cliente ya esta registrado");
+                    accion = "";
+                    origen = "";
+                    c_cliente.setId_cliente(0);
+                    this.dispose();
+                }
+                existe_cliente = false;
+            } else {
+                JOptionPane.showMessageDialog(null, "POR FAVOR INGRESE CORRECTAMENTE NUMEROS");
+                txt_ndoc.setText("");
+                txt_ndoc.requestFocus();
+            }
+            
             if (txt_ndoc.getText().length() == 0) {
                 SecureRandom sr = new SecureRandom();
                 String codigo = "SD" + (sr.nextInt(99999) + 1000);
@@ -274,62 +331,6 @@ public class frm_reg_cliente extends javax.swing.JDialog {
                 txt_nom.setEnabled(true);
                 txt_nom.requestFocus();
             }
-            
-            String documento = txt_ndoc.getText();
-        if (c_varios.esDecimal(documento)) {
-            boolean existe_cliente = false;
-            c_cliente.setDocumento(documento);
-            existe_cliente = c_cliente.buscar_cliente_documento();
-
-            if (existe_cliente == false) {
-                if (documento.length() == 8) {
-                    //dni
-                    try {
-                        String json = cl_json_entidad.getJSONDNI(documento);
-                        //Lo mostramos
-                        String datos = cl_json_entidad.showJSONDNI(json);
-                        txt_nom.setText(datos.trim());
-                        txt_ndoc.setEnabled(false);
-                        txt_nom.setEnabled(false);
-                        txt_dir.setEnabled(true);
-                        txt_dir.requestFocus();
-
-                    } catch (ParseException e) {
-                        JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
-                    }
-
-                }
-                if (documento.length() == 11) {
-                    //ruc
-                    try {
-                        String json = cl_json_entidad.getJSONRUC(documento);
-                        //Lo mostramos
-                        String[] datos = cl_json_entidad.showJSONRUC(json);
-                        txt_nom.setText(datos[0].trim());
-                        txt_dir.setText(datos[1].trim());
-                        txt_ndoc.setEnabled(false);
-                        txt_nom.setEnabled(false);
-                        txt_dir.setEnabled(false);
-                        txt_tel.setEnabled(true);
-                        txt_tel.requestFocus();
-
-                    } catch (ParseException e) {
-                        JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "los datos ingresados ya existen\nEste cliente ya esta registrado");
-                accion = "";
-                origen = "";
-                c_cliente.setId_cliente(0);
-                this.dispose();
-            }
-            existe_cliente = false;
-        } else {
-            JOptionPane.showMessageDialog(null, "POR FAVOR INGRESE CORRECTAMENTE NUMEROS");
-            txt_ndoc.setText("");
-            txt_ndoc.requestFocus();
-        }
         }
     }//GEN-LAST:event_txt_ndocKeyPressed
 
@@ -418,7 +419,7 @@ public class frm_reg_cliente extends javax.swing.JDialog {
             if (accion.equals("registrar")) {
                 c_cliente.setId_cliente(c_cliente.obtener_codigo());
                 if (c_cliente.getDocumento().equals("")) {
-                    c_cliente.setDocumento(c_cliente.getId_cliente()+ "");
+                    c_cliente.setDocumento(c_cliente.getId_cliente() + "");
                 }
                 if (c_cliente.insertar()) {
                     Notification.show("Clientes", "CLIENTE REGISTRADO CORRECTAMENTE");

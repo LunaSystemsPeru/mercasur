@@ -5,7 +5,7 @@
  */
 package forms;
 
-import clases.cl_ac_proveedor;
+import clases_autocomplete.cl_ac_proveedor;
 import clases.cl_compra;
 import clases.cl_conectar;
 import clases.cl_moneda;

@@ -31,7 +31,7 @@ public class cl_zona {
         this.id_zona = id_zona;
         this.nombre = nombre;
     }
-    
+
     @Override
     public String toString() {
         return nombre;
@@ -68,7 +68,25 @@ public class cl_zona {
     public void setId_empleado(int id_empleado) {
         this.id_empleado = id_empleado;
     }
-    
+
+    public void obtener_id() {
+        try {
+            Statement st = c_conectar.conexion();
+            String query = "select ifnull(max(id_zona)+1, 1) as codigo "
+                    + "from zona ";
+            ResultSet rs = c_conectar.consulta(st, query);
+
+            if (rs.next()) {
+                id_zona = rs.getInt("codigo");
+            }
+
+            c_conectar.cerrar(rs);
+            c_conectar.cerrar(st);
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
+
     public boolean cargar_datos() {
         boolean existe = false;
 
@@ -94,8 +112,8 @@ public class cl_zona {
 
         return existe;
     }
-    
-    public void ver_zonas (JTable tabla, String query) {
+
+    public void ver_zonas(JTable tabla, String query) {
         try {
             DefaultTableModel mostrar = new DefaultTableModel() {
                 @Override
@@ -135,5 +153,21 @@ public class cl_zona {
             System.out.println(ex);
             JOptionPane.showMessageDialog(null, ex);
         }
+    }
+
+    public boolean insertar() {
+        boolean grabado = false;
+        Statement st = c_conectar.conexion();
+        String query = "insert into zona "
+                + "Values ('" + id_zona + "', '" + nombre + "', '" + ciudad + "','" + id_empleado + "')";
+        int resultado = c_conectar.actualiza(st, query);
+
+        if (resultado > -1) {
+            grabado = true;
+        }
+
+        c_conectar.cerrar(st);
+
+        return grabado;
     }
 }

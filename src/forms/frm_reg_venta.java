@@ -5,10 +5,20 @@
  */
 package forms;
 
+import clases.cl_cliente;
+import clases.cl_conectar;
 import clases.cl_varios;
+import clases_autocomplete.cl_ac_clientes;
+import com.mxrck.autocompleter.AutoCompleterCallback;
+import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.Frame;
+import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import mercasur.frm_menu;
+import nicon.notify.core.Notification;
 
 /**
  *
@@ -16,7 +26,13 @@ import mercasur.frm_menu;
  */
 public class frm_reg_venta extends javax.swing.JInternalFrame {
 
+    cl_conectar c_conectar = new cl_conectar();
+    cl_cliente c_cliente = new cl_cliente();
+
     cl_varios c_varios = new cl_varios();
+    TextAutoCompleter autocompletar = null;
+
+    int id_zona = frm_menu.c_zona.getId_zona();
 
     /**
      * Creates new form frm_reg_venta
@@ -24,6 +40,57 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     public frm_reg_venta() {
         initComponents();
         txt_zona.setText(frm_menu.c_zona.getNombre());
+        cargar_clientes();
+    }
+
+    private void cargar_clientes() {
+        try {
+            //TextAutoCompleter autocompletar = new TextAutoCompleter(txt_consulta_productos);
+            if (autocompletar != null) {
+                autocompletar.removeAllItems();
+            }
+            autocompletar = new TextAutoCompleter(txt_buscar_cliente, new AutoCompleterCallback() {
+                @Override
+                public void callback(Object selectedItem) {
+//                    System.out.println("El usuario seleccionó: " + selectedItem);
+                    Object itemSelected = selectedItem;
+                    if (itemSelected instanceof cl_ac_clientes) {
+                        int id = ((cl_ac_clientes) itemSelected).getId_cliente();
+                        c_cliente.setId_cliente(id);
+                        c_cliente.setId_zona(id_zona);
+                        c_cliente.obtener_datos();
+                        txt_doc_cliente.setText(c_cliente.getDocumento());
+                        txt_nom_cliente.setText(c_cliente.getNombre());
+                        txt_dir_cliente.setText(c_cliente.getDireccion());
+                    } else {
+                        System.out.println("El item es de un tipo desconocido");
+                        Notification.show("Registrar Venta", "Error al seleccionar el cliente, presione enter para seleccionar");
+                        txt_buscar_cliente.setText("");
+                        txt_buscar_cliente.requestFocus();
+                    }
+                }
+            });
+
+            Statement st = c_conectar.conexion();
+            String query = "select id_cliente, nombre, documento, direccion "
+                    + "from clientes "
+                    + "where id_zona = '" + id_zona + "'";
+            ResultSet rs_cliente = c_conectar.consulta(st, query);
+            while (rs_cliente.next()) {
+
+                String nombre = rs_cliente.getString("nombre");
+                String documento = rs_cliente.getString("documento");
+                String direccion = rs_cliente.getString("direccion");
+                int id_cliente = rs_cliente.getInt("id_cliente");
+                autocompletar.addItem(new cl_ac_clientes(id_cliente, nombre, direccion, documento));
+            }
+            c_conectar.cerrar(rs_cliente);
+            c_conectar.cerrar(st);
+            autocompletar.setMode(0);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            //JOptionPane.showInternalMessageDialog(this, ex.getLocalizedMessage());
+        }
     }
 
     /**
@@ -50,18 +117,20 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         btn_crear = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         btn_grabar = new javax.swing.JButton();
+        txt_buscar_cliente = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        txt_buscar_producto = new javax.swing.JTextField();
+        txt_nombre_producto = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        txt_cantidad_producto = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        cbx_unidad_producto = new javax.swing.JComboBox();
         jLabel9 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        txt_precio_producto = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        txt_subtotal_producto = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
@@ -69,6 +138,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
 
         setTitle("Registrar Venta");
+
+        txt_nom_cliente.setEnabled(false);
 
         txt_dir_cliente.setEnabled(false);
 
@@ -134,6 +205,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         btn_grabar.setText("Grabar");
         btn_grabar.setEnabled(false);
 
+        txt_buscar_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_buscar_clienteKeyPressed(evt);
+            }
+        });
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/find.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -145,6 +224,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     .addComponent(txt_dir_cliente)
                     .addComponent(txt_nom_cliente, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btn_grabar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 87, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addComponent(txt_deuda_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,17 +237,17 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(3, 3, 3)))
+                                .addGap(3, 3, 3))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txt_doc_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txt_doc_cliente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn_crear))
-                            .addComponent(txt_zona)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_grabar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 87, Short.MAX_VALUE)))
+                            .addComponent(txt_zona)
+                            .addComponent(txt_buscar_cliente, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -174,6 +257,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_zona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txt_buscar_cliente, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -191,39 +278,39 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_grabar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jLabel6.setText("Buscar Producto");
 
-        jTextField6.setEnabled(false);
+        txt_buscar_producto.setEnabled(false);
 
-        jTextField7.setEnabled(false);
+        txt_nombre_producto.setEnabled(false);
 
         jLabel7.setText("Cantidad:");
 
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField8.setText("1.00");
-        jTextField8.setEnabled(false);
+        txt_cantidad_producto.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_cantidad_producto.setText("1.00");
+        txt_cantidad_producto.setEnabled(false);
 
         jLabel8.setText("Und. Medida.:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "UND.", "PAQUETE.", "CAJA" }));
-        jComboBox1.setEnabled(false);
+        cbx_unidad_producto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "UND.", "PAQUETE.", "CAJA" }));
+        cbx_unidad_producto.setEnabled(false);
 
         jLabel9.setText("Precio");
 
-        jTextField9.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField9.setText("0.00");
-        jTextField9.setEnabled(false);
+        txt_precio_producto.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_precio_producto.setText("0.00");
+        txt_precio_producto.setEnabled(false);
 
         jLabel10.setText("Sub total");
 
-        jTextField10.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField10.setText("0.00");
-        jTextField10.setEnabled(false);
+        txt_subtotal_producto.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_subtotal_producto.setText("0.00");
+        txt_subtotal_producto.setEnabled(false);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -253,30 +340,30 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField7)
+                    .addComponent(txt_nombre_producto)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField6))
+                        .addComponent(txt_buscar_producto))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(36, 36, 36)
-                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txt_cantidad_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cbx_unidad_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(73, 73, 73)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-                            .addComponent(jTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                            .addComponent(txt_precio_producto, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                            .addComponent(txt_subtotal_producto, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jSeparator1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -292,21 +379,21 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_nombre_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_cantidad_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_precio_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_unidad_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_subtotal_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -355,16 +442,30 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void txt_buscar_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscar_clienteKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_buscar_cliente.getText().length() > 10) {
+                txt_buscar_cliente.setText("");
+                //cargar productos
+                
+                //habilitar txt producto
+                txt_buscar_producto.setEnabled(true);
+                txt_buscar_producto.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_buscar_clienteKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_crear;
     private javax.swing.JButton btn_grabar;
+    private javax.swing.JComboBox cbx_unidad_producto;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -379,15 +480,16 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField txt_buscar_cliente;
+    private javax.swing.JTextField txt_buscar_producto;
+    private javax.swing.JTextField txt_cantidad_producto;
     private javax.swing.JTextField txt_deuda_cliente;
     private javax.swing.JTextField txt_dir_cliente;
     private javax.swing.JTextField txt_doc_cliente;
     private javax.swing.JTextField txt_nom_cliente;
+    private javax.swing.JTextField txt_nombre_producto;
+    private javax.swing.JTextField txt_precio_producto;
+    private javax.swing.JTextField txt_subtotal_producto;
     private javax.swing.JTextField txt_zona;
     // End of variables declaration//GEN-END:variables
 }

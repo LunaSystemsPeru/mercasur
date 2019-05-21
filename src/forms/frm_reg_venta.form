@@ -56,6 +56,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="txt_dir_cliente" max="32767" attributes="0"/>
                       <Component id="txt_nom_cliente" alignment="1" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="btn_grabar" min="-2" pref="180" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jButton5" pref="87" max="32767" attributes="0"/>
+                      </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -69,20 +74,20 @@
                                   <Component id="jLabel1" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="txt_doc_cliente" min="-2" pref="74" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="txt_doc_cliente" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btn_crear" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="txt_zona" max="32767" attributes="0"/>
+                              <Component id="txt_buscar_cliente" alignment="1" max="32767" attributes="0"/>
                           </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="btn_grabar" min="-2" pref="180" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton5" pref="87" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -96,6 +101,11 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txt_zona" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="txt_buscar_cliente" pref="30" max="32767" attributes="0"/>
+                      <Component id="jLabel11" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -117,7 +127,7 @@
                       <Component id="btn_grabar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jButton5" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="111" max="32767" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -126,6 +136,9 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="txt_nom_cliente">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_dir_cliente">
           <Properties>
@@ -243,6 +256,18 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JTextField" name="txt_buscar_cliente">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_buscar_clienteKeyPressed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel11">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/recursos/find.png"/>
+            </Property>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel2">
@@ -253,11 +278,11 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jTextField7" max="32767" attributes="0"/>
+                      <Component id="txt_nombre_producto" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField6" max="32767" attributes="0"/>
+                          <Component id="txt_buscar_producto" max="32767" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" alignment="0" pref="681" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
@@ -265,12 +290,12 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                                  <Component id="jTextField8" min="-2" pref="77" max="-2" attributes="0"/>
+                                  <Component id="txt_cantidad_producto" min="-2" pref="77" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jComboBox1" min="-2" pref="156" max="-2" attributes="0"/>
+                                  <Component id="cbx_unidad_producto" min="-2" pref="156" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
@@ -280,8 +305,8 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextField9" pref="70" max="32767" attributes="0"/>
-                              <Component id="jTextField10" pref="70" max="32767" attributes="0"/>
+                              <Component id="txt_precio_producto" pref="70" max="32767" attributes="0"/>
+                              <Component id="txt_subtotal_producto" pref="70" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -303,23 +328,23 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jTextField6" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="txt_buscar_producto" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTextField7" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_nombre_producto" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel7" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jTextField8" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="txt_cantidad_producto" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField9" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="txt_precio_producto" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel8" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jComboBox1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="cbx_unidad_producto" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField10" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="txt_subtotal_producto" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
@@ -341,12 +366,12 @@
             <Property name="text" type="java.lang.String" value="Buscar Producto"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField6">
+        <Component class="javax.swing.JTextField" name="txt_buscar_producto">
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField7">
+        <Component class="javax.swing.JTextField" name="txt_nombre_producto">
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
@@ -356,7 +381,7 @@
             <Property name="text" type="java.lang.String" value="Cantidad:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField8">
+        <Component class="javax.swing.JTextField" name="txt_cantidad_producto">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="1.00"/>
@@ -368,7 +393,7 @@
             <Property name="text" type="java.lang.String" value="Und. Medida.:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="cbx_unidad_producto">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
@@ -385,7 +410,7 @@
             <Property name="text" type="java.lang.String" value="Precio"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField9">
+        <Component class="javax.swing.JTextField" name="txt_precio_producto">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="0.00"/>
@@ -397,7 +422,7 @@
             <Property name="text" type="java.lang.String" value="Sub total"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField10">
+        <Component class="javax.swing.JTextField" name="txt_subtotal_producto">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="0.00"/>
