@@ -80,6 +80,7 @@ public class cl_conectar implements i_datos_bd {
         boolean hecho = false;
         try {
             Class.forName(driver);
+            System.out.println(server + "\n");
             conexion = DriverManager.getConnection(server, user, password);
             hecho = true;
         } catch (ClassNotFoundException | SQLException e) {
