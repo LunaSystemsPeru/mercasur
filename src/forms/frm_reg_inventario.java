@@ -13,6 +13,7 @@ import clases.cl_productos;
 import clases.cl_varios;
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
+import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -124,31 +125,21 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             });
             c_conectar.conectar();
             Statement st = c_conectar.conexion();
-            String sql = "select p.idproducto, p.descripcion, p.grado, p.marca, p.modelo, p.cant_actual, p.cant_min, u.descripcion as  und_medida, p.precio_venta, p.estado "
+            String sql = "select p.id_producto, p.descripcion, p.cant_actual, u.descripcion as  und_medida, p.precio_venta, p.estado, m.nombre as marca "
                     + "from productos as p "
-                    + "inner join und_medida as u on p.unidad_medida = u.id "
-                    + "order by p.descripcion asc, p.grado asc";
+                    + "inner join und_medida as u on p.id_unidad = u.id_unidad "
+                    + "inner join marcas as m on m.id_marca = p.id_marca "
+                    + "order by m.nombre, p.descripcion asc";
             ResultSet rs = c_conectar.consulta(st, sql);
             while (rs.next()) {
 
                 String descripcion = rs.getString("p.descripcion").trim();
-                String grado = rs.getString("grado").trim();
                 String marca = rs.getString("marca").trim();
-                String modelo = rs.getString("modelo").trim();
-                if (grado.length() > 0 && !grado.equals("-") && !grado.equals("--")) {
-                    descripcion += " | " + grado;
-                }
-                if (marca.length() > 0 && !marca.equals("-") && !marca.equals("--")) {
-                    descripcion += " | " + marca;
-                }
-                if (modelo.length() > 0 && !modelo.equals("-") && !modelo.equals("--")) {
-                    descripcion += " | " + modelo;
-                }
-                int id = rs.getInt("idproducto");
+                int id = rs.getInt("id_producto");
                 double cantidad = rs.getDouble("p.cant_actual");
                 String und_medida = rs.getString("und_medida").trim();
                 double precio = rs.getDouble("p.precio_venta");
-                autocompletar.addItem(new cl_ac_productos(id, descripcion, cantidad, und_medida, precio));
+                autocompletar.addItem(new cl_ac_productos(id, descripcion + " " + marca, cantidad, und_medida, precio));
             }
             c_conectar.cerrar(rs);
             c_conectar.cerrar(st);
@@ -185,6 +176,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         txt_nombre_producto = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         txt_ubicacion = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_detalle = new javax.swing.JTable();
         btn_registrar = new javax.swing.JButton();
@@ -287,6 +279,13 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/add.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -322,11 +321,14 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel19)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txt_ubicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(txt_buscar_producto)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txt_codigo_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_nombre_producto)))
+                        .addComponent(txt_nombre_producto))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txt_buscar_producto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -335,7 +337,8 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -549,7 +552,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             if (JOptionPane.OK_OPTION == confirmado) {
                 c_inventario.setPeriodo(c_varios.obtener_periodo());
                 c_inventario.setCodigo(c_inventario.obtener_codigo());
-                c_inventario.setInventario(c_inventario.getPeriodo() + "" + c_varios.ceros_izquieda_numero(3,c_inventario.getCodigo()));
+                c_inventario.setInventario(c_inventario.getPeriodo() + "" + c_varios.ceros_izquieda_numero(3, c_inventario.getCodigo()));
                 c_inventario.setFecha(c_varios.getFechaActual());
                 c_inventario.setUsuario(frm_menu.c_empleado.getId_empleado() + "");
 
@@ -563,7 +566,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                         c_detalle.setCfisico(Double.parseDouble(t_detalle.getValueAt(i, 6).toString()));
                         c_detalle.insertar();
                     }
-                    
+
                     btn_cerrar.doClick();
                 }
             } else {
@@ -576,14 +579,22 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         this.dispose();
         frm_ver_inventarios ver_inventarios = new frm_ver_inventarios();
         c_varios.llamar_ventana(ver_inventarios);
-        
+
     }//GEN-LAST:event_btn_cerrarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Frame f = JOptionPane.getRootFrame();
+        frm_reg_producto dialog = new frm_reg_producto(f, true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btn_add_producto;
     private javax.swing.JButton btn_cerrar;
     public static javax.swing.JButton btn_registrar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;

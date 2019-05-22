@@ -111,11 +111,12 @@ public class cl_detalle_inventario {
             detalle.addColumn("Diferencia");
 
             Statement st = c_conectar.conexion();
-            String query = "select di.producto, p.descripcion, p.grado, p.marca, p.modelo, di.precio, di.cactual, di.cfisico, di.ubicacion, u.nombre_corto "
+            String query = "select di.id_producto, p.descripcion, m.nombre as marca, p.precio_venta, di.cactual, di.cfisico, di.ubicacion, u.nombre_corto as und_medida "
                     + "from detalle_inventario as di "
-                    + "inner join productos as p on p.idproducto = di.producto "
-                    + "inner join und_medida as u on p.unidad_medida = u.id "
-                    + "where di.inventario = '" + inventario + "' "
+                    + "inner join productos as p on p.id_producto = di.id_producto "
+                    + "inner join marcas as m on m.id_marca = p.id_marca "
+                    + "inner join und_medida as u on p.id_unidad = u.id_unidad "
+                    + "where di.id_inventario = '" + this.inventario + "' "
                     + "order by p.descripcion asc";
             System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
@@ -124,12 +125,12 @@ public class cl_detalle_inventario {
                 double cpactual = rs.getDouble("cactual");
                 double cpfisico = rs.getDouble("cfisico");
                 double diferencia = cpfisico - cpactual;
-                double dprecio = rs.getDouble("precio");
+                double dprecio = rs.getDouble("precio_venta");
 
-                fila_p[0] = rs.getString("producto");
-                fila_p[1] = (rs.getString("descripcion").trim() + " | " + rs.getString("marca").trim() + " | " + rs.getString("modelo").trim() + " | " + rs.getString("grado").trim()).toUpperCase();
+                fila_p[0] = rs.getString("id_producto");
+                fila_p[1] = (rs.getString("descripcion").trim() + " | " + rs.getString("marca").trim()).toUpperCase();
                 fila_p[2] = c_varios.formato_totales(dprecio);
-                fila_p[3] = rs.getString("nombre_corto");
+                fila_p[3] = rs.getString("und_medida");
                 fila_p[4] = rs.getString("ubicacion");
                 fila_p[5] = c_varios.formato_totales(cpactual);
                 fila_p[6] = c_varios.formato_totales(cpfisico);

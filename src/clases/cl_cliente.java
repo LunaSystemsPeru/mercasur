@@ -237,17 +237,6 @@ public class cl_cliente {
         return existe;
     }
 
-    public ResultSet ac_clientes_zona() {
-        Statement st = c_conectar.conexion();
-        String query = "select id_cliente, nombre, documento, direccion "
-                + "from clientes "
-                + "where id_zona = '" + this.id_zona + "'";
-        ResultSet rs = c_conectar.consulta(st, query);
-        c_conectar.cerrar(rs);
-        c_conectar.cerrar(st);
-        return rs;
-    }
-
     public void ver_clientes(JTable tabla, String query) {
         try {
             DefaultTableModel mostrar = new DefaultTableModel() {

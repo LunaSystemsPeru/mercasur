@@ -10,6 +10,7 @@ import clases.cl_und_medida;
 import clases.cl_varios;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import models.m_marcas;
 import models.m_und_medida;
 
 /**
@@ -23,15 +24,19 @@ public class frm_reg_producto extends javax.swing.JDialog {
     public static cl_productos c_producto = new cl_productos();
     cl_und_medida c_unidad = new cl_und_medida();
     m_und_medida m_medida = new m_und_medida();
+    m_marcas m_marca = new m_marcas();
 
     /**
      * Creates new form frm_reg_producto
+     * @param parent
+     * @param modal
      */
     public frm_reg_producto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
         m_medida.cbx_und_medida(cbx_und);
+        m_marca.llenar_combobox(cbx_marca);
 
         if (c_producto.getId_producto()!= 0) {
             c_producto.ver_datos_producto();
@@ -41,14 +46,8 @@ public class frm_reg_producto extends javax.swing.JDialog {
             txt_pcom.setText(c_varios.formato_numero(c_producto.getCosto()));
             txt_pven.setText(c_varios.formato_numero(c_producto.getPrecio()));
             txt_gan.setText(c_varios.formato_numero(c_producto.getPrecio() - c_producto.getCosto()));
-            txt_mar.setEnabled(true);
             txt_pven.setEnabled(true);
             txt_pcom.setEnabled(true);
-            cbx_cla.setEnabled(true);
-            cbx_tipo_producto.setEnabled(true);
-//            cbx_und.setEnabled(true);
-//            System.out.println(cbx_und.getSelectedItem().toString() + " - " + c_unidad.getNombre());
-//            System.out.println(cbx_und.toString());
             btn_registrar.setText("Modificar");
             btn_registrar.setEnabled(true);
         }
@@ -69,17 +68,12 @@ public class frm_reg_producto extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cbx_tipo_producto = new javax.swing.JComboBox();
-        jLabel13 = new javax.swing.JLabel();
         txt_gan = new javax.swing.JTextField();
-        txt_mar = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txt_des = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        cbx_cla = new javax.swing.JComboBox();
         txt_pven = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         btn_registrar = new javax.swing.JButton();
@@ -89,6 +83,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
         cbx_und = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        cbx_marca = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registrar Producto");
@@ -98,26 +93,8 @@ public class frm_reg_producto extends javax.swing.JDialog {
             }
         });
 
-        cbx_tipo_producto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "BIEN", "SERVICIO" }));
-        cbx_tipo_producto.setEnabled(false);
-        cbx_tipo_producto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cbx_tipo_productoKeyPressed(evt);
-            }
-        });
-
-        jLabel13.setText("Tipo Producto:");
-
         txt_gan.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_gan.setEnabled(false);
-
-        txt_mar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_mar.setEnabled(false);
-        txt_mar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_marKeyPressed(evt);
-            }
-        });
 
         jLabel12.setText("Ganancia:");
 
@@ -129,23 +106,9 @@ public class frm_reg_producto extends javax.swing.JDialog {
 
         jLabel9.setText("Unidad de Medida:");
 
-        jLabel1.setText("Clasificacion:");
-
         jLabel8.setText("Precio de Venta:");
 
         jLabel7.setText("Costo de Compra:");
-
-        cbx_cla.setEnabled(false);
-        cbx_cla.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbx_claActionPerformed(evt);
-            }
-        });
-        cbx_cla.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cbx_claKeyPressed(evt);
-            }
-        });
 
         txt_pven.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_pven.setEnabled(false);
@@ -205,6 +168,13 @@ public class frm_reg_producto extends javax.swing.JDialog {
 
         jTextField1.setEnabled(false);
 
+        cbx_marca.setEnabled(false);
+        cbx_marca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbx_marcaKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -212,7 +182,6 @@ public class frm_reg_producto extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel12)
                     .addComponent(jLabel3)
@@ -231,24 +200,19 @@ public class frm_reg_producto extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txt_pcom, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(109, 109, 109)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                .addComponent(jLabel8))
                             .addComponent(txt_gan, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_pven, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbx_tipo_producto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txt_pven, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(cbx_und, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_mar, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbx_cla, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbx_und, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbx_marca, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -259,13 +223,9 @@ public class frm_reg_producto extends javax.swing.JDialog {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_des, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_mar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbx_cla, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_marca, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(cbx_und, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -280,10 +240,8 @@ public class frm_reg_producto extends javax.swing.JDialog {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(cbx_tipo_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(txt_gan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
+                    .addComponent(txt_gan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -294,25 +252,14 @@ public class frm_reg_producto extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_marKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_marKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbx_cla.setEnabled(true);
-            cbx_cla.requestFocus();
-        }
-    }//GEN-LAST:event_txt_marKeyPressed
-
     private void txt_desKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_desKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_des.getText().isEmpty()) {
-                txt_mar.setEnabled(true);
-                txt_mar.requestFocus();
+                cbx_marca.setEnabled(true);
+                cbx_marca.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_desKeyPressed
-
-    private void cbx_claActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_claActionPerformed
-
-    }//GEN-LAST:event_cbx_claActionPerformed
 
     private void txt_pvenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pvenKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -322,8 +269,8 @@ public class frm_reg_producto extends javax.swing.JDialog {
                 double ganacia = precio_venta - precio_compra;
                 txt_gan.setText(c_varios.formato_totales(ganacia));
                 txt_pven.setText(c_varios.formato_numero(precio_venta));
-                cbx_tipo_producto.setEnabled(true);
-                cbx_tipo_producto.requestFocus();
+                btn_registrar.setEnabled(true);
+                btn_registrar.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_pvenKeyPressed
@@ -396,24 +343,16 @@ public class frm_reg_producto extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_cbx_undKeyPressed
 
-    private void cbx_tipo_productoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tipo_productoKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbx_cla.setEnabled(true);
-            cbx_cla.requestFocus();
-        }
-    }//GEN-LAST:event_cbx_tipo_productoKeyPressed
-
-    private void cbx_claKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_claKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btn_registrar.setEnabled(true);
-            cbx_und.setEnabled(true);
-            cbx_und.requestFocus();
-        }
-    }//GEN-LAST:event_cbx_claKeyPressed
-
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         c_producto.setId_producto(0);
     }//GEN-LAST:event_formWindowClosed
+
+    private void cbx_marcaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_marcaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cbx_und.setEnabled(true);
+            cbx_und.requestFocus();
+        }
+    }//GEN-LAST:event_cbx_marcaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -459,13 +398,10 @@ public class frm_reg_producto extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btn_registrar;
-    public static javax.swing.JComboBox cbx_cla;
-    public static javax.swing.JComboBox cbx_tipo_producto;
+    private javax.swing.JComboBox<String> cbx_marca;
     public static javax.swing.JComboBox cbx_und;
     public static javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
-    public static javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -475,7 +411,6 @@ public class frm_reg_producto extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField1;
     public static javax.swing.JTextField txt_des;
     public static javax.swing.JTextField txt_gan;
-    public static javax.swing.JTextField txt_mar;
     public static javax.swing.JTextField txt_pcom;
     public static javax.swing.JTextField txt_pven;
     // End of variables declaration//GEN-END:variables

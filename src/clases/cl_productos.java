@@ -347,7 +347,8 @@ public class cl_productos {
 
         try {
             Statement st = c_conectar.conexion();
-            String query = "select ifnull(max(idproducto) + 1, 1) as codigo from productos";
+            String query = "select ifnull(max(id_producto) + 1, 1) as codigo "
+                    + "from productos";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {

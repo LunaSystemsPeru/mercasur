@@ -6,6 +6,7 @@
 package models;
 
 import clases.cl_conectar;
+import clases.cl_moneda;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,23 +15,23 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author CALIDAD
+ * @author luis
  */
-public class m_und_medida {
-
+public class m_marcas {
     cl_conectar c_conectar = new cl_conectar();
+    //cl_tipo_documento c_tido = new cl_tipo_documento();
 
-    public void cbx_und_medida(JComboBox cbx_medida) {
-        cbx_medida.removeAllItems();
+    public void llenar_combobox (JComboBox cbx_moneda) {
+        cbx_moneda.removeAllItems();
         try {
             Statement st = c_conectar.conexion();
-            String query = "select id_unidad, descripcion "
-                    + "from und_medida "
-                    + "order by descripcion asc";
+            String query = "select id_marca, nombre "
+                    + "from marcas "
+                    + "order by nombre asc";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
-                cbx_medida.addItem(new cl_combobox(rs.getInt("id_unidad"), rs.getString("descripcion")));
+                cbx_moneda.addItem(new cl_combobox(rs.getInt("id_marca"), rs.getString("nombre")));
             }
 
             c_conectar.cerrar(st);

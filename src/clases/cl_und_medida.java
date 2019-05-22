@@ -9,6 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -23,11 +28,6 @@ public class cl_und_medida {
     private String abreviado;
 
     public cl_und_medida() {
-    }
-
-    public cl_und_medida(int id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
     }
 
     public int getId() {
@@ -64,7 +64,9 @@ public class cl_und_medida {
 
         try {
             Statement st = c_conectar.conexion();
-            String v_usuario = "select * from und_medida where id = '" + id + "'";
+            String v_usuario = "select * "
+                    + "from und_medida "
+                    + "where id = '" + id + "'";
             ResultSet rs = c_conectar.consulta(st, v_usuario);
 
             if (rs.next()) {
@@ -81,4 +83,94 @@ public class cl_und_medida {
 
         return bvalidar;
     }
+
+    public boolean insertar() {
+        boolean grabado = false;
+        Statement st = c_conectar.conexion();
+        String query = "insert into und_medida "
+                + "Values ('" + id + "', '" + nombre + "', '" + abreviado + "')";
+        int resultado = c_conectar.actualiza(st, query);
+
+        if (resultado > -1) {
+            grabado = true;
+        }
+
+        c_conectar.cerrar(st);
+
+        return grabado;
+    }
+
+    public boolean modificar() {
+        boolean grabado = false;
+        Statement st = c_conectar.conexion();
+        String query = "update und_medida "
+                + "set descripcion = '" + nombre + "', nombre_corto = '" + abreviado + "' "
+                + "where id_unidad = '" + id + "'";
+        int resultado = c_conectar.actualiza(st, query);
+
+        if (resultado > -1) {
+            grabado = true;
+        }
+
+        c_conectar.cerrar(st);
+
+        return grabado;
+    }
+
+    public void obtener_codigo() {
+        try {
+            Statement st = c_conectar.conexion();
+            String query = "select ifnull(max(id_unidad) + 1, 1) as codigo "
+                    + "from und_medida ";
+            ResultSet rs = c_conectar.consulta(st, query);
+
+            while (rs.next()) {
+                id = rs.getInt("codigo");
+            }
+            c_conectar.cerrar(rs);
+            c_conectar.cerrar(st);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+    }
+    
+     public void ver_unidades (JTable tabla, String query) {
+        try {
+            DefaultTableModel mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            Statement st = c_conectar.conexion();
+            ResultSet rs = c_conectar.consulta(st, query);
+
+            RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(mostrar);
+            tabla.setRowSorter(sorter);
+
+            mostrar.addColumn("Codigo");
+            mostrar.addColumn("Nombre");
+            mostrar.addColumn("Abreviado");
+
+            while (rs.next()) {
+                Object fila[] = new Object[3];
+
+                fila[0] = rs.getInt("id_unidad");
+                fila[1] = rs.getString("descripcion");
+                fila[2] = rs.getString("nombre_corto");
+                mostrar.addRow(fila);
+            }
+
+            c_conectar.cerrar(st);
+            c_conectar.cerrar(rs);
+            tabla.setModel(mostrar);
+            tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(100);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
 }
