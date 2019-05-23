@@ -16,6 +16,8 @@ public interface i_datos_bd {
     String user = "root_lsp";
     String password = "root/*123";
     String servidor = "192.168.1.12"; 
+    
+    //esta ip es variable
 
 
 }
