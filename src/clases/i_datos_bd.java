@@ -18,6 +18,6 @@ public interface i_datos_bd {
     String servidor = "192.168.1.12"; 
     
     //esta ip es variable
-
+// no quiero que sea variable
 
 }
