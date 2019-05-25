@@ -21,6 +21,7 @@ import vistas.frm_ver_caja_diaria;
 import vistas.frm_ver_caja_mensual;
 import vistas.frm_ver_clientes;
 import vistas.frm_ver_compras;
+import vistas.frm_ver_empleado;
 import vistas.frm_ver_ingresos;
 import vistas.frm_ver_inventarios;
 import vistas.frm_ver_marcas;
@@ -831,6 +832,11 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu5.setText("Empresa");
 
         jMenuItem22.setText("Empleados");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem22);
 
         jMenuItem23.setText("Usuarios");
@@ -1216,6 +1222,12 @@ public class frm_menu extends javax.swing.JFrame {
         frm_ver_zonas frm_zona = new frm_ver_zonas();
         c_varios.llamar_ventana(frm_zona);
     }//GEN-LAST:event_jMenuItem29ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        // TODO add your handling code here:
+        frm_ver_empleado frm_empleado=new frm_ver_empleado();
+        c_varios.llamar_ventana(frm_empleado);
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
 
     /**
      * @param args the command line arguments
