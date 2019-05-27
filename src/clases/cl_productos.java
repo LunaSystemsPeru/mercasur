@@ -37,7 +37,6 @@ public class cl_productos {
     private String ultimo_ingreso;
     private int id_proveedor;
 
-
     public cl_productos() {
     }
 
@@ -136,7 +135,7 @@ public class cl_productos {
     public void setId_proveedor(int id_proveedor) {
         this.id_proveedor = id_proveedor;
     }
-    
+
     public void ver_productos(JTable tabla, String query) {
         try {
             DefaultTableModel mostrar = new DefaultTableModel() {
@@ -145,7 +144,7 @@ public class cl_productos {
                     return false;
                 }
             };
-            
+
             Statement st = c_conectar.conexion();
             ResultSet rs = c_conectar.consulta(st, query);
 
@@ -201,7 +200,7 @@ public class cl_productos {
             tabla.getColumnModel().getColumn(6).setPreferredWidth(80);
             tabla.getColumnModel().getColumn(7).setPreferredWidth(80);
             tabla.setDefaultRenderer(Object.class, new render_tables.render_productos());
-            
+
             RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(mostrar);
             tabla.setRowSorter(sorter);
         } catch (SQLException ex) {
@@ -225,7 +224,7 @@ public class cl_productos {
                     + "inner join tipo_documento as td on td.id = k.id_documento "
                     + "where k.id_producto = '" + id_producto + "'"
                     + "order by k.fecha asc";
-            
+
             Statement st = c_conectar.conexion();
             ResultSet rs = c_conectar.consulta(st, query);
 
@@ -285,16 +284,15 @@ public class cl_productos {
 
         try {
             Statement st = c_conectar.conexion();
-            String query = "select p.idproducto, p.descripcion, p.grado, p.marca, p.modelo, p.cant_actual, p.caracteristicas, p.referencia, p.cant_min, u.descripcion as  und_medida, p.unidad_medida, p.costo_compra, p.precio_venta, p.estado "
-                    + "from productos as p "
-                    + "inner join und_medida as u on p.unidad_medida = u.id "
-                    + "where p.idproducto = '" + id_producto + "'"
-                    + "order by p.descripcion asc, p.grado asc";
+            String query = "select * from "
+                    + "productos "
+                    + "where id_producto = '" + id_producto + "'";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
                 existe = true;
                 descripcion = rs.getString("descripcion");
+                id_marca = rs.getInt("id_marca");
                 cantidad = rs.getDouble("cant_actual");
                 precio = rs.getDouble("precio_venta");
                 costo = rs.getDouble("costo_compra");
@@ -312,9 +310,9 @@ public class cl_productos {
     public boolean insertar() {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
-        String query = ""/*"insert into productos "
-                + "Values ('" + codigo + "', '" + descripcion + "','" + marca + "', '" + modelo + "', '" + grado + "', '" + costo + "', '" + precio + "', "
-                + "'" + clasificacion + "', '" + unidad_medida + "', 0, 0, '1', '" + referencias + "', '" + caracteristicas + "', 'noimage.jpg', '0000-00-00', '0000-00-00')"*/;
+        String query = "insert into productos "
+                + "values ('" + id_producto + "', '" + descripcion + "', '" + costo + "', '" + precio + "', '" + id_producto + "', "
+                + "'" + cantidad + "', '" + id_unidad + "', '" + id_marca + "', '1', 'noimage.jpg, '1000-01-01', '1000-01-01', 0)";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {

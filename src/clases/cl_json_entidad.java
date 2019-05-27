@@ -29,7 +29,7 @@ public class cl_json_entidad {
 
         try {
             //Generar la URL
-            String url = SERVER_PATH + "consultas_json/composer/composer/consulta_sunat_JMP.php?ruc=" + ruc;
+            String url = SERVER_PATH + "consultas_json/composer/consulta_sunat_JMP.php?ruc=" + ruc;
             //Creamos un nuevo objeto URL con la url donde pedir el JSON
             URL obj = new URL(url);
             //Creamos un objeto de conexión

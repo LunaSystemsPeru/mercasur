@@ -125,7 +125,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             });
             c_conectar.conectar();
             Statement st = c_conectar.conexion();
-            String sql = "select p.id_producto, p.descripcion, p.cant_actual, u.descripcion as  und_medida, p.precio_venta, p.estado, m.nombre as marca "
+            String sql = "select p.id_producto, p.descripcion, p.cant_actual, u.descripcion as  und_medida, p.precio_venta, p.costo_compra, p.estado, m.nombre as marca "
                     + "from productos as p "
                     + "inner join und_medida as u on p.id_unidad = u.id_unidad "
                     + "inner join marcas as m on m.id_marca = p.id_marca "
@@ -139,7 +139,8 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                 double cantidad = rs.getDouble("p.cant_actual");
                 String und_medida = rs.getString("und_medida").trim();
                 double precio = rs.getDouble("p.precio_venta");
-                autocompletar.addItem(new cl_ac_productos(id, descripcion + " " + marca, cantidad, und_medida, precio));
+                double costo = rs.getDouble("p.costo_compra");
+                autocompletar.addItem(new cl_ac_productos(id, descripcion + " " + marca, cantidad, und_medida, precio, costo));
             }
             c_conectar.cerrar(rs);
             c_conectar.cerrar(st);

@@ -21,17 +21,18 @@ public class cl_ac_productos {
     private double cantidad;
     private String und_medida;
     private double precio;
+    private double costo;
 
     public cl_ac_productos() {
     }
 
-    public cl_ac_productos(int id, String descripcion, double cantidad, String und_medida,
-            double precio) {
+    public cl_ac_productos(int id, String descripcion, double cantidad, String und_medida, double precio, double costo) {
         this.id = id;
         this.descripcion = descripcion;
         this.cantidad = cantidad;
         this.und_medida = und_medida;
         this.precio = precio;
+        this.costo = costo;
     }
 
     @Override
@@ -41,8 +42,10 @@ public class cl_ac_productos {
                 + " || Cant: "
                 + String.format("%7s", c_varios.formato_cantidad(cantidad))
                 + " " + String.format("%-15s\t", und_medida.trim())
-                + " || P.Ven: S/. "
-                + String.format("%9s", c_varios.formato_precio(precio));
+                + " || Precio: S/. "
+                + String.format("%9s", c_varios.formato_precio(precio))
+                + " || Costo: S/. "
+                + String.format("%9s", c_varios.formato_precio(costo));
 
         /*return "<html>"
          + "<u>" + descripcion + "</u>"

@@ -42,7 +42,6 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
 
     m_tipo_documento m_tido = new m_tipo_documento();
 
-    
     cl_documento_tienda c_documento = new cl_documento_tienda();
     cl_proveedor c_proveedor = new cl_proveedor();
     cl_productos c_producto = new cl_productos();
@@ -58,7 +57,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     boolean producto_correcto = false;
     double total_ingreso = 0;
     int total_items = 0;
-    
+
     Integer i;
 
     /**
@@ -187,32 +186,20 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             });
             c_conectar.conectar();
             Statement st = c_conectar.conexion();
-            String sql = "select p.idproducto, p.descripcion, p.grado, p.marca, p.modelo, p.cant_actual, p.cant_min, u.descripcion as  und_medida, p.precio_venta, p.estado "
+            String sql = "select p.id_producto, p.descripcion, p.costo_compra, p.precio_venta, p.cant_actual, m.nombre as marca "
                     + "from productos as p "
-                    + "inner join und_medida as u on p.unidad_medida = u.id "
-                    + "order by p.descripcion asc, p.grado asc";
+                    + "inner join marcas as m on m.id_marca = p.id_marca "
+                    + "order by m.nombre asc, p.descripcion asc";
             ResultSet rs = c_conectar.consulta(st, sql);
 
             while (rs.next()) {
-
-                String descripcion = rs.getString("p.descripcion").trim();
-                String grado = rs.getString("grado").trim();
-                String marca = rs.getString("marca").trim();
-                String modelo = rs.getString("modelo").trim();
-                if (grado.length() > 0 && !grado.equals("-") && !grado.equals("--")) {
-                    descripcion += " | " + grado;
-                }
-                if (marca.length() > 0 && !marca.equals("-") && !marca.equals("--")) {
-                    descripcion += " | " + marca;
-                }
-                if (modelo.length() > 0 && !modelo.equals("-") && !modelo.equals("--")) {
-                    descripcion += " | " + modelo;
-                }
-                int id = rs.getInt("idproducto");
+                String marca = rs.getString("marca");
+                String descripcion = marca + " | " + rs.getString("p.descripcion").trim();
+                int id = rs.getInt("id_producto");
                 double cantidad = rs.getDouble("p.cant_actual");
-                String und_medida = rs.getString("und_medida").trim();
                 double precio = rs.getDouble("p.precio_venta");
-                autocompletar.addItem(new cl_ac_productos(id, descripcion, cantidad, und_medida, precio));
+                double costo = rs.getDouble("p.costo_compra");
+                autocompletar.addItem(new cl_ac_productos(id, descripcion, cantidad, "Cajas", precio, costo));
             }
             c_conectar.cerrar(rs);
             c_conectar.cerrar(st);
@@ -264,12 +251,13 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         btn_cambiar_precio.setEnabled(true);
         btn_eliminar.setEnabled(true);
     }
-    
+
     private void desactivar_botones() {
         btn_cambiar_cantidad.setEnabled(false);
         btn_cambiar_precio.setEnabled(false);
         btn_eliminar.setEnabled(false);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -862,7 +850,8 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_cambiar_cantidadActionPerformed
 
     private void btn_buscar_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_proveedorActionPerformed
-
+        cargar_proveedores();
+        txt_razon_social.requestFocus();
     }//GEN-LAST:event_btn_buscar_proveedorActionPerformed
 
     private void cbx_tidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tidoKeyPressed
@@ -1147,7 +1136,11 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "ESTE DOCUMENTO YA ESTA REGISTRADO");
                     cbx_tido.requestFocus();
                 } else {
-                   //aaa
+                    cargar_productos();
+                    jTabbedPane1.setSelectedIndex(1);
+                    btn_add_producto.setEnabled(true);
+                    txt_buscar_producto.setEnabled(true);
+                    txt_buscar_producto.requestFocus();
                 }
             }
         }
