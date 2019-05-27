@@ -225,19 +225,35 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_nombre">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_nombreKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_ape_pat">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_ape_patKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_ape_mat">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_ape_matActionPerformed"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_ape_matKeyPressed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_direccion">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_direccionKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_correo">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_correoKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_telefono">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_telefonoKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_nick">
       <Properties>
@@ -245,8 +261,15 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_contrase&#xf1;a">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_contrase&#xf1;aKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_dni">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_dniActionPerformed"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_dniKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_cer1">
       <Properties>
@@ -291,9 +314,13 @@
     <Component class="javax.swing.JFormattedTextField" name="txt_fecha_nacimiento">
       <Properties>
         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-          <Format format="" subtype="-1" type="5"/>
+          <Format format="##/##/####" subtype="-1" type="5"/>
         </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_fecha_nacimientoKeyPressed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

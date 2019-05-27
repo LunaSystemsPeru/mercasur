@@ -164,7 +164,6 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem22 = new javax.swing.JMenuItem();
-        jMenuItem23 = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
         jMenuItem26 = new javax.swing.JMenuItem();
@@ -804,9 +803,6 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem22);
 
-        jMenuItem23.setText("Usuarios");
-        jMenu5.add(jMenuItem23);
-
         jMenuItem24.setText("Permisos de Usuario");
         jMenu5.add(jMenuItem24);
         jMenu5.add(jSeparator8);
@@ -1257,7 +1253,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
-    private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem26;

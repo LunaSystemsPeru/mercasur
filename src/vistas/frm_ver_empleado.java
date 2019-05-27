@@ -8,6 +8,7 @@ package vistas;
 import clases.cl_empleados;
 import forms.frm_reg_empleado;
 import clases.cl_varios;
+import java.awt.event.KeyEvent;
 
 public class frm_ver_empleado extends javax.swing.JInternalFrame {
 
@@ -89,6 +90,12 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
             }
         });
 
+        txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_buscarKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -155,6 +162,21 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         btn_modificar.setEnabled(true);
 
     }//GEN-LAST:event_t_empleadosMouseClicked
+
+    private void txt_buscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyPressed
+        
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            String buscar= txt_buscar.getText();
+             squly = "select id_empleado, nick, nombres,ape_pat,ape_mat "
+                + "from empleados "
+                + "where nombres like '%"+buscar+"%'";
+        cl_empleado.ver_empleados(t_empleados, squly);
+            
+//            this.txt_fecha_nacimiento.requestFocus();
+//             txt_fecha_nacimiento.setEnabled(true);
+        }
+        
+    }//GEN-LAST:event_txt_buscarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

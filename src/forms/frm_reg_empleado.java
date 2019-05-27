@@ -8,16 +8,27 @@ package forms;
 import vistas.frm_ver_empleado;
 import clases.cl_varios;
 import clases.cl_empleados;
-
+import java.awt.event.KeyEvent;
 public class frm_reg_empleado extends javax.swing.JInternalFrame {
 
     cl_varios c_varios = new cl_varios();
     cl_empleados c_empleados = new cl_empleados();
     public static String accion;
     public static int id_empleados;
+    
 
     public frm_reg_empleado() {
         initComponents();
+        txt_nombre.setEnabled(false);
+        txt_ape_pat.setEnabled(false);
+        txt_ape_mat.setEnabled(false);
+        txt_direccion.setEnabled(false);
+        txt_correo.setEnabled(false);
+        txt_telefono.setEnabled(false);
+        txt_fecha_nacimiento.setEnabled(false);
+        txt_nick.setEnabled(false);
+        txt_contraseña.setEnabled(false);
+        btn_registrar.setEnabled(false);
         if (accion.equals("modificar")) {
             c_empleados.setId_empleados(id_empleados);
             c_empleados.cargar_datos();
@@ -34,6 +45,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
             txt_contraseña.setText(c_empleados.getContraseña());
             jButton3.setEnabled(true);
             btn_registrar.setEnabled(false);
+            
         }
 
     }
@@ -52,7 +64,11 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         c_empleados.setDireccion(txt_direccion.getText());
         c_empleados.setCorreo(txt_correo.getText());
         c_empleados.setTelefono(txt_telefono.getText());
-        c_empleados.setFecha_nacimiento(txt_fecha_nacimiento.getText());
+        
+        String fecha_nacimento = txt_fecha_nacimiento.getText();
+        String nueva_fecha = c_varios.formato_fecha_mysql(fecha_nacimento);
+        c_empleados.setFecha_nacimiento(nueva_fecha);
+        
         c_empleados.setNick(txt_nick.getText());
         c_empleados.setContraseña(txt_contraseña.getText());
 
@@ -123,13 +139,65 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
 
         txt_codigo.setEnabled(false);
 
+        txt_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_nombreKeyPressed(evt);
+            }
+        });
+
+        txt_ape_pat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_ape_patKeyPressed(evt);
+            }
+        });
+
         txt_ape_mat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_ape_matActionPerformed(evt);
             }
         });
+        txt_ape_mat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_ape_matKeyPressed(evt);
+            }
+        });
+
+        txt_direccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_direccionKeyPressed(evt);
+            }
+        });
+
+        txt_correo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_correoKeyPressed(evt);
+            }
+        });
+
+        txt_telefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_telefonoKeyPressed(evt);
+            }
+        });
 
         txt_nick.setEnabled(false);
+
+        txt_contraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_contraseñaKeyPressed(evt);
+            }
+        });
+
+        txt_dni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_dniActionPerformed(evt);
+            }
+        });
+        txt_dni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_dniKeyPressed(evt);
+            }
+        });
 
         btn_cer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
         btn_cer1.setText("Cerrar");
@@ -160,10 +228,16 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         jLabel12.setText("Fec. Nacimiento");
 
         try {
-            txt_fecha_nacimiento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("")));
+            txt_fecha_nacimiento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txt_fecha_nacimiento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fecha_nacimiento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_fecha_nacimientoKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -304,6 +378,87 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         c_varios.llamar_ventana(frm_empleados);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txt_fecha_nacimientoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecha_nacimientoKeyPressed
+        // TODO add your handling code here:
+        String fecha = txt_nombre.getText().charAt(0) + txt_ape_pat.getText().replace(" ","") + txt_ape_mat.getText().charAt(0);      
+        //System.out.println(n);
+        txt_nick.setText(fecha);
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER)
+             this.txt_contraseña.requestFocus();
+             txt_contraseña.setEnabled(true);
+        
+    }//GEN-LAST:event_txt_fecha_nacimientoKeyPressed
+
+    private void txt_dniKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dniKeyPressed
+
+          if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+             this.txt_nombre.requestFocus();
+             txt_nombre.setEnabled(true);
+
+        }
+        
+    }//GEN-LAST:event_txt_dniKeyPressed
+
+    private void txt_dniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_dniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_dniActionPerformed
+
+    private void txt_nombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombreKeyPressed
+        
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+             this.txt_ape_pat.requestFocus();
+             txt_ape_pat.setEnabled(true);
+        }
+    }//GEN-LAST:event_txt_nombreKeyPressed
+
+    private void txt_ape_patKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ape_patKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+             this.txt_ape_mat.requestFocus();
+             txt_ape_mat.setEnabled(true);
+        }
+    }//GEN-LAST:event_txt_ape_patKeyPressed
+
+    private void txt_ape_matKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ape_matKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+             this.txt_direccion.requestFocus();
+             txt_direccion.setEnabled(true);
+        }
+    }//GEN-LAST:event_txt_ape_matKeyPressed
+
+    private void txt_direccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_direccionKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+             this.txt_correo.requestFocus();
+             txt_correo.setEnabled(true);
+        }
+    }//GEN-LAST:event_txt_direccionKeyPressed
+
+    private void txt_correoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_correoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+             this.txt_telefono.requestFocus();
+             txt_telefono.setEnabled(true);
+        }
+    }//GEN-LAST:event_txt_correoKeyPressed
+
+    private void txt_telefonoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_telefonoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+             this.txt_fecha_nacimiento.requestFocus();
+             txt_fecha_nacimiento.setEnabled(true);
+        }
+    }//GEN-LAST:event_txt_telefonoKeyPressed
+
+    private void txt_contraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_contraseñaKeyPressed
+        
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+             this.btn_registrar.requestFocus();
+             btn_registrar.setEnabled(true);
+        }
+    }//GEN-LAST:event_txt_contraseñaKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
