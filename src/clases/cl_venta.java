@@ -26,144 +26,20 @@ public class cl_venta {
     cl_varios c_varios = new cl_varios();
 
     private String periodo;
-    private int codigo;
-    private String cod_venta;
-    private String fecha_venta;
-    private String fecha_pago;
-    private String placa;
-    private int tipo_documento;
-    private int serie;
-    private int numero;
-    private String usuario;
-    private int cliente;
-    private String nombre_cliente;
-    private int kilometraje;
+    private int id_venta;
+    private String fecha;
+    private int id_cliente;
+    private int id_zona;
+    private int id_documento;
+    private String serie_doc;
+    private int numero_doc;
     private double total;
     private double pagado;
-    private double descuento;
-    private String estado;
+    private int estado;
+    private String fecha_registro;
+    private int id_empleado;
 
     public cl_venta() {
-    }
-
-    public String getCod_venta() {
-        return cod_venta;
-    }
-
-    public void setCod_venta(String cod_venta) {
-        this.cod_venta = cod_venta;
-    }
-
-    public int getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(int cliente) {
-        this.cliente = cliente;
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-
-    public double getDescuento() {
-        return descuento;
-    }
-
-    public void setDescuento(double descuento) {
-        this.descuento = descuento;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getFecha_pago() {
-        return fecha_pago;
-    }
-
-    public void setFecha_pago(String fecha_pago) {
-        this.fecha_pago = fecha_pago;
-    }
-
-    public String getFecha_venta() {
-        return fecha_venta;
-    }
-
-    public void setFecha_venta(String fecha_venta) {
-        this.fecha_venta = fecha_venta;
-    }
-
-    public int getKilometraje() {
-        return kilometraje;
-    }
-
-    public void setKilometraje(int kilometraje) {
-        this.kilometraje = kilometraje;
-    }
-
-    public String getNombre_cliente() {
-        return nombre_cliente;
-    }
-
-    public void setNombre_cliente(String nombre_cliente) {
-        this.nombre_cliente = nombre_cliente;
-    }
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-
-    public String getPlaca() {
-        return placa;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
-    public int getSerie() {
-        return serie;
-    }
-
-    public void setSerie(int serie) {
-        this.serie = serie;
-    }
-
-    public int getTipo_documento() {
-        return tipo_documento;
-    }
-
-    public void setTipo_documento(int tipo_documento) {
-        this.tipo_documento = tipo_documento;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     public String getPeriodo() {
@@ -174,6 +50,70 @@ public class cl_venta {
         this.periodo = periodo;
     }
 
+    public int getId_venta() {
+        return id_venta;
+    }
+
+    public void setId_venta(int id_venta) {
+        this.id_venta = id_venta;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public int getId_cliente() {
+        return id_cliente;
+    }
+
+    public void setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
+    }
+
+    public int getId_zona() {
+        return id_zona;
+    }
+
+    public void setId_zona(int id_zona) {
+        this.id_zona = id_zona;
+    }
+
+    public int getId_documento() {
+        return id_documento;
+    }
+
+    public void setId_documento(int id_documento) {
+        this.id_documento = id_documento;
+    }
+
+    public String getSerie_doc() {
+        return serie_doc;
+    }
+
+    public void setSerie_doc(String serie_doc) {
+        this.serie_doc = serie_doc;
+    }
+
+    public int getNumero_doc() {
+        return numero_doc;
+    }
+
+    public void setNumero_doc(int numero_doc) {
+        this.numero_doc = numero_doc;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
     public double getPagado() {
         return pagado;
     }
@@ -182,13 +122,37 @@ public class cl_venta {
         this.pagado = pagado;
     }
 
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public String getFecha_registro() {
+        return fecha_registro;
+    }
+
+    public void setFecha_registro(String fecha_registro) {
+        this.fecha_registro = fecha_registro;
+    }
+
+    public int getId_empleado() {
+        return id_empleado;
+    }
+
+    public void setId_empleado(int id_empleado) {
+        this.id_empleado = id_empleado;
+    }
+
     public boolean insertar() {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into ventas "
-                + "Values ('" + periodo + "', '" + codigo + "', '" + placa + "', '" + fecha_venta + "', '" + fecha_pago + "', '" + tipo_documento + "', "
-                + "'" + serie + "', '" + numero + "', '" + cliente + "', '" + nombre_cliente + "', '" + kilometraje + "', '" + descuento + "', "
-                + "'" + total + "', 0,'" + usuario + "', '" + estado + "', current_time())";
+                + "Values ('" + periodo + "', '" + id_venta + "', '" + fecha + "', '" + id_cliente + "', '" + id_zona + "', '" + id_documento + "', "
+                + "'" + serie_doc + "', '" + numero_doc + "', '" + total + "', '0', '1', current_time(), "
+                + "'" + id_empleado + "')";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {
@@ -205,11 +169,11 @@ public class cl_venta {
 
         try {
             Statement st = c_conectar.conexion();
-            String query = "select ifnull(max(id) + 1, 1) as codigo from ventas where periodo = '" + periodo + "' ";
+            String query = "select ifnull(max(id_venta) + 1, 1) as codigo from ventas where periodo = '" + periodo + "' ";
             ResultSet rs = c_conectar.consulta(st, query);
             System.out.println(query);
             while (rs.next()) {
-                resultado = rs.getInt("codigo");
+                id_venta = rs.getInt("codigo");
             }
 
             c_conectar.cerrar(rs);
@@ -224,8 +188,8 @@ public class cl_venta {
     public boolean eliminar() {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
-        String query = "update ventas set estado = '2', total = '0', descuento = '0' "
-                + "where periodo = '" + periodo + "' and id = '" + codigo + "'";
+        String query = "update ventas set estado = '2', total = '0' "
+                + "where periodo = '" + periodo + "' and id_venta = '" + id_venta + "'";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {
@@ -304,15 +268,17 @@ public class cl_venta {
     public void datos_venta() {
         try {
             Statement st = c_conectar.conexion();
-            String query = "select periodo, id, nro_placa, fecha_venta, tipo_documento, serie_doc, nro_doc, cliente, nombre_cliente, kilometraje, descuento, total, estado "
+            String query = "select * "
                     + "from ventas "
-                    + "where concat (periodo, lpad (id, 5, 0)) = '" + cod_venta + "'";
+                    + "where periodo = '" + periodo + "' and id_venta = '" + id_venta + "'";
             ResultSet rs = c_conectar.consulta(st, query);
             while (rs.next()) {
-                periodo = rs.getString("periodo");
-                codigo = rs.getInt("id");
-                placa = rs.getString("nro_placa");
-                kilometraje = rs.getInt("kilometraje");
+                fecha = rs.getString("fecha_venta");
+                id_zona = rs.getInt("id_zona");
+                id_empleado = rs.getInt("id_empleado");
+                id_documento = rs.getInt("id_documento");
+                serie_doc = rs.getString("serie_doc");
+                numero_doc = rs.getInt("nro_doc");
             }
 
             c_conectar.cerrar(rs);
@@ -320,23 +286,5 @@ public class cl_venta {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
-    }
-
-    public boolean actualizar_kilometraje() {
-        boolean grabado = false;
-        Statement st = c_conectar.conexion();
-        String query = "update ventas "
-                + "set kilometraje = '" + kilometraje + "' "
-                + "where concat (periodo, lpad (id, 5, 0)) = '" + cod_venta + "'";
-        System.out.println(query);
-        int resultado = c_conectar.actualiza(st, query);
-
-        if (resultado > -1) {
-            grabado = true;
-        }
-
-        c_conectar.cerrar(st);
-
-        return grabado;
     }
 }

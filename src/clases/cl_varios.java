@@ -384,6 +384,23 @@ public class cl_varios {
                     (desktopSize.height - jInternalFrameSize.height) / 2);
         }
     }
+    
+    public void llamar_ventana_completa(JInternalFrame ventana) {
+        if (verificar_existencia(ventana)) {
+            mercasur.frm_menu.jDesktopPane1.add(ventana);
+            ventana.show();
+
+            Dimension desktopSize = mercasur.frm_menu.jDesktopPane1.getSize();
+            
+            int ancho = (int) (desktopSize.getWidth() / 1.05);
+            int alto = (int) (desktopSize.getHeight() / 1.05);
+            ventana.setSize(ancho, alto);
+            Dimension jInternalFrameSize = ventana.getSize();
+
+            ventana.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                    (desktopSize.height - jInternalFrameSize.height) / 2);
+        }
+    }
 
     public void solo_numeros(KeyEvent evt) {
         char car = evt.getKeyChar();

@@ -41,16 +41,14 @@ import vistas.frm_ver_zonas;
  * @author CALIDAD
  */
 public class frm_menu extends javax.swing.JFrame {
-    
+
     cl_conectar c_conectar = new cl_conectar();
     cl_varios c_varios = new cl_varios();
-    
+
     cl_caja_chica c_caja = new cl_caja_chica();
-    
+
     public static cl_empleado c_empleado = new cl_empleado();
     public static cl_zona c_zona = new cl_zona();
-    
-    m_zonas m_zona = new m_zonas();
 
     /**
      * Creates new form frm_menu
@@ -70,17 +68,17 @@ public class frm_menu extends javax.swing.JFrame {
 //            System.exit(0);
 //        }
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+
         obtener_version_pc();
     }
-    
+
     private void cargar_login() {
         jd_login.setSize(356, 409);
         jd_login.setModal(true);
         jd_login.setLocationRelativeTo(null);
         jd_login.setVisible(true);
     }
-    
+
     private void obtener_version_pc() {
         String version = c_varios.leer_archivo("version.cfg");
         lbl_version.setText(version);
@@ -105,8 +103,6 @@ public class frm_menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txt_contrasena = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
-        cbx_zonas = new javax.swing.JComboBox();
-        jLabel11 = new javax.swing.JLabel();
         jd_apertura = new javax.swing.JDialog();
         jLabel24 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
@@ -134,8 +130,6 @@ public class frm_menu extends javax.swing.JFrame {
         lbl_empleado = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lbl_version = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        lbl_zona = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
@@ -235,17 +229,6 @@ public class frm_menu extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         jLabel2.setText("Ingreso al Sistema");
 
-        cbx_zonas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CARGAR ZONAS" }));
-        cbx_zonas.setEnabled(false);
-        cbx_zonas.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cbx_zonasKeyPressed(evt);
-            }
-        });
-
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/store-icon.png"))); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -262,16 +245,13 @@ public class frm_menu extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4))
-                            .addComponent(jLabel11))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_usuario)
-                            .addComponent(txt_contrasena)
-                            .addComponent(cbx_zonas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txt_contrasena))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -289,10 +269,6 @@ public class frm_menu extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txt_contrasena))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbx_zonas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -565,11 +541,6 @@ public class frm_menu extends javax.swing.JFrame {
         lbl_version.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lbl_version.setText("lbl_version");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel6.setText("Zona:");
-
-        lbl_zona.setText("lbl_zona");
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -581,10 +552,6 @@ public class frm_menu extends javax.swing.JFrame {
                 .addComponent(lbl_empleado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_zona)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -598,8 +565,6 @@ public class frm_menu extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(lbl_zona, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbl_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.CENTER, jPanel5Layout.createSequentialGroup()
@@ -880,8 +845,6 @@ public class frm_menu extends javax.swing.JFrame {
                     txt_contrasena.setText("");
                     txt_contrasena.setEnabled(true);
                     txt_contrasena.requestFocus();
-                    cbx_zonas.removeAllItems();
-                    m_zona.cbx_zona(cbx_zonas);
                 } else {
                     Notification.show("Login", "Usuario Invalido", Notification.ERROR_MESSAGE);
                     txt_usuario.setText("");
@@ -898,12 +861,10 @@ public class frm_menu extends javax.swing.JFrame {
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         jd_login.setVisible(false);
         c_empleado.cargar_datos();
-        c_zona.cargar_datos();
-        Notification.show("Bienvenido", "BIENVENIDO SR(A): " + c_empleado.getNombres() + "  " + c_empleado.getApe_pat() + " " + c_empleado.getApe_mat());
+        //Notification.show("Bienvenido", "BIENVENIDO SR(A): " + c_empleado.getNombres() + "  " + c_empleado.getApe_pat() + " " + c_empleado.getApe_mat());
         lbl_empleado.setText(c_empleado.getNombres() + "  " + c_empleado.getApe_pat() + " " + c_empleado.getApe_mat());
-        lbl_zona.setText(c_zona.getNombre() + " | " + c_zona.getCiudad());
         c_caja.setFecha(c_varios.getFechaActual());
-        
+
         if (!c_caja.validar_apertura()) {
             jd_apertura.setSize(402, 225);
             jd_apertura.setModal(true);
@@ -928,8 +889,8 @@ public class frm_menu extends javax.swing.JFrame {
                 if (c_empleado.getContrasena().equals(password)) {
                     txt_usuario.setEnabled(false);
                     txt_contrasena.setEnabled(false);
-                    cbx_zonas.setEnabled(true);
-                    cbx_zonas.requestFocus();
+                    btn_ingresar.setEnabled(true);
+                    btn_ingresar.requestFocus();
                 } else {
                     Notification.show("Login", "Contraseña Invalida", Notification.ERROR_MESSAGE);
                     txt_contrasena.setText("");
@@ -945,7 +906,7 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         frm_reg_venta frm_venta = new frm_reg_venta();
-        c_varios.llamar_ventana(frm_venta);
+        c_varios.llamar_ventana_completa(frm_venta);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txt_usuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyTyped
@@ -1049,7 +1010,7 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        
+
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -1153,14 +1114,14 @@ public class frm_menu extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "INGRESE UN PERIODO CORRECTO \nSOLO NUMEROS \nEJEMPLO: 201801");
         }
-        
+
         if (!f_inicio.equals("")) {
             rpt_boolean = true;
         }
         if (!f_fin.equals("")) {
             rpt_boolean = true;
         }
-        
+
         if (rpt_boolean) {
             File miDir = new File(".");
             try {
@@ -1204,15 +1165,6 @@ public class frm_menu extends javax.swing.JFrame {
         c_varios.llamar_ventana(frm_caja);
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
-    private void cbx_zonasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_zonasKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cl_zona sel_zona = (cl_zona) cbx_zonas.getSelectedItem();
-            c_zona.setId_zona(sel_zona.getId_zona());
-            btn_ingresar.setEnabled(true);
-            btn_ingresar.requestFocus();
-        }
-    }//GEN-LAST:event_cbx_zonasKeyPressed
-
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         frm_ver_marcas frm_marca = new frm_ver_marcas();
         c_varios.llamar_ventana(frm_marca);
@@ -1225,7 +1177,7 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
         // TODO add your handling code here:
-        frm_ver_empleado frm_empleado=new frm_ver_empleado();
+        frm_ver_empleado frm_empleado = new frm_ver_empleado();
         c_varios.llamar_ventana(frm_empleado);
     }//GEN-LAST:event_jMenuItem22ActionPerformed
 
@@ -1267,7 +1219,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JButton btn_aperturar;
     private javax.swing.JButton btn_cerrar;
     private javax.swing.JButton btn_ingresar;
-    private javax.swing.JComboBox cbx_zonas;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
@@ -1279,7 +1230,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     public static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -1288,7 +1238,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -1337,7 +1286,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JDialog jd_login;
     private javax.swing.JLabel lbl_empleado;
     private javax.swing.JLabel lbl_version;
-    private javax.swing.JLabel lbl_zona;
     private javax.swing.JPasswordField txt_contrasena;
     private javax.swing.JFormattedTextField txt_j_fecha;
     private javax.swing.JTextField txt_j_monto;

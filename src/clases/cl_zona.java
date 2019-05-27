@@ -113,6 +113,31 @@ public class cl_zona {
         return existe;
     }
 
+    public boolean validar_empleado() {
+        boolean existe = false;
+
+        try {
+            Statement st = c_conectar.conexion();
+            String query = "select count(*) as contar_zonas "
+                    + "from zona "
+                    + "where id_empleado = '" + id_empleado + "'";
+            ResultSet rs = c_conectar.consulta(st, query);
+
+            if (rs.next()) {
+                if (rs.getInt("contar_zonas") > 0) {
+                    existe = true;
+                }
+            }
+
+            c_conectar.cerrar(rs);
+            c_conectar.cerrar(st);
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+
+        return existe;
+    }
+
     public void ver_zonas(JTable tabla, String query) {
         try {
             DefaultTableModel mostrar = new DefaultTableModel() {

@@ -114,18 +114,6 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
         cbx_jda_tipopago = new javax.swing.JComboBox();
         txt_jda_monto = new javax.swing.JTextField();
         btn_jda_registrar = new javax.swing.JButton();
-        jd_modificar_venta = new javax.swing.JDialog();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        txt_modificar_placa = new javax.swing.JTextField();
-        jLabel29 = new javax.swing.JLabel();
-        txt_modificar_cliente = new javax.swing.JTextField();
-        txt_modificar_fecha = new javax.swing.JFormattedTextField();
-        jLabel24 = new javax.swing.JLabel();
-        txt_modificar_documento = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        txt_modificar_kilometraje = new javax.swing.JTextField();
-        btn_modificar_guardar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txt_bus = new javax.swing.JTextField();
         cbx_busqueda = new javax.swing.JComboBox();
@@ -138,7 +126,6 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
         cbx_estado = new javax.swing.JComboBox();
         btn_ver_detalle = new javax.swing.JButton();
         btn_ver_cobro = new javax.swing.JButton();
-        btn_modificar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         txt_total_deudas = new javax.swing.JTextField();
 
@@ -547,100 +534,6 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jd_modificar_venta.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jd_modificar_venta.setTitle("Modificar Venta");
-        jd_modificar_venta.setResizable(false);
-
-        jLabel28.setText("Placa");
-
-        jLabel21.setText("Tipo de Documento");
-
-        txt_modificar_placa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_modificar_placa.setEnabled(false);
-
-        jLabel29.setText("Cliente:");
-
-        txt_modificar_cliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_modificar_cliente.setEnabled(false);
-
-        try {
-            txt_modificar_fecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txt_modificar_fecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_modificar_fecha.setEnabled(false);
-
-        jLabel24.setText("Fecha:");
-
-        txt_modificar_documento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_modificar_documento.setEnabled(false);
-
-        jLabel6.setText("Kilometraje:");
-
-        txt_modificar_kilometraje.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        btn_modificar_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
-        btn_modificar_guardar.setText("Modificar");
-        btn_modificar_guardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_modificar_guardarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jd_modificar_ventaLayout = new javax.swing.GroupLayout(jd_modificar_venta.getContentPane());
-        jd_modificar_venta.getContentPane().setLayout(jd_modificar_ventaLayout);
-        jd_modificar_ventaLayout.setHorizontalGroup(
-            jd_modificar_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jd_modificar_ventaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jd_modificar_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel21)
-                    .addComponent(jLabel28)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
-                .addGroup(jd_modificar_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jd_modificar_ventaLayout.createSequentialGroup()
-                        .addComponent(txt_modificar_placa, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel29)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_modificar_cliente))
-                    .addGroup(jd_modificar_ventaLayout.createSequentialGroup()
-                        .addComponent(txt_modificar_documento, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(86, 86, 86)
-                        .addComponent(jLabel24)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_modificar_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jd_modificar_ventaLayout.createSequentialGroup()
-                        .addComponent(txt_modificar_kilometraje, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_modificar_guardar)))
-                .addContainerGap())
-        );
-        jd_modificar_ventaLayout.setVerticalGroup(
-            jd_modificar_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jd_modificar_ventaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jd_modificar_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_modificar_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_modificar_documento, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jd_modificar_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel28)
-                    .addComponent(txt_modificar_placa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel29)
-                    .addComponent(txt_modificar_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jd_modificar_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_modificar_kilometraje, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_modificar_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
         setTitle("Registro de Ventas");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/find.png"))); // NOI18N
@@ -732,15 +625,6 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
-        btn_modificar.setText("Modificar");
-        btn_modificar.setEnabled(false);
-        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_modificarActionPerformed(evt);
-            }
-        });
-
         jLabel9.setText("TOTAL DEUDAS:");
 
         txt_total_deudas.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -753,16 +637,14 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_modificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                         .addComponent(cbx_estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_ver_cobro)
@@ -794,8 +676,7 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
                         .addComponent(cbx_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cbx_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_ver_detalle, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_ver_cobro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_ver_cobro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -889,25 +770,24 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
     private void btn_anuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anuActionPerformed
         if (fila_seleccionada > -1) {
             btn_ver_cobro.setEnabled(false);
-            btn_modificar.setEnabled(false);
             btn_ver_detalle.setEnabled(false);
             btn_anu.setEnabled(false);
 
             int dialogButton = JOptionPane.YES_NO_OPTION;
             JOptionPane.showConfirmDialog(null, "Desea eliminar el registro seleccionado??", "Atencion", dialogButton);
             if (dialogButton == JOptionPane.YES_OPTION) { //The ISSUE is here
-                c_venta.setCod_venta(t_ventas.getValueAt(fila_seleccionada, 0).toString());
+                c_venta.setId_venta(Integer.parseInt(t_ventas.getValueAt(fila_seleccionada, 0).toString()));
                 c_venta.datos_venta();
 
                 c_detalle.setPeriodo(c_venta.getPeriodo());
-                c_detalle.setVenta(c_venta.getCodigo());
+                c_detalle.setVenta(c_venta.getId_venta());
 
                 //eliminar detalle de venta
                 c_detalle.eliminar();
 
                 //eliminar cobro
                 c_cobros.setPeriodo(c_venta.getPeriodo());
-                c_cobros.setVenta(c_venta.getCodigo());
+                c_cobros.setVenta(c_venta.getId_venta());
 
                 c_cobros.eliminar_todo();
 
@@ -926,31 +806,31 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
 
     private void btn_ver_cobroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ver_cobroActionPerformed
         if (fila_seleccionada > -1) {
-            btn_ver_cobro.setEnabled(false);
-            btn_modificar.setEnabled(false);
-            btn_ver_detalle.setEnabled(false);
-            jd_ver_pagos.setModal(true);
-            jd_ver_pagos.setSize(710, 380);
-            jd_ver_pagos.setLocationRelativeTo(null);
-            double total = Double.parseDouble(t_ventas.getValueAt(fila_seleccionada, 5).toString());
-            txt_jd_cliente.setText(t_ventas.getValueAt(fila_seleccionada, 4).toString());
-            txt_jd_iventa.setText(t_ventas.getValueAt(fila_seleccionada, 0).toString());
-            txt_jd_placa.setText(t_ventas.getValueAt(fila_seleccionada, 3).toString());
-            txt_jd_numero.setText(t_ventas.getValueAt(fila_seleccionada, 2).toString());
-            txt_jd_total.setText(t_ventas.getValueAt(fila_seleccionada, 5).toString());
-            c_cobros.setCod_venta(t_ventas.getValueAt(fila_seleccionada, 0).toString());
-            c_venta.setCod_venta(c_cobros.getCod_venta());
-            double pagado = c_cobros.mostrar_cobros(t_jd_pagos);
-            txt_jd_porcobrar.setText(c_varios.formato_totales(total - pagado));
-            if (total == pagado) {
-                btn_jd_registrar.setEnabled(false);
-            } else {
-                btn_jd_registrar.setEnabled(true);
-            }
-            jd_ver_pagos.setVisible(true);
-            btn_ver_cobro.setEnabled(false);
-            btn_ver_detalle.setEnabled(false);
-            btn_jd_registrar.requestFocus();
+//            btn_ver_cobro.setEnabled(false);
+//            btn_modificar.setEnabled(false);
+//            btn_ver_detalle.setEnabled(false);
+//            jd_ver_pagos.setModal(true);
+//            jd_ver_pagos.setSize(710, 380);
+//            jd_ver_pagos.setLocationRelativeTo(null);
+//            double total = Double.parseDouble(t_ventas.getValueAt(fila_seleccionada, 5).toString());
+//            txt_jd_cliente.setText(t_ventas.getValueAt(fila_seleccionada, 4).toString());
+//            txt_jd_iventa.setText(t_ventas.getValueAt(fila_seleccionada, 0).toString());
+//            txt_jd_placa.setText(t_ventas.getValueAt(fila_seleccionada, 3).toString());
+//            txt_jd_numero.setText(t_ventas.getValueAt(fila_seleccionada, 2).toString());
+//            txt_jd_total.setText(t_ventas.getValueAt(fila_seleccionada, 5).toString());
+//            c_cobros.setCod_venta(t_ventas.getValueAt(fila_seleccionada, 0).toString());
+//            c_venta.setId_venta(c_cobros.getCod_venta());
+//            double pagado = c_cobros.mostrar_cobros(t_jd_pagos);
+//            txt_jd_porcobrar.setText(c_varios.formato_totales(total - pagado));
+//            if (total == pagado) {
+//                btn_jd_registrar.setEnabled(false);
+//            } else {
+//                btn_jd_registrar.setEnabled(true);
+//            }
+//            jd_ver_pagos.setVisible(true);
+//            btn_ver_cobro.setEnabled(false);
+//            btn_ver_detalle.setEnabled(false);
+//            btn_jd_registrar.requestFocus();
         } else {
             JOptionPane.showMessageDialog(null, "No ha seleccionado una fila");
         }
@@ -961,12 +841,10 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
         String estado = t_ventas.getValueAt(fila_seleccionada, 7).toString();
         if (estado.equals("ANULADO")) {
             btn_ver_cobro.setEnabled(false);
-            btn_modificar.setEnabled(false);
             btn_ver_detalle.setEnabled(false);
             btn_anu.setEnabled(false);
         } else {
             btn_ver_cobro.setEnabled(true);
-            btn_modificar.setEnabled(true);
             btn_ver_detalle.setEnabled(true);
             btn_anu.setEnabled(true);
         }
@@ -990,23 +868,23 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
 
     private void btn_ver_detalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ver_detalleActionPerformed
         if (fila_seleccionada > -1) {
-            btn_ver_cobro.setEnabled(false);
-            btn_modificar.setEnabled(false);
-            btn_ver_detalle.setEnabled(false);
-            jd_ver_detalle_venta.setModal(true);
-            jd_ver_detalle_venta.setSize(710, 380);
-            jd_ver_detalle_venta.setLocationRelativeTo(null);
-            txt_jd_cliente1.setText(t_ventas.getValueAt(fila_seleccionada, 4).toString());
-            txt_jd_iventa1.setText(t_ventas.getValueAt(fila_seleccionada, 0).toString());
-            txt_jd_placa1.setText(t_ventas.getValueAt(fila_seleccionada, 3).toString());
-            txt_jd_numero1.setText(t_ventas.getValueAt(fila_seleccionada, 2).toString());
-            txt_jd_total1.setText(t_ventas.getValueAt(fila_seleccionada, 5).toString());
-            c_venta.setCod_venta(t_ventas.getValueAt(fila_seleccionada, 0).toString());
-            c_venta.datos_venta();
-            c_detalle.setPeriodo(c_venta.getPeriodo());
-            c_detalle.setVenta(c_venta.getCodigo());
-            c_detalle.mostrar_productos(t_detalle);
-            jd_ver_detalle_venta.setVisible(true);
+//            btn_ver_cobro.setEnabled(false);
+//            btn_modificar.setEnabled(false);
+//            btn_ver_detalle.setEnabled(false);
+//            jd_ver_detalle_venta.setModal(true);
+//            jd_ver_detalle_venta.setSize(710, 380);
+//            jd_ver_detalle_venta.setLocationRelativeTo(null);
+//            txt_jd_cliente1.setText(t_ventas.getValueAt(fila_seleccionada, 4).toString());
+//            txt_jd_iventa1.setText(t_ventas.getValueAt(fila_seleccionada, 0).toString());
+//            txt_jd_placa1.setText(t_ventas.getValueAt(fila_seleccionada, 3).toString());
+//            txt_jd_numero1.setText(t_ventas.getValueAt(fila_seleccionada, 2).toString());
+//            txt_jd_total1.setText(t_ventas.getValueAt(fila_seleccionada, 5).toString());
+//            c_venta.setId_venta(t_ventas.getValueAt(fila_seleccionada, 0).toString());
+//            c_venta.datos_venta();
+//            c_detalle.setPeriodo(c_venta.getPeriodo());
+//            c_detalle.setVenta(c_venta.getCodigo());
+//            c_detalle.mostrar_productos(t_detalle);
+//            jd_ver_detalle_venta.setVisible(true);
 
         } else {
             JOptionPane.showMessageDialog(null, "No ha seleccionado una fila");
@@ -1071,24 +949,24 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_jda_montoKeyTyped
 
     private void btn_jda_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_jda_registrarActionPerformed
-        c_venta.datos_venta();
-        c_cobros.setPeriodo(c_venta.getPeriodo());
-        c_cobros.setVenta(c_venta.getCodigo());
-        c_cobros.setCodigo(c_cobros.obtener_codigo());
-        c_cobros.setFecha(c_varios.formato_fecha_mysql(txt_jda_fecha.getText()));
-        c_cobros.setMonto(Double.parseDouble(txt_jda_monto.getText()));
-        c_cobros.setTipo(cbx_jda_tipopago.getSelectedIndex() + 1);
-        if (c_cobros.insertar()) {
-            jd_reg_pago.dispose();
-            double total = Double.parseDouble(t_ventas.getValueAt(fila_seleccionada, 5).toString());
-            double pagado = c_cobros.mostrar_cobros(t_jd_pagos);
-            txt_jd_porcobrar.setText(c_varios.formato_totales(total - pagado));
-            if (total == pagado) {
-                btn_jd_registrar.setEnabled(false);
-            } else {
-                btn_jd_registrar.requestFocus();
-            }
-        }
+//        c_venta.datos_venta();
+//        c_cobros.setPeriodo(c_venta.getPeriodo());
+//        c_cobros.setVenta(c_venta.getCodigo());
+//        c_cobros.setCodigo(c_cobros.obtener_codigo());
+//        c_cobros.setFecha(c_varios.formato_fecha_mysql(txt_jda_fecha.getText()));
+//        c_cobros.setMonto(Double.parseDouble(txt_jda_monto.getText()));
+//        c_cobros.setTipo(cbx_jda_tipopago.getSelectedIndex() + 1);
+//        if (c_cobros.insertar()) {
+//            jd_reg_pago.dispose();
+//            double total = Double.parseDouble(t_ventas.getValueAt(fila_seleccionada, 5).toString());
+//            double pagado = c_cobros.mostrar_cobros(t_jd_pagos);
+//            txt_jd_porcobrar.setText(c_varios.formato_totales(total - pagado));
+//            if (total == pagado) {
+//                btn_jd_registrar.setEnabled(false);
+//            } else {
+//                btn_jd_registrar.requestFocus();
+//            }
+//        }
     }//GEN-LAST:event_btn_jda_registrarActionPerformed
 
     private void t_ventasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_ventasKeyPressed
@@ -1097,49 +975,22 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
 
     private void btn_jd_eliminar_pagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_jd_eliminar_pagoActionPerformed
         if (fila_pago > -1) {
-            c_venta.datos_venta();
-            c_cobros.setPeriodo(c_venta.getPeriodo());
-            c_cobros.setVenta(c_venta.getCodigo());
-            c_cobros.setCodigo(Integer.parseInt(t_jd_pagos.getValueAt(fila_pago, 0).toString()));
-            if (c_cobros.eliminar()) {
-                double total = Double.parseDouble(t_ventas.getValueAt(fila_seleccionada, 5).toString());
-                double pagado = c_cobros.mostrar_cobros(t_jd_pagos);
-                txt_jd_porcobrar.setText(c_varios.formato_totales(total - pagado));
-                btn_jd_registrar.setEnabled(true);
-                btn_jd_registrar.requestFocus();
-            }
-            btn_jd_eliminar_pago.setEnabled(false);
+//            c_venta.datos_venta();
+//            c_cobros.setPeriodo(c_venta.getPeriodo());
+//            c_cobros.setVenta(c_venta.getCodigo());
+//            c_cobros.setCodigo(Integer.parseInt(t_jd_pagos.getValueAt(fila_pago, 0).toString()));
+//            if (c_cobros.eliminar()) {
+//                double total = Double.parseDouble(t_ventas.getValueAt(fila_seleccionada, 5).toString());
+//                double pagado = c_cobros.mostrar_cobros(t_jd_pagos);
+//                txt_jd_porcobrar.setText(c_varios.formato_totales(total - pagado));
+//                btn_jd_registrar.setEnabled(true);
+//                btn_jd_registrar.requestFocus();
+//            }
+//            btn_jd_eliminar_pago.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(null, "No ha seleccionado una fila");
         }
     }//GEN-LAST:event_btn_jd_eliminar_pagoActionPerformed
-
-    private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
-        if (fila_seleccionada > -1) {
-            btn_ver_cobro.setEnabled(false);
-            btn_modificar.setEnabled(false);
-            btn_ver_detalle.setEnabled(false);
-            jd_modificar_venta.setModal(true);
-            jd_modificar_venta.setSize(710, 150);
-            jd_modificar_venta.setLocationRelativeTo(null);
-            c_venta.setCod_venta(t_ventas.getValueAt(fila_seleccionada, 0).toString());
-            c_venta.datos_venta();
-            txt_modificar_cliente.setText(t_ventas.getValueAt(fila_seleccionada, 4).toString());
-            txt_modificar_placa.setText(t_ventas.getValueAt(fila_seleccionada, 3).toString());
-            txt_modificar_documento.setText(t_ventas.getValueAt(fila_seleccionada, 2).toString());
-            txt_modificar_fecha.setText(t_ventas.getValueAt(fila_seleccionada, 1).toString());
-            txt_modificar_kilometraje.setText(c_venta.getKilometraje() + "");
-            jd_modificar_venta.setVisible(true);
-            txt_modificar_kilometraje.requestFocus();
-        }
-    }//GEN-LAST:event_btn_modificarActionPerformed
-
-    private void btn_modificar_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificar_guardarActionPerformed
-        c_venta.setKilometraje(Integer.parseInt(txt_modificar_kilometraje.getText()));
-        if (c_venta.actualizar_kilometraje()) {
-            jd_modificar_venta.dispose();
-        }
-    }//GEN-LAST:event_btn_modificar_guardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1149,8 +1000,6 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_jd_eliminar_pago;
     private javax.swing.JButton btn_jd_registrar;
     private javax.swing.JButton btn_jda_registrar;
-    private javax.swing.JButton btn_modificar;
-    private javax.swing.JButton btn_modificar_guardar;
     private javax.swing.JButton btn_ver_cobro;
     private javax.swing.JButton btn_ver_detalle;
     private javax.swing.JComboBox cbx_busqueda;
@@ -1168,24 +1017,18 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JDialog jd_modificar_venta;
     private javax.swing.JDialog jd_reg_pago;
     private javax.swing.JDialog jd_ver_detalle_venta;
     private javax.swing.JDialog jd_ver_pagos;
@@ -1209,11 +1052,6 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_jd_total1;
     private javax.swing.JFormattedTextField txt_jda_fecha;
     private javax.swing.JTextField txt_jda_monto;
-    private javax.swing.JTextField txt_modificar_cliente;
-    private javax.swing.JTextField txt_modificar_documento;
-    private javax.swing.JFormattedTextField txt_modificar_fecha;
-    private javax.swing.JTextField txt_modificar_kilometraje;
-    private javax.swing.JTextField txt_modificar_placa;
     private javax.swing.JTextField txt_tot;
     private javax.swing.JTextField txt_total_deudas;
     // End of variables declaration//GEN-END:variables

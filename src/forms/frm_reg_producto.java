@@ -5,6 +5,7 @@
  */
 package forms;
 
+import clases.cl_producto_unidad;
 import clases.cl_productos;
 import clases.cl_und_medida;
 import clases.cl_varios;
@@ -23,8 +24,11 @@ public class frm_reg_producto extends javax.swing.JDialog {
 
     public static cl_productos c_producto = new cl_productos();
     cl_und_medida c_unidad = new cl_und_medida();
+    cl_producto_unidad c_punidad = new cl_producto_unidad();
+    
     m_und_medida m_medida = new m_und_medida();
     m_marcas m_marca = new m_marcas();
+    
 
     /**
      * Creates new form frm_reg_producto
@@ -275,6 +279,14 @@ public class frm_reg_producto extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txt_pvenKeyPressed
 
+    private void llenar_unidad (){
+        c_punidad.setNombre(cbx_und.getSelectedItem().toString());
+        c_punidad.setFactor(1);
+        c_punidad.setId_producto(c_producto.getId_producto());
+        c_punidad.obtener_id();
+        c_punidad.insertar();
+    }
+    
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         btn_registrar.setEnabled(false);
         int confirmado = JOptionPane.showConfirmDialog(null, "¿Esta Seguro de Guardar el Producto?");
@@ -294,6 +306,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
             if (c_producto.getId_producto() == 0) {
                 c_producto.setId_producto(c_producto.obtener_codigo());
                 if (c_producto.insertar()) {
+                    llenar_unidad();
                     bhecho = true;
                     JOptionPane.showMessageDialog(null, "SE HA REGISRTRADO CORRECTAMENTE AL PRODUCTO");
                 } else {
