@@ -28,7 +28,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     cl_varios c_varios = new cl_varios();
     Integer i;
     DefaultTableModel mostrar;
-    String query;
+//    String squly
 
     /**
      * Creates new form frm_ver_productos
@@ -70,6 +70,14 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         t_kardex = new javax.swing.JTable();
         txt_kardex_descripcion = new javax.swing.JTextField();
+        jd_unidad = new javax.swing.JDialog();
+        jLabel3 = new javax.swing.JLabel();
+        txt_nombre = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txt_unidad = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        t_producto = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txt_bus = new javax.swing.JTextField();
@@ -82,6 +90,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         lbl_encontrados = new javax.swing.JLabel();
         btn_kardex = new javax.swing.JButton();
         btn_kardex_pdf = new javax.swing.JButton();
+        btn_unidad = new javax.swing.JButton();
 
         t_kardex.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,6 +126,64 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                 .addComponent(txt_kardex_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jLabel3.setText("NOMBRE:");
+
+        jLabel4.setText("UNIDAD:");
+
+        t_producto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(t_producto);
+
+        jButton1.setText("GUARDAR");
+
+        javax.swing.GroupLayout jd_unidadLayout = new javax.swing.GroupLayout(jd_unidad.getContentPane());
+        jd_unidad.getContentPane().setLayout(jd_unidadLayout);
+        jd_unidadLayout.setHorizontalGroup(
+            jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_unidadLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_unidadLayout.createSequentialGroup()
+                        .addGroup(jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(4, 4, 4)
+                        .addGroup(jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_nombre)
+                            .addComponent(txt_unidad)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_unidadLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
+                .addContainerGap())
+        );
+        jd_unidadLayout.setVerticalGroup(
+            jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_unidadLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_unidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -215,6 +282,13 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_unidad.setText("Unidad");
+        btn_unidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_unidadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -222,7 +296,6 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -231,9 +304,11 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                         .addComponent(lbl_encontrados, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
-                        .addGap(86, 86, 86)
+                        .addGap(18, 18, 18)
                         .addComponent(cbx_est, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_unidad)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_mod))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btn_eli)
@@ -244,6 +319,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)))
                 .addContainerGap())
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,9 +331,10 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     .addComponent(btn_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_est, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(lbl_encontrados))
+                    .addComponent(lbl_encontrados)
+                    .addComponent(btn_unidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -370,23 +447,37 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btn_kardex_pdfActionPerformed
 
+    private void btn_unidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_unidadActionPerformed
+        
+        
+    }//GEN-LAST:event_btn_unidadActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_eli;
     private javax.swing.JButton btn_kardex;
     private javax.swing.JButton btn_kardex_pdf;
     private javax.swing.JButton btn_mod;
+    private javax.swing.JButton btn_unidad;
     private javax.swing.JComboBox cbx_est;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JDialog jd_kardex;
+    private javax.swing.JDialog jd_unidad;
     private javax.swing.JLabel lbl_encontrados;
     private javax.swing.JTable t_kardex;
+    private javax.swing.JTable t_producto;
     private javax.swing.JTable t_productos;
     private javax.swing.JTextField txt_bus;
     private javax.swing.JTextField txt_kardex_descripcion;
+    private javax.swing.JTextField txt_nombre;
+    private javax.swing.JTextField txt_unidad;
     // End of variables declaration//GEN-END:variables
 }
