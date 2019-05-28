@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import clases.cl_producto_unidad;
 import clases.cl_productos;
 import clases.cl_und_medida;
 import clases.cl_varios;
@@ -24,11 +25,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frm_ver_productos extends javax.swing.JInternalFrame {
 
+    cl_producto_unidad u_producto = new cl_producto_unidad();
     cl_productos c_productos = new cl_productos();
     cl_varios c_varios = new cl_varios();
     Integer i;
     DefaultTableModel mostrar;
-//    String squly
+    String query;
+    
 
     /**
      * Creates new form frm_ver_productos
@@ -42,6 +45,14 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         c_productos.ver_productos(t_productos, query);
         lbl_encontrados.setText(t_productos.getRowCount() + "");
     }
+    
+    private void llenar(){
+        
+        u_producto.setNombre(txt_nombre.getText());
+        u_producto.setFactor(Double.parseDouble(txt_factor.getText()));
+                
+}
+    
 
     private void activar_botones() {
         btn_eli.setEnabled(true);
@@ -74,10 +85,13 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txt_nombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txt_unidad = new javax.swing.JTextField();
+        txt_factor = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         t_producto = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btn_guardar = new javax.swing.JButton();
+        btn_cerrar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txt_bus = new javax.swing.JTextField();
@@ -146,7 +160,22 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         ));
         jScrollPane3.setViewportView(t_producto);
 
-        jButton1.setText("GUARDAR");
+        btn_guardar.setText("GUARDAR");
+        btn_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_guardarActionPerformed(evt);
+            }
+        });
+
+        btn_cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
+        btn_cerrar.setText("CERRAR");
+        btn_cerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrarActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("PRODUCTO");
 
         javax.swing.GroupLayout jd_unidadLayout = new javax.swing.GroupLayout(jd_unidad.getContentPane());
         jd_unidad.getContentPane().setLayout(jd_unidadLayout);
@@ -162,11 +191,17 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                         .addGap(4, 4, 4)
                         .addGroup(jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_nombre)
-                            .addComponent(txt_unidad)))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_unidadLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                            .addComponent(txt_factor))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_cerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+                    .addGroup(jd_unidadLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jd_unidadLayout.setVerticalGroup(
@@ -175,16 +210,19 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_unidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(txt_factor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         setTitle("Ver Productos");
@@ -448,27 +486,51 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_kardex_pdfActionPerformed
 
     private void btn_unidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_unidadActionPerformed
-        
-        
+        jd_unidad.setModal(true);
+        jd_unidad.setSize(840, 380);
+        jd_unidad.setLocationRelativeTo(null);
+        jd_unidad.setVisible(true);
+        int id_producto = Integer.parseInt(t_producto.getValueAt(i, 0).toString());
+        u_producto.setId_producto(id_producto);
+        query = "select id_unidad, nombre, factor "
+                + "from producto_unidades "
+                +" where id_producto = '"+id_producto+"' ";
+        u_producto.ver_unidades_producto(t_producto, query);
     }//GEN-LAST:event_btn_unidadActionPerformed
+
+    private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
+       
+        llenar();
+        u_producto.obtener_id();
+        u_producto.insertar();
+        
+    }//GEN-LAST:event_btn_guardarActionPerformed
+
+    private void btn_cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarActionPerformed
+        
+        jd_unidad.dispose();
+    }//GEN-LAST:event_btn_cerrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_cerrar;
     private javax.swing.JButton btn_eli;
+    private javax.swing.JButton btn_guardar;
     private javax.swing.JButton btn_kardex;
     private javax.swing.JButton btn_kardex_pdf;
     private javax.swing.JButton btn_mod;
     private javax.swing.JButton btn_unidad;
     private javax.swing.JComboBox cbx_est;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JDialog jd_kardex;
     private javax.swing.JDialog jd_unidad;
     private javax.swing.JLabel lbl_encontrados;
@@ -476,8 +538,8 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     private javax.swing.JTable t_producto;
     private javax.swing.JTable t_productos;
     private javax.swing.JTextField txt_bus;
+    private javax.swing.JTextField txt_factor;
     private javax.swing.JTextField txt_kardex_descripcion;
     private javax.swing.JTextField txt_nombre;
-    private javax.swing.JTextField txt_unidad;
     // End of variables declaration//GEN-END:variables
 }

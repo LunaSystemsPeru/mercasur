@@ -9,6 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -100,6 +105,44 @@ public class cl_producto_unidad {
             System.out.println(e.getLocalizedMessage());
         }
     }
+         public void ver_unidades_producto (JTable tabla, String query) {
+        try {
+            DefaultTableModel mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            Statement st = c_conectar.conexion();
+            ResultSet rs = c_conectar.consulta(st, query);
+
+            RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(mostrar);
+            tabla.setRowSorter(sorter);
+
+            mostrar.addColumn("Codigo");
+            mostrar.addColumn("Nombre");
+            mostrar.addColumn("factor");
+
+            while (rs.next()) {
+                Object fila[] = new Object[3];
+
+                fila[0] = rs.getInt("id_unidad");
+                fila[1] = rs.getString("nombre");
+                fila[2] = rs.getString("factor");
+                mostrar.addRow(fila);
+            }
+
+            c_conectar.cerrar(st);
+            c_conectar.cerrar(rs);
+            tabla.setModel(mostrar);
+            tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(100);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
 
     public boolean insertar() {
         boolean grabado = false;
@@ -116,5 +159,7 @@ public class cl_producto_unidad {
 
         return grabado;
     }
+    
+    
 
 }
