@@ -392,7 +392,7 @@ public class cl_varios {
 
             Dimension desktopSize = mercasur.frm_menu.jDesktopPane1.getSize();
             
-            int ancho = (int) (desktopSize.getWidth() / 1.25);
+            int ancho = (int) (desktopSize.getWidth() / 1.1);
             int alto = (int) (desktopSize.getHeight() / 1.25);
             ventana.setSize(ancho, alto);
             Dimension jInternalFrameSize = ventana.getSize();

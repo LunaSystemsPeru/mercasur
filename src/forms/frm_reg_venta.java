@@ -9,6 +9,7 @@ import clases.cl_cliente;
 import clases.cl_conectar;
 import clases.cl_detalle_venta;
 import clases.cl_documento_tienda;
+import clases.cl_producto_unidad;
 import clases.cl_productos;
 import clases.cl_und_medida;
 import clases.cl_varios;
@@ -36,27 +37,29 @@ import nicon.notify.core.Notification;
  * @author CALIDAD
  */
 public class frm_reg_venta extends javax.swing.JInternalFrame {
-    
+
     cl_conectar c_conectar = new cl_conectar();
     cl_cliente c_cliente = new cl_cliente();
-    
+
     cl_varios c_varios = new cl_varios();
     cl_zona c_zona = new cl_zona();
     cl_productos c_producto = new cl_productos();
     cl_und_medida c_unidad = new cl_und_medida();
     cl_documento_tienda c_doc_tienda = new cl_documento_tienda();
-    
+    cl_producto_unidad c_uproducto = new cl_producto_unidad();
+
     cl_venta c_venta = new cl_venta();
     cl_detalle_venta c_detalle = new cl_detalle_venta();
-    
-    TextAutoCompleter autocompletar = null;
-    
+
+    TextAutoCompleter tac_clientes = null;
+    TextAutoCompleter tac_productos = null;
+
     int id_zona = frm_menu.c_zona.getId_zona();
     int id_empleado = frm_menu.c_empleado.getId_empleado();
     int id_producto;
     double costo_producto;
     boolean existe_producto = false;
-    
+
     m_zonas m_zona = new m_zonas();
     m_unidad_producto m_unidades = new m_unidad_producto();
     DefaultTableModel detalle = null;
@@ -82,10 +85,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "USTED NO TIENE ZONAS ASIGNADAS");
             this.dispose();
         }
-        
+
         modelo_detalle();
     }
-    
+
     private void modelo_detalle() {
         //formato de tabla detalle de venta
         detalle = new DefaultTableModel() {
@@ -102,6 +105,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         detalle.addColumn("Parcial");
         detalle.addColumn("id und medida");
         detalle.addColumn("costo");
+        detalle.addColumn("factor");
         t_detalle.setModel(detalle);
         t_detalle.getColumnModel().getColumn(0).setPreferredWidth(10);
         t_detalle.getColumnModel().getColumn(1).setPreferredWidth(350);
@@ -115,15 +119,18 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         t_detalle.getColumnModel().getColumn(7).setPreferredWidth(0);
         t_detalle.getColumnModel().getColumn(7).setMinWidth(0);
         t_detalle.getColumnModel().getColumn(7).setMaxWidth(0);
+        t_detalle.getColumnModel().getColumn(8).setPreferredWidth(0);
+        t_detalle.getColumnModel().getColumn(8).setMinWidth(0);
+        t_detalle.getColumnModel().getColumn(8).setMaxWidth(0);
         c_varios.centrar_celda(t_detalle, 0);
         c_varios.derecha_celda(t_detalle, 2);
         c_varios.centrar_celda(t_detalle, 3);
         c_varios.derecha_celda(t_detalle, 4);
         c_varios.derecha_celda(t_detalle, 5);
         c_varios.derecha_celda(t_detalle, 6);
-        
+
     }
-    
+
     private void calcular_total() {
         int contar_filas = t_detalle.getRowCount();
         for (int i = 0; i < contar_filas; i++) {
@@ -131,16 +138,16 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             double precio = Double.parseDouble(t_detalle.getValueAt(i, 4).toString());
             lbl_total.setText("total: S/ " + c_varios.formato_totales(precio * cantidad));
         }
-        
+
     }
-    
+
     private void cargar_clientes() {
         try {
             //TextAutoCompleter autocompletar = new TextAutoCompleter(txt_consulta_productos);
-            if (autocompletar != null) {
-                autocompletar.removeAllItems();
+            if (tac_clientes != null) {
+                tac_clientes.removeAllItems();
             }
-            autocompletar = new TextAutoCompleter(txt_buscar_cliente, new AutoCompleterCallback() {
+            tac_clientes = new TextAutoCompleter(txt_buscar_cliente, new AutoCompleterCallback() {
                 @Override
                 public void callback(Object selectedItem) {
 //                    System.out.println("El usuario seleccionó: " + selectedItem);
@@ -161,36 +168,36 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     }
                 }
             });
-            
+
             Statement st = c_conectar.conexion();
             String query = "select id_cliente, nombre, documento, direccion "
                     + "from clientes "
                     + "where id_zona = '" + id_zona + "'";
             ResultSet rs_cliente = c_conectar.consulta(st, query);
             while (rs_cliente.next()) {
-                
+
                 String nombre = rs_cliente.getString("nombre");
                 String documento = rs_cliente.getString("documento");
                 String direccion = rs_cliente.getString("direccion");
                 int id_cliente = rs_cliente.getInt("id_cliente");
-                autocompletar.addItem(new cl_ac_clientes(id_cliente, nombre, direccion, documento));
+                tac_clientes.addItem(new cl_ac_clientes(id_cliente, nombre, direccion, documento));
             }
             c_conectar.cerrar(rs_cliente);
             c_conectar.cerrar(st);
-            autocompletar.setMode(0);
+            tac_clientes.setMode(0);
         } catch (SQLException ex) {
             System.out.println(ex);
             //JOptionPane.showInternalMessageDialog(this, ex.getLocalizedMessage());
         }
     }
-    
+
     private void cargar_productos() {
         try {
             //TextAutoCompleter autocompletar = new TextAutoCompleter(txt_consulta_productos);
-            if (autocompletar != null) {
-                autocompletar.removeAllItems();
+            if (tac_productos != null) {
+                tac_productos.removeAllItems();
             }
-            autocompletar = new TextAutoCompleter(txt_buscar_producto, new AutoCompleterCallback() {
+            tac_productos = new TextAutoCompleter(txt_buscar_producto, new AutoCompleterCallback() {
                 @Override
                 public void callback(Object selectedItem) {
 //                    System.out.println("El usuario seleccionó: " + selectedItem);
@@ -229,7 +236,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     + "inner join und_medida as um on um.id_unidad = p.id_unidad "
                     + "order by m.nombre asc, p.descripcion asc";
             ResultSet rs = c_conectar.consulta(st, sql);
-            
+
             while (rs.next()) {
                 String marca = rs.getString("marca");
                 String descripcion = marca + " | " + rs.getString("p.descripcion").trim();
@@ -238,17 +245,17 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 double precio = rs.getDouble("p.precio_venta");
                 double costo = 0.00;
                 String medida = rs.getString("medida");
-                autocompletar.addItem(new cl_ac_productos(id, descripcion, cantidad, medida, precio, costo));
+                tac_productos.addItem(new cl_ac_productos(id, descripcion, cantidad, medida, precio, costo));
             }
             c_conectar.cerrar(rs);
             c_conectar.cerrar(st);
-            autocompletar.setMode(0);
+            tac_productos.setMode(0);
         } catch (SQLException ex) {
             JOptionPane.showInternalMessageDialog(this, ex.getLocalizedMessage());
         }
-        
+
     }
-    
+
     private boolean valida_tabla(int producto) {
         //estado de ingreso
         boolean agregar_datos = false;
@@ -260,7 +267,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         if (contar_filas == 0) {
             ingresar = true;
         }
-        
+
         if (contar_filas > 0) {
             for (int j = 0; j < contar_filas; j++) {
                 int id_producto_fila = Integer.parseInt(t_detalle.getValueAt(j, 0).toString());
@@ -274,21 +281,22 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 }
             }
         }
-        
+
         if (ingresar == true && cuenta_iguales == 0) {
             agregar_datos = true;
         }
-        
+
         if (contar_filas == 29) {
             txt_buscar_producto.setEnabled(false);
             JOptionPane.showMessageDialog(null, "SE HA LLEGADO AL LIMITE DE 30 PRODUCTOS");
         }
         return agregar_datos;
     }
-    
+
     private void limpiar_productos() {
         txt_nombre_producto.setText("");
         cbx_unidad_producto.removeAllItems();
+        cbx_unidad_producto.setEnabled(false);
         txt_cantidad_producto.setText("");
         txt_cantidad_producto.setEnabled(false);
         txt_precio_producto.setText("");
@@ -513,16 +521,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_nombre_zona))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(txt_deuda_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addComponent(jButton1)))
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_deuda_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jButton1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -552,9 +558,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_grabar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -797,6 +803,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private void cbx_unidad_productoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_unidad_productoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txt_cantidad_producto.setEnabled(true);
+            txt_cantidad_producto.selectAll();
             txt_cantidad_producto.requestFocus();
         }
     }//GEN-LAST:event_cbx_unidad_productoKeyPressed
@@ -819,6 +826,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private void btn_add_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_productoActionPerformed
         //obtener id_unidad_medida
         cl_combobox c_combo = (cl_combobox) cbx_unidad_producto.getSelectedItem();
+        int id_unidad = c_combo.getId();
+        c_uproducto.setId_unidad(id_unidad);
+        c_uproducto.setId_producto(id_producto);
+        c_uproducto.obtener_datos();
+        double factor = c_uproducto.getFactor();
         //agregar fila
         Object fila[] = new Object[8];
         fila[0] = id_producto;
@@ -829,13 +841,30 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         fila[5] = txt_subtotal_producto.getText();
         fila[6] = c_combo.getId();
         fila[7] = costo_producto;
+        fila[8] = factor;
         detalle.addRow(fila);
-        
+
         btn_grabar.setEnabled(true);
         calcular_total();
-        
+
         limpiar_productos();
     }//GEN-LAST:event_btn_add_productoActionPerformed
+
+    private void limpiar_cliente() {
+        txt_deuda_cliente.setText("");
+        txt_dir_cliente.setText("");
+        txt_doc_cliente.setText("");
+        txt_nom_cliente.setText("");
+        btn_grabar.setEnabled(false);
+        lbl_total.setText("total: S/ 0.00");
+
+        for (int i = 0; i < t_detalle.getRowCount(); i++) {
+            detalle.removeRow(i);
+            i -= 1;
+        }
+
+        txt_buscar_cliente.requestFocus();
+    }
 
     private void btn_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_grabarActionPerformed
         c_venta.setFecha(c_varios.getFechaActual());
@@ -851,14 +880,27 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         c_venta.setTotal(0);
         c_venta.setPagado(0);
         c_venta.setId_empleado(id_empleado);
-        
+
         c_venta.insertar();
-        
+
         int contar_filas = t_detalle.getRowCount();
-        
+
+        c_detalle.setId_venta(c_venta.getId_venta());
+        c_detalle.setPeriodo(c_venta.getPeriodo());
+
         for (int i = 0; i < contar_filas; i++) {
-            //c_
+            double cantidad = Double.parseDouble(t_detalle.getValueAt(i, 2).toString());
+            double factor = Double.parseDouble(t_detalle.getValueAt(i, 8).toString());
+            c_detalle.setId_producto(Integer.parseInt(t_detalle.getValueAt(i, 0).toString()));
+            c_detalle.setCantidad(cantidad * factor);
+            c_detalle.setPrecio(Double.parseDouble(t_detalle.getValueAt(i, 4).toString()));
+            c_detalle.setId_unidad(Integer.parseInt(t_detalle.getValueAt(i, 6).toString()));
+            c_detalle.setCosto(Double.parseDouble(t_detalle.getValueAt(i, 7).toString()));
+
+            c_detalle.insertar();
         }
+        limpiar_cliente();
+
     }//GEN-LAST:event_btn_grabarActionPerformed
 
 

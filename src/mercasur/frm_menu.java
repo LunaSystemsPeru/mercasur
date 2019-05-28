@@ -28,6 +28,7 @@ import vistas.frm_ver_marcas;
 import vistas.frm_ver_movimientos;
 import vistas.frm_ver_productos;
 import vistas.frm_ver_proveedores;
+import vistas.frm_ver_rpt_despacho;
 import vistas.frm_ver_ventas;
 import vistas.frm_ver_zonas;
 
@@ -153,6 +154,8 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
@@ -718,6 +721,15 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu4.add(jMenuItem10);
         jMenu4.add(jSeparator7);
 
+        jMenuItem14.setText("Ver Despachos");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem14);
+        jMenu4.add(jSeparator2);
+
         jMenuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
         jMenuItem18.setText("Excel para Inventarios - Todos los Productos");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
@@ -911,7 +923,7 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         frm_ver_productos ver_productos = new frm_ver_productos();
-        c_varios.llamar_ventana(ver_productos);
+        c_varios.llamar_ventana_completa(ver_productos);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -1021,7 +1033,7 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         frm_ver_productos ver_productos = new frm_ver_productos();
-        c_varios.llamar_ventana(ver_productos);
+        c_varios.llamar_ventana_completa(ver_productos);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
@@ -1177,6 +1189,11 @@ public class frm_menu extends javax.swing.JFrame {
         c_varios.llamar_ventana(frm_empleado);
     }//GEN-LAST:event_jMenuItem22ActionPerformed
 
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        frm_ver_rpt_despacho formulario = new frm_ver_rpt_despacho();
+        c_varios.llamar_ventana_completa(formulario);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1246,6 +1263,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
@@ -1270,6 +1288,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;

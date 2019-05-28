@@ -59,7 +59,7 @@ public class cl_marca {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into marcas "
-                + "Values ('" + id + "', '" + nombre + "')";
+                + "Values ('" + id + "', '" + nombre + "', '" + comision + "')";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {

@@ -219,45 +219,46 @@ public class cl_venta {
             mostrar.addColumn("Codigo"); //periodo + id
             mostrar.addColumn("Fecha");
             mostrar.addColumn("Documento");
-            mostrar.addColumn("Placa");
+            mostrar.addColumn("Zona");
             mostrar.addColumn("Cliente");
             mostrar.addColumn("Monto");
-            mostrar.addColumn("Deuda");
             mostrar.addColumn("Estado");
+            mostrar.addColumn("periodo");
+            mostrar.addColumn("id_venta");
             //Creando las filas para el JTable
             while (rs.next()) {
-                total = total + (rs.getDouble("total") - rs.getDouble("descuento"));
-                double deuda = rs.getDouble("total") - rs.getDouble("descuento") - rs.getDouble("pagado");
-                Object[] fila = new Object[8];
-                fila[0] = rs.getString("periodo") + c_varios.ceros_izquieda_numero(5, rs.getInt("id"));
-                fila[1] = c_varios.formato_fecha_vista(rs.getString("fecha_venta"));;
-                fila[2] = rs.getString("documento") + " / " + c_varios.ceros_izquieda_letras(4, rs.getString("serie_doc")) + " - " + c_varios.ceros_izquieda_numero(7, rs.getInt("nro_doc"));
-                fila[3] = rs.getString("nro_placa");
-                fila[4] = rs.getString("doc_cliente") + " | " + rs.getString("nombre_cliente") + " | Km: " + rs.getString("kilometraje");
-                fila[5] = c_varios.formato_totales(rs.getDouble("total") - rs.getDouble("descuento"));
-                fila[6] = c_varios.formato_numero(deuda);
+                Object[] fila = new Object[9];
+                fila[0] = rs.getString("periodo") + c_varios.ceros_izquieda_numero(4, rs.getInt("id_venta"));
+                fila[1] = c_varios.formato_fecha_vista(rs.getString("fecha_venta"));
+                fila[2] = rs.getString("abreviado") + " / " + c_varios.ceros_izquieda_letras(4, rs.getString("serie_doc")) + " - " + c_varios.ceros_izquieda_numero(7, rs.getInt("nro_doc"));
+                fila[3] = rs.getString("zona");
+                fila[4] = rs.getString("documento") + " | " + rs.getString("nom_cliente");
+                fila[5] = c_varios.formato_totales(rs.getDouble("total"));
                 if (rs.getString("estado").equals("1")) {
-                    fila[7] = "PAGADO";
+                    fila[6] = "PAGADO";
                 }
                 if (rs.getString("estado").equals("0")) {
-                    fila[7] = "PENDIENTE";
+                    fila[6] = "PENDIENTE";
                 }
                 if (rs.getString("estado").equals("2")) {
-                    fila[7] = "ANULADO";
+                    fila[6] = "ANULADO";
                 }
+                fila[7] = rs.getString("periodo");
+                fila[8] = rs.getInt("id_venta");
                 mostrar.addRow(fila);
             }
             c_conectar.cerrar(st);
             c_conectar.cerrar(rs);
             tabla.setModel(mostrar);
-            tabla.getColumnModel().getColumn(0).setPreferredWidth(65);
-            tabla.getColumnModel().getColumn(1).setPreferredWidth(70);
-            tabla.getColumnModel().getColumn(2).setPreferredWidth(130);
-            tabla.getColumnModel().getColumn(3).setPreferredWidth(70);
-            tabla.getColumnModel().getColumn(4).setPreferredWidth(410);
+            tabla.getColumnModel().getColumn(0).setPreferredWidth(90);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(90);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(140);
+            tabla.getColumnModel().getColumn(3).setPreferredWidth(120);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(350);
             tabla.getColumnModel().getColumn(5).setPreferredWidth(70);
             tabla.getColumnModel().getColumn(6).setPreferredWidth(70);
-            tabla.getColumnModel().getColumn(7).setPreferredWidth(70);
+            tabla.getColumnModel().getColumn(7).setPreferredWidth(0);
+            tabla.getColumnModel().getColumn(8).setPreferredWidth(0);
             tabla.setDefaultRenderer(Object.class, new render_tables.render_ventas());
         } catch (SQLException e) {
             System.out.print(e);

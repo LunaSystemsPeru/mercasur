@@ -53,6 +53,8 @@ public class frm_ver_marcas extends javax.swing.JInternalFrame {
         jToolBar1 = new javax.swing.JToolBar();
         btn_frm_grabar = new javax.swing.JButton();
         btn_frm_salir = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txt_comision = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_marcas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -94,27 +96,49 @@ public class frm_ver_marcas extends javax.swing.JInternalFrame {
         btn_frm_salir.setFocusable(false);
         btn_frm_salir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_frm_salir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_frm_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_frm_salirActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btn_frm_salir);
+
+        jLabel3.setText("Marca:");
+
+        txt_comision.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_comisionKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_formularioLayout = new javax.swing.GroupLayout(jd_formulario.getContentPane());
         jd_formulario.getContentPane().setLayout(jd_formularioLayout);
         jd_formularioLayout.setHorizontalGroup(
             jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jd_formularioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jd_formularioLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_frm_nombre)
-                        .addContainerGap())
+                        .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jd_formularioLayout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(txt_frm_id, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(244, Short.MAX_VALUE))
+                            .addGroup(jd_formularioLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_frm_nombre)
+                                    .addGroup(jd_formularioLayout.createSequentialGroup()
+                                        .addComponent(txt_comision, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addContainerGap())))
                     .addGroup(jd_formularioLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(txt_frm_id, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(244, Short.MAX_VALUE))))
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jd_formularioLayout.setVerticalGroup(
             jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,6 +152,10 @@ public class frm_ver_marcas extends javax.swing.JInternalFrame {
                 .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_frm_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txt_comision, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -215,7 +243,8 @@ public class frm_ver_marcas extends javax.swing.JInternalFrame {
     private void txt_frm_nombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_frm_nombreKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_frm_nombre.getText().length() > 0) {
-                btn_frm_grabar.setEnabled(true);
+                txt_comision.setEnabled(true);
+                txt_comision.requestFocus();
             } else {
                 JOptionPane.showMessageDialog(null, "ingrese datos");
             }
@@ -224,6 +253,7 @@ public class frm_ver_marcas extends javax.swing.JInternalFrame {
 
     private void btn_frm_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_frm_grabarActionPerformed
         c_marca.setNombre(txt_frm_nombre.getText());
+        c_marca.setComision(Double.parseDouble(txt_comision.getText()));
         c_marca.obtener_codigo();
 
         if (c_marca.insertar()) {
@@ -233,7 +263,7 @@ public class frm_ver_marcas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_frm_grabarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jd_formulario.setSize(400, 177); // establecer tamaño
+        jd_formulario.setSize(400, 217); // establecer tamaño
         jd_formulario.setModal(true);
         jd_formulario.setLocationRelativeTo(null); //para centrar en el menu
         jd_formulario.setVisible(true);
@@ -253,6 +283,26 @@ public class frm_ver_marcas extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_btn_modificarActionPerformed
 
+    private void btn_frm_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_frm_salirActionPerformed
+            jd_formulario.dispose();
+    }//GEN-LAST:event_btn_frm_salirActionPerformed
+
+    private void txt_comisionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_comisionKeyPressed
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_comision.getText().length() > 0) {
+                String comision = txt_comision.getText();
+                if (c_varios.esDecimal(comision)) {
+                btn_frm_grabar.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingrese un numero correcto");
+                    txt_comision.selectAll();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "ingrese datos");
+            }
+        }
+    }//GEN-LAST:event_txt_comisionKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_frm_grabar;
@@ -262,10 +312,12 @@ public class frm_ver_marcas extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JDialog jd_formulario;
     private javax.swing.JTable t_marcas;
+    private javax.swing.JTextField txt_comision;
     private javax.swing.JTextField txt_frm_id;
     private javax.swing.JTextField txt_frm_nombre;
     // End of variables declaration//GEN-END:variables

@@ -37,26 +37,15 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
     }
 
     private void cargar_tabla() {
-        String query = "select v.periodo, v.id, v.nro_placa, v.fecha_venta, td.abreviado as documento, v.serie_doc, v.nro_doc, c.documento as doc_cliente, v.nombre_cliente, v.kilometraje, v.total, v.descuento, v.pagado, v.estado "
+        String query = "select v.periodo, v.id_venta,v.fecha_venta, td.abreviado, v.serie_doc, v.nro_doc, v.total, v.estado, cl.documento, cl.nombre as nom_cliente, z.nombre as zona "
                 + "from ventas as v "
-                + "inner join tipo_documento as td on td.id = v.tipo_documento "
-                + "inner join clientes as c on c.codigo = v.cliente "
-                + "where v.fecha_venta = '" + c_varios.getFechaActual() + "' "
-                + "order by v.id asc";
+                + "inner join clientes as cl on cl.id_cliente = v.id_cliente and cl.id_zona = v.id_zona "
+                + "inner join zona as z on z.id_zona = cl.id_zona "
+                + "inner join tipo_documento as td on td.id_documento = v.id_documento";
         double total = c_venta.ver_ventas(t_ventas, query);
         txt_tot.setText(c_varios.formato_totales(total));
         cbx_busqueda.setSelectedIndex(0);
-        txt_total_deudas.setText(c_varios.formato_totales(deudas_ventas()));
         txt_bus.requestFocus();
-    }
-
-    private double deudas_ventas() {
-        double deudas = 0;
-        int nro_filas = t_ventas.getRowCount();
-        for (int i = 0; i < nro_filas; i++) {
-            deudas = deudas + Double.parseDouble(t_ventas.getValueAt(i, 6).toString());
-        }
-        return deudas;
     }
 
     /**
@@ -563,6 +552,7 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        t_ventas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         t_ventas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 t_ventasMouseClicked(evt);
@@ -757,7 +747,6 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
 
                 double total = c_venta.ver_ventas(t_ventas, query);
                 txt_tot.setText(c_varios.formato_totales(total));
-                txt_total_deudas.setText(c_varios.formato_totales(deudas_ventas()));
                 cbx_busqueda.setSelectedIndex(0);
             } else {
                 JOptionPane.showMessageDialog(null, "POR FAVOR INGRESE DATOS PARA BUSCAR");
@@ -861,7 +850,6 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
             double total = c_venta.ver_ventas(t_ventas, query);
             txt_tot.setText(c_varios.formato_totales(total));
             cbx_busqueda.setSelectedIndex(0);
-            txt_total_deudas.setText(c_varios.formato_totales(deudas_ventas()));
             txt_bus.requestFocus();
         }
     }//GEN-LAST:event_cbx_estadoActionPerformed

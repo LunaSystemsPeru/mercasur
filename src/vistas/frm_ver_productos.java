@@ -44,14 +44,13 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         c_productos.ver_productos(t_productos, query);
         lbl_encontrados.setText(t_productos.getRowCount() + "");
     }
-    
-    private void llenar(){
-        
+
+    private void llenar() {
+
         u_producto.setNombre(txt_nombre.getText());
         u_producto.setFactor(Double.parseDouble(txt_factor.getText()));
-                
-}
-    
+
+    }
 
     private void activar_botones() {
         btn_eli.setEnabled(true);
@@ -86,7 +85,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         txt_factor = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        t_producto = new javax.swing.JTable();
+        t_unidades = new javax.swing.JTable();
         btn_guardar = new javax.swing.JButton();
         btn_cerrar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -146,7 +145,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
         jLabel4.setText("UNIDAD:");
 
-        t_producto.setModel(new javax.swing.table.DefaultTableModel(
+        t_unidades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -157,7 +156,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(t_producto);
+        jScrollPane3.setViewportView(t_unidades);
 
         btn_guardar.setText("GUARDAR");
         btn_guardar.addActionListener(new java.awt.event.ActionListener() {
@@ -216,12 +215,13 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_factor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jd_unidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setTitle("Ver Productos");
@@ -319,7 +319,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_unidad.setText("Unidad");
+        btn_unidad.setText("Presentaciones");
         btn_unidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_unidadActionPerformed(evt);
@@ -332,31 +332,31 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbl_encontrados, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(cbx_est, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_unidad)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_mod))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_eli)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_kardex)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_kardex_pdf)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_unidad)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)))
-                .addContainerGap())
-            .addComponent(jScrollPane1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -368,8 +368,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     .addComponent(btn_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_est, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(lbl_encontrados)
-                    .addComponent(btn_unidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_encontrados))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -377,7 +376,8 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_eli, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_kardex, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_kardex_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_kardex_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_unidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -486,27 +486,27 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
     private void btn_unidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_unidadActionPerformed
         jd_unidad.setModal(true);
-        jd_unidad.setSize(840, 380);
+        jd_unidad.setSize(482, 380);
         jd_unidad.setLocationRelativeTo(null);
-        jd_unidad.setVisible(true);
-        int id_producto = Integer.parseInt(t_producto.getValueAt(i, 0).toString());
+        int id_producto = Integer.parseInt(t_productos.getValueAt(i, 0).toString());
         u_producto.setId_producto(id_producto);
         query = "select id_unidad, nombre, factor "
                 + "from producto_unidades "
-                +" where id_producto = '"+id_producto+"' ";
-        u_producto.ver_unidades_producto(t_producto, query);
+                + " where id_producto = '" + id_producto + "' ";
+        u_producto.ver_unidades_producto(t_unidades, query);
+        jd_unidad.setVisible(true);
     }//GEN-LAST:event_btn_unidadActionPerformed
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
-       
+
         llenar();
         u_producto.obtener_id();
         u_producto.insertar();
-        
+
     }//GEN-LAST:event_btn_guardarActionPerformed
 
     private void btn_cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarActionPerformed
-        
+
         jd_unidad.dispose();
     }//GEN-LAST:event_btn_cerrarActionPerformed
 
@@ -534,8 +534,8 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     private javax.swing.JDialog jd_unidad;
     private javax.swing.JLabel lbl_encontrados;
     private javax.swing.JTable t_kardex;
-    private javax.swing.JTable t_producto;
     private javax.swing.JTable t_productos;
+    private javax.swing.JTable t_unidades;
     private javax.swing.JTextField txt_bus;
     private javax.swing.JTextField txt_factor;
     private javax.swing.JTextField txt_kardex_descripcion;

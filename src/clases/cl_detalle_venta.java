@@ -87,7 +87,6 @@ public class cl_detalle_venta {
         this.costo = costo;
     }
 
-   
     public boolean insertar() {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
@@ -165,6 +164,60 @@ public class cl_detalle_venta {
             c_varios.centrar_celda(tabla, 1);
             c_varios.derecha_celda(tabla, 3);
             c_varios.derecha_celda(tabla, 4);
+            c_conectar.cerrar(rs);
+            c_conectar.cerrar(st);
+        } catch (SQLException | NumberFormatException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return suma_pagado;
+    }
+
+    public double mostrar_despacho(JTable tabla) {
+        double suma_pagado = 0;
+        try {
+            DefaultTableModel modelo_pago = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            modelo_pago.addColumn("Descripcion");
+            modelo_pago.addColumn("Cant");
+            modelo_pago.addColumn("Grupo");
+            modelo_pago.addColumn("Cant");
+            modelo_pago.addColumn("Unidad");
+
+            Statement st = c_conectar.conexion();
+            String query = "select p.descripcion, sum(dv.cantidad) as cantidad, p.id_unidad, pu.factor, pu.nombre as cajas "
+                    + "from detalle_venta as dv "
+                    + "inner join productos as p on p.id_producto = dv.id_producto "
+                    + "inner join producto_unidades as pu on pu.id_producto = dv.id_producto and pu.id_unidad = dv.id_unidad "
+                    + "group by dv.id_producto";
+            System.out.println(query);
+            ResultSet rs = c_conectar.consulta(st, query);
+            Object fila_p[] = new Object[5];
+            while (rs.next()) {
+                int factor = rs.getInt("factor");
+                double dcantidad = rs.getDouble("cantidad");
+double total_unidades = dcantidad * factor;
+int total_cajas = (int)total_unidades;
+                fila_p[0] = rs.getString("descripcion");
+                fila_p[1] = total_cajas;
+                fila_p[2] = rs.getString("cajas");
+                fila_p[3] = dcantidad % factor;
+                fila_p[4] = "UNDS";
+                modelo_pago.addRow(fila_p);
+            }
+            tabla.setModel(modelo_pago);
+            tabla.getColumnModel().getColumn(0).setPreferredWidth(450);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(60);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(3).setPreferredWidth(60);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(80);
+            c_varios.centrar_celda(tabla, 2);
+            c_varios.centrar_celda(tabla, 4);
+            c_varios.derecha_celda(tabla, 1);
+            c_varios.derecha_celda(tabla, 3);
             c_conectar.cerrar(rs);
             c_conectar.cerrar(st);
         } catch (SQLException | NumberFormatException e) {
