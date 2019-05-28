@@ -312,8 +312,8 @@ public class cl_productos {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into productos "
-                + "values ('" + id_producto + "', '" + descripcion + "', '" + costo + "', '" + precio + "', '" + id_producto + "', "
-                + "'" + cantidad + "', '" + id_unidad + "', '" + id_marca + "', '1', 'noimage.jpg', '1000-01-01', '1000-01-01', 0)";
+                + "values ('" + id_producto + "', '" + descripcion + "', '" + costo + "', '" + precio + "', '0', "
+                + "'" + id_unidad + "', '" + id_marca + "', '1', 'noimage.jpg', '1000-01-01', '1000-01-01', 0)";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {

@@ -7,8 +7,12 @@ package forms;
 
 import clases.cl_cliente;
 import clases.cl_conectar;
+import clases.cl_detalle_venta;
+import clases.cl_documento_tienda;
 import clases.cl_productos;
+import clases.cl_und_medida;
 import clases.cl_varios;
+import clases.cl_venta;
 import clases.cl_zona;
 import clases_autocomplete.cl_ac_clientes;
 import clases_autocomplete.cl_ac_productos;
@@ -32,22 +36,27 @@ import nicon.notify.core.Notification;
  * @author CALIDAD
  */
 public class frm_reg_venta extends javax.swing.JInternalFrame {
-
+    
     cl_conectar c_conectar = new cl_conectar();
     cl_cliente c_cliente = new cl_cliente();
-
+    
     cl_varios c_varios = new cl_varios();
     cl_zona c_zona = new cl_zona();
     cl_productos c_producto = new cl_productos();
-
+    cl_und_medida c_unidad = new cl_und_medida();
+    cl_documento_tienda c_doc_tienda = new cl_documento_tienda();
+    
+    cl_venta c_venta = new cl_venta();
+    cl_detalle_venta c_detalle = new cl_detalle_venta();
+    
     TextAutoCompleter autocompletar = null;
-
+    
     int id_zona = frm_menu.c_zona.getId_zona();
     int id_empleado = frm_menu.c_empleado.getId_empleado();
     int id_producto;
     double costo_producto;
     boolean existe_producto = false;
-
+    
     m_zonas m_zona = new m_zonas();
     m_unidad_producto m_unidades = new m_unidad_producto();
     DefaultTableModel detalle = null;
@@ -73,16 +82,16 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "USTED NO TIENE ZONAS ASIGNADAS");
             this.dispose();
         }
-
+        
         modelo_detalle();
     }
-
+    
     private void modelo_detalle() {
         //formato de tabla detalle de venta
         detalle = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int fila, int columna) {
-                return columna == 2 || columna == 4;
+                return columna == 2;
             }
         };
         detalle.addColumn("Id");
@@ -112,9 +121,19 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         c_varios.derecha_celda(t_detalle, 4);
         c_varios.derecha_celda(t_detalle, 5);
         c_varios.derecha_celda(t_detalle, 6);
-
+        
     }
-
+    
+    private void calcular_total() {
+        int contar_filas = t_detalle.getRowCount();
+        for (int i = 0; i < contar_filas; i++) {
+            double cantidad = Double.parseDouble(t_detalle.getValueAt(i, 2).toString());
+            double precio = Double.parseDouble(t_detalle.getValueAt(i, 4).toString());
+            lbl_total.setText("total: S/ " + c_varios.formato_totales(precio * cantidad));
+        }
+        
+    }
+    
     private void cargar_clientes() {
         try {
             //TextAutoCompleter autocompletar = new TextAutoCompleter(txt_consulta_productos);
@@ -142,14 +161,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     }
                 }
             });
-
+            
             Statement st = c_conectar.conexion();
             String query = "select id_cliente, nombre, documento, direccion "
                     + "from clientes "
                     + "where id_zona = '" + id_zona + "'";
             ResultSet rs_cliente = c_conectar.consulta(st, query);
             while (rs_cliente.next()) {
-
+                
                 String nombre = rs_cliente.getString("nombre");
                 String documento = rs_cliente.getString("documento");
                 String direccion = rs_cliente.getString("direccion");
@@ -164,7 +183,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             //JOptionPane.showInternalMessageDialog(this, ex.getLocalizedMessage());
         }
     }
-
+    
     private void cargar_productos() {
         try {
             //TextAutoCompleter autocompletar = new TextAutoCompleter(txt_consulta_productos);
@@ -203,12 +222,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             });
             c_conectar.conectar();
             Statement st = c_conectar.conexion();
-            String sql = "select p.id_producto, p.descripcion, p.costo_compra, p.precio_venta, p.cant_actual, m.nombre as marca "
+            String sql = "select p.id_producto, p.descripcion, p.costo_compra, p.precio_venta, p.cant_actual, "
+                    + "um.descripcion as medida, m.nombre as marca "
                     + "from productos as p "
                     + "inner join marcas as m on m.id_marca = p.id_marca "
+                    + "inner join und_medida as um on um.id_unidad = p.id_unidad "
                     + "order by m.nombre asc, p.descripcion asc";
             ResultSet rs = c_conectar.consulta(st, sql);
-
+            
             while (rs.next()) {
                 String marca = rs.getString("marca");
                 String descripcion = marca + " | " + rs.getString("p.descripcion").trim();
@@ -216,7 +237,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 double cantidad = rs.getDouble("p.cant_actual");
                 double precio = rs.getDouble("p.precio_venta");
                 double costo = 0.00;
-                autocompletar.addItem(new cl_ac_productos(id, descripcion, cantidad, "Cajas", precio, costo));
+                String medida = rs.getString("medida");
+                autocompletar.addItem(new cl_ac_productos(id, descripcion, cantidad, medida, precio, costo));
             }
             c_conectar.cerrar(rs);
             c_conectar.cerrar(st);
@@ -224,9 +246,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             JOptionPane.showInternalMessageDialog(this, ex.getLocalizedMessage());
         }
-
+        
     }
-
+    
     private boolean valida_tabla(int producto) {
         //estado de ingreso
         boolean agregar_datos = false;
@@ -238,7 +260,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         if (contar_filas == 0) {
             ingresar = true;
         }
-
+        
         if (contar_filas > 0) {
             for (int j = 0; j < contar_filas; j++) {
                 int id_producto_fila = Integer.parseInt(t_detalle.getValueAt(j, 0).toString());
@@ -252,18 +274,18 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 }
             }
         }
-
+        
         if (ingresar == true && cuenta_iguales == 0) {
             agregar_datos = true;
         }
-
+        
         if (contar_filas == 29) {
             txt_buscar_producto.setEnabled(false);
             JOptionPane.showMessageDialog(null, "SE HA LLEGADO AL LIMITE DE 30 PRODUCTOS");
         }
         return agregar_datos;
     }
-
+    
     private void limpiar_productos() {
         txt_nombre_producto.setText("");
         cbx_unidad_producto.removeAllItems();
@@ -297,7 +319,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txt_deuda_cliente = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        lbl_total = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txt_doc_cliente = new javax.swing.JTextField();
@@ -382,9 +404,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("total: S/ 0.00");
+        lbl_total.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        lbl_total.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_total.setText("total: S/ 0.00");
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("suma pedido");
@@ -396,7 +418,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -404,7 +426,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addContainerGap(17, Short.MAX_VALUE))
@@ -433,6 +455,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         btn_grabar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/add.png"))); // NOI18N
         btn_grabar.setText("Grabar");
         btn_grabar.setEnabled(false);
+        btn_grabar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_grabarActionPerformed(evt);
+            }
+        });
 
         txt_buscar_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -803,11 +830,36 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         fila[6] = c_combo.getId();
         fila[7] = costo_producto;
         detalle.addRow(fila);
-
+        
         btn_grabar.setEnabled(true);
-
+        calcular_total();
+        
         limpiar_productos();
     }//GEN-LAST:event_btn_add_productoActionPerformed
+
+    private void btn_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_grabarActionPerformed
+        c_venta.setFecha(c_varios.getFechaActual());
+        c_venta.setId_cliente(c_cliente.getId_cliente());
+        c_venta.setId_zona(id_zona);
+        c_venta.setPeriodo(c_varios.obtener_periodo());
+        c_venta.obtener_codigo();
+        c_venta.setId_documento(11);
+        c_doc_tienda.setId(c_venta.getId_documento());
+        c_doc_tienda.datos_documento();
+        c_venta.setSerie_doc(c_doc_tienda.getSerie());
+        c_venta.setNumero_doc(c_doc_tienda.getNumero());
+        c_venta.setTotal(0);
+        c_venta.setPagado(0);
+        c_venta.setId_empleado(id_empleado);
+        
+        c_venta.insertar();
+        
+        int contar_filas = t_detalle.getRowCount();
+        
+        for (int i = 0; i < contar_filas; i++) {
+            //c_
+        }
+    }//GEN-LAST:event_btn_grabarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -827,7 +879,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -839,6 +890,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JDialog jd_zonas;
+    private javax.swing.JLabel lbl_total;
     private javax.swing.JTable t_detalle;
     private javax.swing.JTextField txt_buscar_cliente;
     private javax.swing.JTextField txt_buscar_producto;

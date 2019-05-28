@@ -780,7 +780,7 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
                 c_venta.datos_venta();
 
                 c_detalle.setPeriodo(c_venta.getPeriodo());
-                c_detalle.setVenta(c_venta.getId_venta());
+                c_detalle.setId_venta(c_venta.getId_venta());
 
                 //eliminar detalle de venta
                 c_detalle.eliminar();

@@ -198,7 +198,8 @@ public class frm_ver_inventarios extends javax.swing.JInternalFrame {
 
     private void btn_ver_inventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ver_inventarioActionPerformed
         btn_eliminar.setEnabled(true);
-        c_detalle.setInventario(cbx_inventario.getSelectedItem().toString());
+        c_detalle.setId_inventario(Integer.parseInt(cbx_inventario.getSelectedItem().toString()));
+        c_detalle.setPeriodo(cbx_periodo.getSelectedItem().toString());
         c_detalle.mostrar_productos(t_detalle_inventario);
     }//GEN-LAST:event_btn_ver_inventarioActionPerformed
 
@@ -227,9 +228,10 @@ public class frm_ver_inventarios extends javax.swing.JInternalFrame {
 
     private void cbx_inventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_inventarioActionPerformed
         if (cbx_inventario.getSelectedIndex() > 0) {
-            c_inventario.setInventario(cbx_inventario.getSelectedItem().toString());
+            c_inventario.setId_inventario(Integer.parseInt(cbx_inventario.getSelectedItem().toString()));
+            c_inventario.setPeriodo(cbx_periodo.getSelectedItem().toString());
             c_inventario.cargar_datos();
-            txt_usuario.setText(c_inventario.getUsuario());
+            txt_usuario.setText(c_inventario.getId_empleado() + "");
             txt_fecha.setText(c_inventario.getFecha());
             btn_ver_inventario.setEnabled(true);
             btn_ver_inventario.requestFocus();

@@ -178,6 +178,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         jLabel19 = new javax.swing.JLabel();
         txt_ubicacion = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        btn_actualizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_detalle = new javax.swing.JTable();
         btn_registrar = new javax.swing.JButton();
@@ -287,6 +288,13 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/arrow_redo.png"))); // NOI18N
+        btn_actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_actualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -329,6 +337,8 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txt_buscar_producto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_actualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -336,10 +346,12 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -552,15 +564,15 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         if (nro_filas > -1) {
             if (JOptionPane.OK_OPTION == confirmado) {
                 c_inventario.setPeriodo(c_varios.obtener_periodo());
-                c_inventario.setCodigo(c_inventario.obtener_codigo());
-                c_inventario.setInventario(c_inventario.getPeriodo() + "" + c_varios.ceros_izquieda_numero(3, c_inventario.getCodigo()));
+                c_inventario.obtener_codigo();
                 c_inventario.setFecha(c_varios.getFechaActual());
-                c_inventario.setUsuario(frm_menu.c_empleado.getId_empleado() + "");
+                c_inventario.setId_empleado(frm_menu.c_empleado.getId_empleado());
 
                 if (c_inventario.insertar()) {
-                    c_detalle.setInventario(c_inventario.getInventario());
+                    c_detalle.setId_inventario(c_inventario.getId_inventario());
+                    c_detalle.setPeriodo(c_inventario.getPeriodo());
                     for (int i = 0; i < nro_filas; i++) {
-                        c_detalle.setProducto(Integer.parseInt(t_detalle.getValueAt(i, 0).toString()));
+                        c_detalle.setId_producto(Integer.parseInt(t_detalle.getValueAt(i, 0).toString()));
                         c_detalle.setPrecio(Double.parseDouble(t_detalle.getValueAt(i, 2).toString()));
                         c_detalle.setUbicacion(t_detalle.getValueAt(i, 4).toString());
                         c_detalle.setCactual(Double.parseDouble(t_detalle.getValueAt(i, 5).toString()));
@@ -590,8 +602,15 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
+        cargar_productos();
+        txt_buscar_producto.setText("");
+        txt_buscar_producto.requestFocus();
+    }//GEN-LAST:event_btn_actualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JButton btn_actualizar;
     public static javax.swing.JButton btn_add_producto;
     private javax.swing.JButton btn_cerrar;
     public static javax.swing.JButton btn_registrar;

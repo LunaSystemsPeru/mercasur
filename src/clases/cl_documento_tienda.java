@@ -12,7 +12,7 @@ public class cl_documento_tienda {
     private int id;
     private String nombre;
     private String abreviado;
-    private int serie;
+    private String serie;
     private int numero;
 
     public cl_documento_tienda() {
@@ -34,11 +34,11 @@ public class cl_documento_tienda {
         this.nombre = nombre;
     }
 
-    public int getSerie() {
+    public String getSerie() {
         return serie;
     }
 
-    public void setSerie(int serie) {
+    public void setSerie(String serie) {
         this.serie = serie;
     }
 
@@ -82,16 +82,13 @@ public class cl_documento_tienda {
     public void datos_documento() {
         try {
             Statement st = c_conectar.conexion();
-            String query = "select dt.id, td.nombre, dt.serie, dt.numero "
-                    + "from documento_tienda as dt "
-                    + "inner join tipo_documento as td on td.id = dt.id "
-                    + "where dt.id = " + id;
+            String query = "select * "
+                    + "from documento_tienda "
+                    + "where id_documento = '" + id + "'";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
-                nombre = rs.getString("nombre");
-                abreviado = rs.getString("nombre");
-                serie = rs.getInt("serie");
+                serie = rs.getString("serie");
                 numero = rs.getInt("numero");
             }
 

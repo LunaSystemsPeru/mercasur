@@ -20,8 +20,9 @@ public class cl_detalle_inventario {
     cl_conectar c_conectar = new cl_conectar();
     cl_varios c_varios = new cl_varios();
 
-    private String inventario;
-    private int producto;
+    private String periodo;
+    private int id_inventario;
+    private int id_producto;
     private double precio;
     private double cactual;
     private double cfisico;
@@ -30,20 +31,28 @@ public class cl_detalle_inventario {
     public cl_detalle_inventario() {
     }
 
-    public String getInventario() {
-        return inventario;
+    public String getPeriodo() {
+        return periodo;
     }
 
-    public void setInventario(String inventario) {
-        this.inventario = inventario;
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
     }
 
-    public int getProducto() {
-        return producto;
+    public int getId_inventario() {
+        return id_inventario;
     }
 
-    public void setProducto(int producto) {
-        this.producto = producto;
+    public void setId_inventario(int id_inventario) {
+        this.id_inventario = id_inventario;
+    }
+
+    public int getId_producto() {
+        return id_producto;
+    }
+
+    public void setId_producto(int id_producto) {
+        this.id_producto = id_producto;
     }
 
     public double getPrecio() {
@@ -82,7 +91,7 @@ public class cl_detalle_inventario {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into detalle_inventario  "
-                + "values ('" + inventario + "' , '" + producto + "', '" + precio + "', '" + cactual + "', '" + cfisico + "', '" + ubicacion + "')";
+                + "values ('" + periodo + "' , '" + id_inventario + "' , '" + id_producto + "', '" + precio + "', '" + cactual + "', '" + cfisico + "', '" + ubicacion + "')";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {
@@ -116,7 +125,7 @@ public class cl_detalle_inventario {
                     + "inner join productos as p on p.id_producto = di.id_producto "
                     + "inner join marcas as m on m.id_marca = p.id_marca "
                     + "inner join und_medida as u on p.id_unidad = u.id_unidad "
-                    + "where di.id_inventario = '" + this.inventario + "' "
+                    + "where di.periodo = '" + this.periodo + "' and di.id_inventario = '" + this.id_inventario + "' "
                     + "order by p.descripcion asc";
             System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);

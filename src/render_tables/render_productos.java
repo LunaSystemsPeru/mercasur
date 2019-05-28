@@ -19,20 +19,20 @@ public class render_productos extends DefaultTableCellRenderer {
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
         // SI EN CADA FILA DE LA TABLA LA CELDA 5 ES IGUAL A ACTIVO COLOR AZUL
-        if (String.valueOf(table.getValueAt(row, 6)).equals("NORMAL")) {
+        if (String.valueOf(table.getValueAt(row, 7)).equals("NORMAL")) {
             setBackground(Color.white);
             setForeground(Color.black);
         }
-        if (String.valueOf(table.getValueAt(row, 6)).equals("POR TERMINAR")) {
+        if (String.valueOf(table.getValueAt(row, 7)).equals("POR TERMINAR")) {
             setBackground(Color.GREEN);
             setForeground(Color.white);
         }
-        if (String.valueOf(table.getValueAt(row, 6)).equals("NO DISPONIBLE")) {
+        if (String.valueOf(table.getValueAt(row, 7)).equals("NO DISPONIBLE")) {
             setBackground(Color.RED);
             setForeground(Color.WHITE);
         }
         
-        if (String.valueOf(table.getValueAt(row, 6)).equals("NO ACTIVO")) {
+        if (String.valueOf(table.getValueAt(row, 7)).equals("NO ACTIVO")) {
             setBackground(Color.BLACK);
             setForeground(Color.WHITE);
         }

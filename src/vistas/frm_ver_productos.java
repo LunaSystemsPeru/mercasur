@@ -31,7 +31,6 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     Integer i;
     DefaultTableModel mostrar;
     String query;
-    
 
     /**
      * Creates new form frm_ver_productos
@@ -436,7 +435,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
     private void txt_busKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyReleased
         String texto = txt_bus.getText();
-        String query = "select p.idproducto, p.descripcion, p.grado, p.marca, p.modelo, p.cant_actual, p.cant_min, u.nombre_corto, p.precio_venta, p.estado "
+        query = "select p.idproducto, p.descripcion, p.grado, p.marca, p.modelo, p.cant_actual, p.cant_min, u.nombre_corto, p.precio_venta, p.estado "
                 + "from productos as p "
                 + "inner join und_medida as u on p.unidad_medida = u.id "
                 + "where p.idproducto = '" + texto + "' or p.descripcion like '%" + texto + "%' or p.grado like '%" + texto + "%' or p.marca like '%" + texto + "%' "

@@ -21,10 +21,9 @@ public class cl_inventario {
     cl_conectar c_conectar = new cl_conectar();
 
     private String periodo;
-    private int codigo;
-    private String inventario;
+    private int id_inventario;
     private String fecha;
-    private String usuario;
+    private int id_empleado;
 
     public cl_inventario() {
     }
@@ -37,20 +36,12 @@ public class cl_inventario {
         this.periodo = periodo;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public int getId_inventario() {
+        return id_inventario;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getInventario() {
-        return inventario;
-    }
-
-    public void setInventario(String inventario) {
-        this.inventario = inventario;
+    public void setId_inventario(int id_inventario) {
+        this.id_inventario = id_inventario;
     }
 
     public String getFecha() {
@@ -61,12 +52,12 @@ public class cl_inventario {
         this.fecha = fecha;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public int getId_empleado() {
+        return id_empleado;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setId_empleado(int id_empleado) {
+        this.id_empleado = id_empleado;
     }
 
     public boolean insertar() {
@@ -74,7 +65,7 @@ public class cl_inventario {
         c_conectar.conectar();
         Statement st = c_conectar.conexion();
         String query = "insert into inventarios "
-                + "values ('" + periodo + "' , '" + codigo + "', '" + inventario + "', '" + fecha + "', '" + usuario + "')";
+                + "values ('" + periodo + "' , '" + id_inventario + "', '" + fecha + "', '" + id_empleado + "')";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {
@@ -90,13 +81,13 @@ public class cl_inventario {
 
         try {
             Statement st = c_conectar.conexion();
-            String query = "select ifnull(max(codigo) + 1, 1) as codigo "
+            String query = "select ifnull(max(id_inventario) + 1, 1) as codigo "
                     + "from inventarios "
                     + "where periodo = '" + periodo + "'";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
-                resultado = rs.getInt("codigo");
+                this.id_inventario = rs.getInt("codigo");
             }
 
             c_conectar.cerrar(rs);
@@ -133,15 +124,15 @@ public class cl_inventario {
     public void cargar_codigo(String periodo, JComboBox cbx_combo) {
         try {
             Statement st = c_conectar.conexion();
-            String query = "select inventario "
+            String query = "select id_inventario "
                     + "from inventarios "
                     + "where periodo = '" + periodo + "' "
-                    + "order by inventario desc";
+                    + "order by id_inventario desc";
             ResultSet rs = c_conectar.consulta(st, query);
             cbx_combo.removeAllItems();
             cbx_combo.addItem("SELECCIONAR INVENTARIO");
             while (rs.next()) {
-                cbx_combo.addItem(rs.getString("inventario"));
+                cbx_combo.addItem(rs.getString("id_inventario"));
             }
 
             c_conectar.cerrar(rs);
@@ -155,14 +146,14 @@ public class cl_inventario {
     public void cargar_datos() {
         try {
             Statement st = c_conectar.conexion();
-            String query = "select fecha, usuario "
+            String query = "select fecha, id_empleado "
                     + "from inventarios "
-                    + "where inventario = '" + inventario + "'";
+                    + "where periodo = '" + this.periodo + "' and id_inventario = '" + this.id_empleado + "'";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
                 fecha = rs.getString("fecha");
-                usuario = rs.getString("usuario");
+                id_empleado = rs.getInt("id_empleado");
             }
 
             c_conectar.cerrar(rs);

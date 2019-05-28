@@ -21,10 +21,12 @@ public class cl_detalle_venta {
     cl_varios c_varios = new cl_varios();
 
     private String periodo;
-    private int venta;
-    private int producto;
+    private int id_venta;
+    private int id_producto;
     private double cantidad;
+    private int id_unidad;
     private double precio;
+    private double costo;
 
     public cl_detalle_venta() {
     }
@@ -37,20 +39,20 @@ public class cl_detalle_venta {
         this.periodo = periodo;
     }
 
-    public int getVenta() {
-        return venta;
+    public int getId_venta() {
+        return id_venta;
     }
 
-    public void setVenta(int venta) {
-        this.venta = venta;
+    public void setId_venta(int id_venta) {
+        this.id_venta = id_venta;
     }
 
-    public int getProducto() {
-        return producto;
+    public int getId_producto() {
+        return id_producto;
     }
 
-    public void setProducto(int producto) {
-        this.producto = producto;
+    public void setId_producto(int id_producto) {
+        this.id_producto = id_producto;
     }
 
     public double getCantidad() {
@@ -61,6 +63,14 @@ public class cl_detalle_venta {
         this.cantidad = cantidad;
     }
 
+    public int getId_unidad() {
+        return id_unidad;
+    }
+
+    public void setId_unidad(int id_unidad) {
+        this.id_unidad = id_unidad;
+    }
+
     public double getPrecio() {
         return precio;
     }
@@ -69,11 +79,20 @@ public class cl_detalle_venta {
         this.precio = precio;
     }
 
+    public double getCosto() {
+        return costo;
+    }
+
+    public void setCosto(double costo) {
+        this.costo = costo;
+    }
+
+   
     public boolean insertar() {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into detalle_venta "
-                + "Values ('" + periodo + "', '" + venta + "', '" + producto + "', '" + cantidad + "', '" + precio + "')";
+                + "Values ('" + periodo + "', '" + id_venta + "', '" + id_producto + "', '" + cantidad + "', '" + id_unidad + "','" + precio + "', '" + costo + "')";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {
@@ -89,7 +108,7 @@ public class cl_detalle_venta {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
         String query = "delete from detalle_venta "
-                + "where periodo = '" + periodo + "' and idventa = '" + venta + "'";
+                + "where periodo = '" + periodo + "' and id_venta = '" + id_venta + "'";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {
@@ -121,7 +140,7 @@ public class cl_detalle_venta {
                     + "from detalle_venta as dv "
                     + "inner join productos as p on p.idproducto = dv.idproducto "
                     + "inner join und_medida as u on p.unidad_medida = u.id "
-                    + "where dv.periodo = '" + periodo + "' and idventa = '" + venta + "'";
+                    + "where dv.periodo = '" + periodo + "' and id_venta = '" + id_venta + "'";
             System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
             Object fila_p[] = new Object[5];
@@ -174,7 +193,7 @@ public class cl_detalle_venta {
                     + "from detalle_venta as dv "
                     + "inner join productos as p on p.idproducto = dv.idproducto "
                     + "inner join und_medida as u on p.unidad_medida = u.id "
-                    + "where dv.periodo = '" + periodo + "' and idventa = '" + venta + "'";
+                    + "where dv.periodo = '" + periodo + "' and id_venta = '" + id_venta + "'";
             ResultSet rs = c_conectar.consulta(st, ver_pagos);
             Object fila_p[] = new Object[5];
             while (rs.next()) {

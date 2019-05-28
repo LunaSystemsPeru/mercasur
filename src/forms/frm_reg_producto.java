@@ -354,6 +354,8 @@ public class frm_reg_producto extends javax.swing.JDialog {
     private void cbx_undKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_undKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             System.out.println(cbx_und.getSelectedItem().toString());
+            cl_combobox c_combo = (cl_combobox) cbx_und.getSelectedItem();
+            c_producto.setId_unidad(c_combo.getId());
             txt_pcom.setEnabled(true);
             txt_pcom.requestFocus();
         }
@@ -367,6 +369,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             cl_combobox c_combo = (cl_combobox) cbx_marca.getSelectedItem();
             c_marca.setId(c_combo.getId());
+            c_producto.setId_marca(c_marca.getId());
             c_marca.obtener_datos();
             txt_comisio.setText(c_marca.getComision() + "");
             cbx_und.setEnabled(true);
