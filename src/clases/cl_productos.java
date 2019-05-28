@@ -165,11 +165,11 @@ public class cl_productos {
                 }
 
                 if (rs.getInt("estado") == 1) {
-                    if (rs.getDouble("cantidad") <= 0) {
+                    if (rs.getDouble("cant_actual") <= 0) {
                         valor_estado = "NO DISPONIBLE";
                     }
 
-                    if (rs.getDouble("cantidad") > 0) {
+                    if (rs.getDouble("cant_actual") > 0) {
                         valor_estado = "NORMAL";
                     }
                 }
@@ -180,9 +180,9 @@ public class cl_productos {
                 fila[1] = rs.getString("descripcion").trim().toUpperCase();
                 fila[2] = rs.getString("marca").toUpperCase().trim();
                 fila[3] = c_varios.formato_numero(rs.getDouble("comision"));
-                fila[4] = c_varios.formato_numero(rs.getDouble("cantidad"));
-                fila[5] = rs.getString("nombre_corto").toUpperCase().trim();
-                fila[6] = c_varios.formato_numero(rs.getDouble("precio"));
+                fila[4] = c_varios.formato_numero(rs.getDouble("cant_actual"));
+                fila[5] = "UND";
+                fila[6] = c_varios.formato_numero(rs.getDouble("precio_venta"));
                 fila[7] = valor_estado;
 
                 mostrar.addRow(fila);
@@ -293,6 +293,7 @@ public class cl_productos {
                 existe = true;
                 descripcion = rs.getString("descripcion");
                 id_marca = rs.getInt("id_marca");
+                id_unidad = rs.getInt("id_unidad");
                 cantidad = rs.getDouble("cant_actual");
                 precio = rs.getDouble("precio_venta");
                 costo = rs.getDouble("costo_compra");
@@ -312,7 +313,7 @@ public class cl_productos {
         Statement st = c_conectar.conexion();
         String query = "insert into productos "
                 + "values ('" + id_producto + "', '" + descripcion + "', '" + costo + "', '" + precio + "', '" + id_producto + "', "
-                + "'" + cantidad + "', '" + id_unidad + "', '" + id_marca + "', '1', 'noimage.jpg, '1000-01-01', '1000-01-01', 0)";
+                + "'" + cantidad + "', '" + id_unidad + "', '" + id_marca + "', '1', 'noimage.jpg', '1000-01-01', '1000-01-01', 0)";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {

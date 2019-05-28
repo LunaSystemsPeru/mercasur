@@ -28,18 +28,18 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     cl_varios c_varios = new cl_varios();
     Integer i;
     DefaultTableModel mostrar;
+    String query;
 
     /**
      * Creates new form frm_ver_productos
      */
     public frm_ver_productos() {
         initComponents();
-      /* String query = "select p.id_producto, p.descripcion, p.grado, p.marca, p.modelo, p.cant_actual, p.cant_min, u.nombre_corto, p.precio_venta, p.estado "
+        query = "select p.id_producto, p.descripcion, p.precio_venta, p.cant_actual, p.costo_compra, m.nombre as marca, m.comision, p.ultima_salida, "
+                + "p.ultimo_ingreso, p.estado "
                 + "from productos as p "
-                + "inner join und_medida as u on p.unidad_medida = u.id "
-                + "order by p.descripcion asc, p.marca, p.grado asc "
-                + "limit 0";
-        c_productos.ver_productos(t_productos, query);*/
+                + "inner join marcas as m on m.id_marca = p.id_marca";
+        c_productos.ver_productos(t_productos, query);
         lbl_encontrados.setText(t_productos.getRowCount() + "");
     }
 

@@ -66,7 +66,7 @@ public class cl_und_medida {
             Statement st = c_conectar.conexion();
             String v_usuario = "select * "
                     + "from und_medida "
-                    + "where id = '" + id + "'";
+                    + "where id_unidad = '" + id + "'";
             ResultSet rs = c_conectar.consulta(st, v_usuario);
 
             if (rs.next()) {

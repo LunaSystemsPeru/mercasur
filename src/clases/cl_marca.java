@@ -110,7 +110,7 @@ public class cl_marca {
 
         try {
             Statement st = c_conectar.conexion();
-            String query = "select nombre "
+            String query = "select nombre, comision "
                     + "from marcas "
                     + "where id_marca = '" + id + "' ";
             ResultSet rs = c_conectar.consulta(st, query);
@@ -118,6 +118,8 @@ public class cl_marca {
             while (rs.next()) {
                 existe = true;
                 nombre = rs.getString("nombre").toUpperCase().trim();
+                comision = rs.getDouble("comision");
+                
             }
             c_conectar.cerrar(rs);
             c_conectar.cerrar(st);

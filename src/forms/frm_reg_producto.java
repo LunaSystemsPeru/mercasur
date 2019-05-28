@@ -5,12 +5,14 @@
  */
 package forms;
 
+import clases.cl_marca;
 import clases.cl_producto_unidad;
 import clases.cl_productos;
 import clases.cl_und_medida;
 import clases.cl_varios;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import models.cl_combobox;
 import models.m_marcas;
 import models.m_und_medida;
 
@@ -25,6 +27,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
     public static cl_productos c_producto = new cl_productos();
     cl_und_medida c_unidad = new cl_und_medida();
     cl_producto_unidad c_punidad = new cl_producto_unidad();
+    cl_marca c_marca = new cl_marca();
     
     m_und_medida m_medida = new m_und_medida();
     m_marcas m_marca = new m_marcas();
@@ -86,7 +89,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
         txt_pcom = new javax.swing.JTextField();
         cbx_und = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txt_comisio = new javax.swing.JTextField();
         cbx_marca = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -170,7 +173,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
 
         jLabel4.setText("Comision:");
 
-        jTextField1.setEnabled(false);
+        txt_comisio.setEnabled(false);
 
         cbx_marca.setEnabled(false);
         cbx_marca.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -211,7 +214,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_comisio, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbx_und, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,7 +244,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_comisio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel12)
@@ -362,6 +365,10 @@ public class frm_reg_producto extends javax.swing.JDialog {
 
     private void cbx_marcaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_marcaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cl_combobox c_combo = (cl_combobox) cbx_marca.getSelectedItem();
+            c_marca.setId(c_combo.getId());
+            c_marca.obtener_datos();
+            txt_comisio.setText(c_marca.getComision() + "");
             cbx_und.setEnabled(true);
             cbx_und.requestFocus();
         }
@@ -421,7 +428,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     public static javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txt_comisio;
     public static javax.swing.JTextField txt_des;
     public static javax.swing.JTextField txt_gan;
     public static javax.swing.JTextField txt_pcom;
