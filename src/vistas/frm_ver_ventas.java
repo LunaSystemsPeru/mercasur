@@ -765,7 +765,11 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
             int dialogButton = JOptionPane.YES_NO_OPTION;
             JOptionPane.showConfirmDialog(null, "Desea eliminar el registro seleccionado??", "Atencion", dialogButton);
             if (dialogButton == JOptionPane.YES_OPTION) { //The ISSUE is here
-                c_venta.setId_venta(Integer.parseInt(t_ventas.getValueAt(fila_seleccionada, 0).toString()));
+                String periodo = t_ventas.getValueAt(fila_seleccionada, 7).toString();
+                int id_venta = Integer.parseInt(t_ventas.getValueAt(fila_seleccionada, 8).toString());
+                
+                c_venta.setId_venta(id_venta);
+                c_venta.setPeriodo(periodo);
                 c_venta.datos_venta();
 
                 c_detalle.setPeriodo(c_venta.getPeriodo());

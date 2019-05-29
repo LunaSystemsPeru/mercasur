@@ -169,7 +169,9 @@ public class cl_venta {
 
         try {
             Statement st = c_conectar.conexion();
-            String query = "select ifnull(max(id_venta) + 1, 1) as codigo from ventas where periodo = '" + periodo + "' ";
+            String query = "select ifnull(max(id_venta) + 1, 1) as codigo "
+                    + "from ventas "
+                    + "where periodo = '" + periodo + "' ";
             ResultSet rs = c_conectar.consulta(st, query);
             System.out.println(query);
             while (rs.next()) {
@@ -275,11 +277,15 @@ public class cl_venta {
             ResultSet rs = c_conectar.consulta(st, query);
             while (rs.next()) {
                 fecha = rs.getString("fecha_venta");
+                id_cliente = rs.getInt("id_cliente");
                 id_zona = rs.getInt("id_zona");
                 id_empleado = rs.getInt("id_empleado");
                 id_documento = rs.getInt("id_documento");
                 serie_doc = rs.getString("serie_doc");
                 numero_doc = rs.getInt("nro_doc");
+                total = rs.getDouble("total");
+                estado = rs.getInt("estado");
+                
             }
 
             c_conectar.cerrar(rs);

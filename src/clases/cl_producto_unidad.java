@@ -27,6 +27,7 @@ public class cl_producto_unidad {
     private int id_unidad;
     private double factor;
     private String nombre;
+    private double precio;
 
     public cl_producto_unidad() {
     }
@@ -63,12 +64,20 @@ public class cl_producto_unidad {
         this.nombre = nombre;
     }
 
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
     public boolean obtener_datos() {
         boolean existe = false;
 
         try {
             Statement st = c_conectar.conexion();
-            String query = "select nombre, factor "
+            String query = "select nombre, factor, precio "
                     + "from producto_unidades "
                     + "where id_producto = '" + id_producto + "' and id_unidad = '" + id_unidad + "' ";
             ResultSet rs = c_conectar.consulta(st, query);
@@ -77,6 +86,7 @@ public class cl_producto_unidad {
                 existe = true;
                 nombre = rs.getString("nombre").toUpperCase().trim();
                 factor = rs.getDouble("factor");
+                precio = rs.getDouble("precio");
             }
             c_conectar.cerrar(rs);
             c_conectar.cerrar(st);
@@ -105,7 +115,8 @@ public class cl_producto_unidad {
             System.out.println(e.getLocalizedMessage());
         }
     }
-         public void ver_unidades_producto (JTable tabla, String query) {
+
+    public void ver_unidades_producto(JTable tabla, String query) {
         try {
             DefaultTableModel mostrar = new DefaultTableModel() {
                 @Override
@@ -121,14 +132,16 @@ public class cl_producto_unidad {
 
             mostrar.addColumn("Codigo");
             mostrar.addColumn("Nombre");
-            mostrar.addColumn("factor");
+            mostrar.addColumn("Factor");
+            mostrar.addColumn("Precio");
 
             while (rs.next()) {
-                Object fila[] = new Object[3];
+                Object fila[] = new Object[4];
 
                 fila[0] = rs.getInt("id_unidad");
                 fila[1] = rs.getString("nombre");
                 fila[2] = rs.getString("factor");
+                fila[3] = rs.getDouble("precio");
                 mostrar.addRow(fila);
             }
 
@@ -137,7 +150,8 @@ public class cl_producto_unidad {
             tabla.setModel(mostrar);
             tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
             tabla.getColumnModel().getColumn(1).setPreferredWidth(150);
-            tabla.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(3).setPreferredWidth(80);
         } catch (SQLException ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(null, ex);
@@ -148,7 +162,7 @@ public class cl_producto_unidad {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into producto_unidades "
-                + "Values ('" + id_producto + "', '" + id_unidad + "', '" + nombre + "','" + factor + "')";
+                + "Values ('" + id_producto + "', '" + id_unidad + "', '" + nombre + "','" + factor + "','" + precio + "')";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {
@@ -159,7 +173,5 @@ public class cl_producto_unidad {
 
         return grabado;
     }
-    
-    
 
 }

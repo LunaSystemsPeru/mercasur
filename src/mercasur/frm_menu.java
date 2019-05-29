@@ -74,7 +74,7 @@ public class frm_menu extends javax.swing.JFrame {
     }
 
     private void cargar_login() {
-        jd_login.setSize(356, 409);
+        jd_login.setSize(356, 353);
         jd_login.setModal(true);
         jd_login.setLocationRelativeTo(null);
         jd_login.setVisible(true);
