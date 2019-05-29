@@ -21,6 +21,20 @@ import javax.swing.table.TableRowSorter;
  */
 public class cl_producto_unidad {
 
+    /**
+     * @return the precio
+     */
+    public int getPrecio() {
+        return precio;
+    }
+
+    /**
+     * @param precio the precio to set
+     */
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
     cl_conectar c_conectar = new cl_conectar();
 
     private int id_producto;
