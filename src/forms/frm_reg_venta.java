@@ -832,7 +832,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         c_uproducto.obtener_datos();
         double factor = c_uproducto.getFactor();
         //agregar fila
-        Object fila[] = new Object[8];
+        Object fila[] = new Object[9];
         fila[0] = id_producto;
         fila[1] = txt_nombre_producto.getText();
         fila[2] = txt_cantidad_producto.getText();

@@ -270,7 +270,7 @@ public class frm_ver_marcas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txt_frm_nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_frm_nombreKeyTyped
-        c_varios.limitar_caracteres(evt, txt_frm_nombre, 8);
+        c_varios.limitar_caracteres(evt, txt_frm_nombre, 100);
     }//GEN-LAST:event_txt_frm_nombreKeyTyped
 
     private void t_marcasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_marcasMouseClicked

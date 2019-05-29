@@ -69,7 +69,7 @@ public class cl_producto_unidad {
         try {
             Statement st = c_conectar.conexion();
             String query = "select nombre, factor "
-                    + "from producto_unidad "
+                    + "from producto_unidades "
                     + "where id_producto = '" + id_producto + "' and id_unidad = '" + id_unidad + "' ";
             ResultSet rs = c_conectar.consulta(st, query);
 

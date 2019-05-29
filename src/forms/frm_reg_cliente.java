@@ -132,7 +132,7 @@ public class frm_reg_cliente extends javax.swing.JDialog {
             }
         });
 
-        jLabel5.setText("Telefono:");
+        jLabel5.setText("Referencia Dir.");
 
         txt_tel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_tel.setEnabled(false);
@@ -212,14 +212,14 @@ public class frm_reg_cliente extends javax.swing.JDialog {
                             .addComponent(txt_nombre_comercial)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_tel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt_tel1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt_ndoc, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txt_zona, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_cer))))
+                                .addComponent(btn_cer))
+                            .addComponent(txt_tel)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_reg)))

@@ -44,7 +44,6 @@
                           <Component id="txt_nombre_comercial" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txt_tel" alignment="0" min="-2" pref="112" max="-2" attributes="0"/>
                                   <Component id="txt_tel1" alignment="0" min="-2" pref="112" max="-2" attributes="0"/>
                                   <Component id="txt_ndoc" alignment="0" min="-2" pref="144" max="-2" attributes="0"/>
                               </Group>
@@ -55,6 +54,7 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="btn_cer" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="txt_tel" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -166,7 +166,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Telefono:"/>
+        <Property name="text" type="java.lang.String" value="Referencia Dir."/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_tel">
