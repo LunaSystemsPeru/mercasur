@@ -285,6 +285,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
     private void llenar_unidad (){
         c_punidad.setNombre(cbx_und.getSelectedItem().toString());
         c_punidad.setFactor(1);
+        c_punidad.setPrecio(c_producto.getPrecio());
         c_punidad.setId_producto(c_producto.getId_producto());
         c_punidad.obtener_id();
         c_punidad.insertar();

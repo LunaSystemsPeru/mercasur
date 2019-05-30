@@ -192,7 +192,7 @@ public class cl_productos {
             c_conectar.cerrar(rs);
             tabla.setModel(mostrar);
             tabla.getColumnModel().getColumn(0).setPreferredWidth(70);
-            tabla.getColumnModel().getColumn(1).setPreferredWidth(510);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(400);
             tabla.getColumnModel().getColumn(2).setPreferredWidth(180);
             tabla.getColumnModel().getColumn(3).setPreferredWidth(80);
             tabla.getColumnModel().getColumn(4).setPreferredWidth(80);
