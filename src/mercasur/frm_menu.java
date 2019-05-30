@@ -139,6 +139,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jMenuItem25 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -639,6 +640,14 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem7);
+
+        jMenuItem15.setText("Rpt. Consolidado Diario de Vendedor ");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem15);
         jMenu1.add(jSeparator6);
 
         jMenuItem25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
@@ -1194,6 +1203,27 @@ public class frm_menu extends javax.swing.JFrame {
         c_varios.llamar_ventana_completa(formulario);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        File miDir = new File(".");
+        try {
+            Map<String, Object> parametros = new HashMap<>();
+            String rpt_periodo = JOptionPane.showInputDialog("Ingrese Fecha. Ejemplo: 2019-05-29");
+            if (rpt_periodo.length() == 10) {
+                String path = miDir.getCanonicalPath();
+                String direccion = path + "//reports//subreports//";
+                //String direccion = path + "\\reports\\subreports\\";
+                System.out.println(direccion);
+                parametros.put("SUBREPORT_DIR", direccion);
+                parametros.put("fecha", rpt_periodo);
+                c_varios.ver_reporte("rpt_ventas_vendedor", parametros);
+            } else {
+                JOptionPane.showMessageDialog(null, "INGRESE UN PERIODO CORRECTO \nSOLO NUMEROS \nEJEMPLO: 201801");
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1264,6 +1294,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
