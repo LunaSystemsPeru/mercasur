@@ -17,7 +17,7 @@ public interface i_datos_bd {
     String password = "root/*123";
     String servidor = "localhost"; 
     
-    //esta ip es variable
+    //esta ip es vari
 // no quiero que sea variable
 
 }
