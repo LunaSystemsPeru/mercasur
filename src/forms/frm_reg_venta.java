@@ -58,6 +58,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     int id_empleado = frm_menu.c_empleado.getId_empleado();
     int id_producto;
     double costo_producto;
+    double factor;
+    double precio_nuevo;
     boolean existe_producto = false;
 
     m_zonas m_zona = new m_zonas();
@@ -137,7 +139,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         for (int i = 0; i < contar_filas; i++) {
             double cantidad = Double.parseDouble(t_detalle.getValueAt(i, 2).toString());
             double precio = Double.parseDouble(t_detalle.getValueAt(i, 4).toString());
-            total_filas += (cantidad * precio);
+            double dfactor = Double.parseDouble(t_detalle.getValueAt(i, 8).toString());
+            total_filas += (cantidad * precio * factor);
         }
         lbl_total.setText("total: S/ " + c_varios.formato_totales(total_filas));
 
@@ -241,7 +244,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
             while (rs.next()) {
                 String marca = rs.getString("marca");
-                String descripcion = marca + " | " + rs.getString("p.descripcion").trim();
+                String descripcion = rs.getString("p.descripcion").trim() + " | " + marca;
                 int id = rs.getInt("id_producto");
                 double cantidad = rs.getDouble("p.cant_actual");
                 double precio = rs.getDouble("p.precio_venta");
@@ -813,6 +816,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     private void cbx_unidad_productoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_unidad_productoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cl_combobox c_combo = (cl_combobox) cbx_unidad_producto.getSelectedItem();
+            int id_unidad = c_combo.getId();
+            c_uproducto.setId_unidad(id_unidad);
+            c_uproducto.setId_producto(id_producto);
+            c_uproducto.obtener_datos();
+            factor = c_uproducto.getFactor();
+            precio_nuevo = c_uproducto.getPrecio();
+            txt_precio_producto.setText(c_varios.formato_numero(precio_nuevo));
             txt_cantidad_producto.setEnabled(true);
             txt_cantidad_producto.selectAll();
             txt_cantidad_producto.requestFocus();
@@ -825,8 +836,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             if (c_varios.isNumeric(numero)) {
                 //multiplicar y hallar subtotal
                 double cantidad = Double.parseDouble(txt_cantidad_producto.getText());
-                double precio = Double.parseDouble(txt_precio_producto.getText());
-                double parcial = cantidad * precio;
+                double precio = precio_nuevo;
+                double parcial = cantidad * precio * factor;
                 txt_subtotal_producto.setText(parcial + "");
                 btn_add_producto.setEnabled(true);
                 btn_add_producto.requestFocus();
@@ -841,7 +852,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         c_uproducto.setId_unidad(id_unidad);
         c_uproducto.setId_producto(id_producto);
         c_uproducto.obtener_datos();
-        double factor = c_uproducto.getFactor();
+//        double factor = c_uproducto.getFactor();
         //agregar fila
         Object fila[] = new Object[9];
         fila[0] = id_producto;

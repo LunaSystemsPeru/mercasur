@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ventas_vendedor" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2eaab693-283c-48da-9e9a-755717e3209c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     empleados.`nombres` AS empleados_nombres,
+     zona.`nombre` AS zona_nombre,
+     ventas.`fecha_venta` AS ventas_fecha_venta,
+     empleados.`ape_pat` AS empleados_ape_pat,
+     empleados.`ape_mat` AS empleados_ape_mat,
+     empleados.`dni` AS empleados_dni,
+     ventas.`id_zona` AS ventas_id_zona,
+     ventas.`id_empleado` AS ventas_id_empleado
+FROM
+     `empleados` empleados INNER JOIN `ventas` ventas ON empleados.`id_empleado` = ventas.`id_empleado`
+     INNER JOIN `zona` zona ON ventas.`id_zona` = zona.`id_zona`
+WHERE
+     ventas.fecha_venta = $P{fecha} order by empleados.ape_pat asc]]>
+	</queryString>
+	<field name="empleados_nombres" class="java.lang.String"/>
+	<field name="zona_nombre" class="java.lang.String"/>
+	<field name="ventas_fecha_venta" class="java.sql.Date"/>
+	<field name="empleados_ape_pat" class="java.lang.String"/>
+	<field name="empleados_ape_mat" class="java.lang.String"/>
+	<field name="empleados_dni" class="java.lang.String"/>
+	<field name="ventas_id_zona" class="java.lang.Integer"/>
+	<field name="ventas_id_empleado" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement x="105" y="19" width="450" height="27" uuid="664449e3-4cb2-4d87-a4f1-1244c4a617cc"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[DISTRIBUIDORA "MERCASUR IMPORT" ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="20" y="0" width="85" height="60" uuid="5d4f9aab-0eef-4827-86b6-628d66221eca"/>
+				<imageExpression><![CDATA["https://scontent.ftru2-1.fna.fbcdn.net/v/t1.0-9/42614832_1024097204437069_4554792158615306240_n.jpg?_nc_cat=100&_nc_ht=scontent.ftru2-1.fna&oh=387f4ddfe58691c2419631cc732f26cc&oe=5D96B635"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="105" y="46" width="450" height="20" uuid="18689f1e-85e0-463f-ad4c-c683ca2938c0"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSOLIDADO DIARIO POR VENDEDOR]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="72" y="0" width="273" height="20" uuid="f36b072c-b42e-4418-97a1-dff0b7c900c8"/>
+				<textFieldExpression><![CDATA[$F{empleados_dni} + " - " + $F{empleados_ape_pat} + " " + $F{empleados_ape_mat} + " " + $F{empleados_nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="0" width="112" height="20" uuid="6efed9e5-bfcd-40f0-80a8-266f532b93f9"/>
+				<textFieldExpression><![CDATA[$F{zona_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="371" y="0" width="41" height="20" uuid="02b28616-73df-4910-895f-99e38b60a620"/>
+				<text><![CDATA[Zona]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="0" width="52" height="20" uuid="a36b48a1-96bc-427b-8500-733aa86d1769"/>
+				<text><![CDATA[Empleado]]></text>
+			</staticText>
+		</band>
+		<band height="20">
+			<subreport>
+				<reportElement x="20" y="0" width="514" height="20" uuid="29b9572f-aff2-4333-8871-fa3175c77d8c"/>
+				<subreportParameter name="p_id_empleado">
+					<subreportParameterExpression><![CDATA[$F{ventas_id_empleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_id_zona">
+					<subreportParameterExpression><![CDATA[$F{ventas_id_zona}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rpt_ventas_vendedor_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="105" y="0" width="77" height="20" uuid="aa789800-5ec4-4d1d-ac9c-ceded46c32e3"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="0" width="100" height="20" uuid="18af5f8b-c5c6-4171-b829-7a6cd4fd3bcc"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Reporte:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

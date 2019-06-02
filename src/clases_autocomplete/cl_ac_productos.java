@@ -38,7 +38,7 @@ public class cl_ac_productos {
     @Override
     public String toString() {
 
-        return String.format("%1$-80s\t", descripcion)
+        return String.format("%1$-50s\t", descripcion)
                 + " || Cant: "
                 + String.format("%7s", c_varios.formato_cantidad(cantidad))
                 + " " + String.format("%-15s\t", und_medida.trim())

@@ -685,6 +685,9 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
 
     private double total() {
         Double tot = 0.0;
+        double factor = 1;
+        double cantidad = 1;
+        double precio = 0;
         int nro_fila = t_ventas.getRowCount();
         if (nro_fila > 0) {
             for (int j = 0; j < nro_fila; j++) {
