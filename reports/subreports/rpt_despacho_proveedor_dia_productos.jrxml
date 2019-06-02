@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_despacho_proveedor_dia_productos" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7a7cd54f-fd74-4b9c-84e6-4a1c1edbe217">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_fecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_id_marca" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     detalle_venta.`id_producto` AS detalle_venta_id_producto,
+     sum(detalle_venta.`cantidad`) AS detalle_venta_cantidad,
+     detalle_venta.`id_unidad` AS detalle_venta_id_unidad,
+     detalle_venta.`precio` AS detalle_venta_precio,
+     productos.`descripcion` AS productos_descripcion,
+     productos.`id_marca` AS productos_id_marca,
+     und_medida.`nombre_corto` AS und_medida_nombre_corto
+FROM
+     `ventas` ventas INNER JOIN `detalle_venta` detalle_venta ON ventas.`periodo` = detalle_venta.`periodo`
+     AND ventas.`id_venta` = detalle_venta.`id_venta`
+     INNER JOIN `productos` productos ON detalle_venta.`id_producto` = productos.`id_producto`
+     INNER JOIN `und_medida` und_medida ON productos.`id_unidad` = und_medida.`id_unidad`
+where ventas.fecha_venta = $P{p_fecha} and productos.id_marca = $P{p_id_marca}
+group by detalle_venta.id_producto
+order by productos.descripcion asc]]>
+	</queryString>
+	<field name="detalle_venta_id_producto" class="java.lang.Integer"/>
+	<field name="detalle_venta_cantidad" class="java.math.BigDecimal"/>
+	<field name="detalle_venta_id_unidad" class="java.lang.Integer"/>
+	<field name="detalle_venta_precio" class="java.math.BigDecimal"/>
+	<field name="productos_descripcion" class="java.lang.String"/>
+	<field name="productos_id_marca" class="java.lang.Integer"/>
+	<field name="und_medida_nombre_corto" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement x="51" y="0" width="31" height="16" uuid="6bcdc0cf-885f-4d58-877b-bc292a97847f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Id. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="0" width="376" height="16" uuid="d90d3d1e-fc7a-4438-8bd1-bb3002442c0d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="0" width="59" height="16" uuid="02c5df03-ad96-4c3d-8b2e-632bc46a5f5f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Cant.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="51" y="0" width="31" height="16" uuid="fe278c10-9949-4111-9e46-0bcd495f1599"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalle_venta_id_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="0" width="376" height="16" uuid="c8090268-6f6e-40ba-a371-2ef64e595136"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_descripcion} + " - " + $F{und_medida_nombre_corto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="458" y="0" width="59" height="16" uuid="dfe36043-4365-42e5-985c-e95e5a4846d5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalle_venta_cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="11">
+			<line>
+				<reportElement x="0" y="10" width="555" height="1" uuid="756c28b3-8e67-409d-a8c2-f12e36b96969"/>
+			</line>
+		</band>
+	</columnFooter>
+</jasperReport>

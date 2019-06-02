@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_despacho_proveedor_dia" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b06058c1-7d1f-4772-ab63-30bca341c171">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_fecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\ANDY\\Documents\\NetBeansProjects\\reports\\subreports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     marcas.`nombre` AS marcas_nombre,
+     ventas.`fecha_venta` AS ventas_fecha_venta,
+     marcas.`id_marca` AS marcas_id_marca
+FROM
+     `productos` productos INNER JOIN `detalle_venta` detalle_venta ON productos.`id_producto` = detalle_venta.`id_producto`
+     INNER JOIN `marcas` marcas ON productos.`id_marca` = marcas.`id_marca`
+     INNER JOIN `ventas` ventas ON detalle_venta.`periodo` = ventas.`periodo`
+     AND ventas.`id_venta` = detalle_venta.`id_venta`
+where ventas.fecha_venta = $P{p_fecha}
+group by productos.id_marca]]>
+	</queryString>
+	<field name="marcas_nombre" class="java.lang.String"/>
+	<field name="ventas_fecha_venta" class="java.sql.Date"/>
+	<field name="marcas_id_marca" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="472" y="20" width="83" height="20" uuid="c8a8e3f9-cfb0-48c3-98d8-2a08a3fb0765"/>
+				<textFieldExpression><![CDATA[$F{ventas_fecha_venta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="73" y="0" width="482" height="20" uuid="d5dddd70-5322-4786-9e14-aaff4293b37e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE CONSOLIDADO DESPACHO POR MARCA - DIARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="421" y="20" width="51" height="20" uuid="1f197fc7-ee72-4d1d-b0bf-6430be6f1e07"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="73" height="55" uuid="dc9c2902-3a29-40b4-b154-80242988fb3b"/>
+				<imageExpression><![CDATA["https://scontent.ftru2-1.fna.fbcdn.net/v/t1.0-9/42614832_1024097204437069_4554792158615306240_n.jpg?_nc_cat=100&_nc_ht=scontent.ftru2-1.fna&oh=387f4ddfe58691c2419631cc732f26cc&oe=5D96B635"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="73" y="20" width="149" height="20" uuid="774b840f-2829-4c68-b94b-78d137cd2151"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOLO CANTIDADES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="63" y="0" width="159" height="20" uuid="3d0e04c6-4803-40e5-a4cd-6525da33717b"/>
+				<textFieldExpression><![CDATA[$F{marcas_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="63" height="20" uuid="7db92f66-0288-4b84-b041-b639461aadb7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MARCA:]]></text>
+			</staticText>
+		</band>
+		<band height="20">
+			<subreport>
+				<reportElement x="7" y="0" width="548" height="20" uuid="e9a16121-5849-449f-a667-7ec500beb881"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_id_marca">
+					<subreportParameterExpression><![CDATA[$F{marcas_id_marca}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha">
+					<subreportParameterExpression><![CDATA[$P{p_fecha}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rpt_despacho_proveedor_dia_productos.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

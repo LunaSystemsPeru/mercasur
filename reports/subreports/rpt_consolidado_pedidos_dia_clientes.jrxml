@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_consolidado_pedidos_dia_clientes" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6581ba60-79d4-425d-ab6d-462ffd5e319c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_id_empleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_id_zona" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     ventas.`fecha_venta` AS ventas_fecha_venta,
+     ventas.`id_zona` AS ventas_id_zona,
+     ventas.`id_empleado` AS ventas_id_empleado,
+     clientes.`id_cliente` AS clientes_id_cliente,
+     clientes.`documento` AS clientes_documento,
+     clientes.`nombre` AS clientes_nombre,
+     clientes.`direccion` AS clientes_direccion,
+     tipo_documento.`abreviado` AS tipo_documento_abreviado,
+     ventas.`serie_doc` AS ventas_serie_doc,
+     ventas.`nro_doc` AS ventas_nro_doc,
+     ventas.`total` AS ventas_total
+FROM
+     `clientes` clientes INNER JOIN `ventas` ventas ON clientes.`id_cliente` = ventas.`id_cliente`
+     AND clientes.`id_zona` = ventas.`id_zona`
+     INNER JOIN `tipo_documento` tipo_documento ON ventas.`id_documento` = tipo_documento.`id_documento`
+
+where ventas.fecha_venta = $P{p_fecha} and ventas.id_empleado = $P{p_id_empleado} and ventas.id_zona =$P{p_id_zona}]]>
+	</queryString>
+	<field name="ventas_fecha_venta" class="java.sql.Date"/>
+	<field name="ventas_id_zona" class="java.lang.Integer"/>
+	<field name="ventas_id_empleado" class="java.lang.Integer"/>
+	<field name="clientes_id_cliente" class="java.lang.Integer"/>
+	<field name="clientes_documento" class="java.lang.String"/>
+	<field name="clientes_nombre" class="java.lang.String"/>
+	<field name="clientes_direccion" class="java.lang.String"/>
+	<field name="tipo_documento_abreviado" class="java.lang.String"/>
+	<field name="ventas_serie_doc" class="java.lang.String"/>
+	<field name="ventas_nro_doc" class="java.lang.Integer"/>
+	<field name="ventas_total" class="java.lang.Double"/>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="44" y="0" width="31" height="20" uuid="82371264-b02d-4ddf-b592-4baf48a527d3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Id.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="0" width="193" height="20" uuid="270d6932-665f-411e-8451-e0096e426f2f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="0" width="138" height="20" uuid="74c0cc13-2183-47c5-b72a-ab9ebcfac608"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Direccion:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="406" y="0" width="69" height="20" uuid="8d1d923b-a8d3-4029-8797-e3f53a3cffdf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Doc. Vta.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="0" width="53" height="20" uuid="bcc02c0a-f2ae-4195-abd2-b8f679ece69f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Total.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="44" y="0" width="31" height="20" uuid="6b1fadb5-0a1a-44b1-9067-36c2e46beaf0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientes_id_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="75" y="0" width="193" height="20" uuid="ce226dc2-311d-4df1-897c-b1e9dd4651e9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientes_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="0" width="138" height="20" uuid="f271deb3-fddb-40fa-af10-c8a11e656188"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientes_direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="0" width="69" height="20" uuid="c281cee8-6c10-4e2e-98c8-cf1753a6b68b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_documento_abreviado} + " | " + $F{ventas_serie_doc} + " - " + $F{ventas_nro_doc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="475" y="0" width="53" height="20" uuid="70f6e7dd-04ff-448a-9b6d-ab194f0cd93d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ventas_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="3">
+			<line>
+				<reportElement x="13" y="2" width="542" height="1" uuid="734de66a-66c9-4871-b0ca-79d5f5580922"/>
+			</line>
+		</band>
+	</columnFooter>
+</jasperReport>

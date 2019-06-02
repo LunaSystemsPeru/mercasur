@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_comision_dia_productos" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4aedf916-883f-448a-85f2-905d2d0d4189">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_id_empleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_id_zona" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     sum(detalle_venta.`cantidad`) AS detalle_venta_cantidad,
+     productos.`descripcion` AS productos_descripcion,
+     detalle_venta.`precio` AS detalle_venta_precio,
+     detalle_venta.`costo` AS detalle_venta_costo,
+     marcas.`comision` AS marcas_comision,
+     detalle_venta.`id_producto` AS detalle_venta_id_producto,
+     ventas.`fecha_venta` AS ventas_fecha_venta,
+     ventas.`id_zona` AS ventas_id_zona,
+     ventas.`id_empleado` AS ventas_id_empleado,
+     detalle_venta.`id_unidad` AS detalle_venta_id_unidad,
+     marcas.`comision_mayor` AS marcas_comision_mayor
+FROM
+     `productos` productos INNER JOIN `detalle_venta` detalle_venta ON productos.`id_producto` = detalle_venta.`id_producto`
+     INNER JOIN `marcas` marcas ON productos.`id_marca` = marcas.`id_marca`
+     INNER JOIN `ventas` ventas ON detalle_venta.`periodo` = ventas.`periodo`
+     AND ventas.`id_venta` = detalle_venta.`id_venta`
+WHERE
+     ventas.fecha_venta = $P{p_fecha}
+     and ventas.id_empleado = $P{p_id_empleado}
+     and ventas.id_zona = $P{p_id_zona}
+GROUP BY
+     detalle_venta.id_producto,
+     detalle_venta.precio]]>
+	</queryString>
+	<field name="detalle_venta_cantidad" class="java.math.BigDecimal"/>
+	<field name="productos_descripcion" class="java.lang.String"/>
+	<field name="detalle_venta_precio" class="java.math.BigDecimal"/>
+	<field name="detalle_venta_costo" class="java.lang.Double"/>
+	<field name="marcas_comision" class="java.math.BigDecimal"/>
+	<field name="detalle_venta_id_producto" class="java.lang.Integer"/>
+	<field name="ventas_fecha_venta" class="java.sql.Date"/>
+	<field name="ventas_id_zona" class="java.lang.Integer"/>
+	<field name="ventas_id_empleado" class="java.lang.Integer"/>
+	<field name="detalle_venta_id_unidad" class="java.lang.Integer"/>
+	<field name="marcas_comision_mayor" class="java.lang.Double"/>
+	<variable name="sub_total_venta" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{detalle_venta_cantidad} * $F{detalle_venta_precio}]]></variableExpression>
+	</variable>
+	<variable name="sub_total_compra" class="java.lang.String">
+		<variableExpression><![CDATA[$F{detalle_venta_cantidad} * $F{detalle_venta_costo}]]></variableExpression>
+	</variable>
+	<variable name="valor_comision" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{detalle_venta_cantidad} * $F{detalle_venta_precio} * $F{marcas_comision} / 100]]></variableExpression>
+	</variable>
+	<variable name="suma_venta" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{detalle_venta_cantidad} * $F{detalle_venta_precio}]]></variableExpression>
+	</variable>
+	<variable name="suma_comision" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{detalle_venta_cantidad} * $F{detalle_venta_precio} * $F{marcas_comision} / 100]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="31" y="0" width="36" height="15" uuid="06e05767-c2ba-4c53-bc98-93b609960cbe"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Id.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="0" width="267" height="15" uuid="8449bfd6-b138-4bae-8efc-1d0f1c65ba03"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="334" y="0" width="50" height="15" uuid="e328f681-ce3f-41c2-ae2e-dc5c7ccfd04b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Cant.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="384" y="0" width="50" height="15" uuid="554f357e-b4e7-4aee-b264-8930806ac970"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="434" y="0" width="50" height="15" uuid="bb3f5f2c-d5eb-4932-afd7-881fb4e861e2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Sub. Tot. Vta.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="484" y="0" width="50" height="15" uuid="88ed9b4c-dac5-45cb-aa15-cd8b7abf139a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Comision]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="31" y="0" width="36" height="15" uuid="e0125186-0087-4e9f-87eb-b9c70210f90a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalle_venta_id_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="67" y="0" width="267" height="15" uuid="ec4b7b2b-996f-435d-81dc-2a1626bc500a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_descripcion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="334" y="0" width="50" height="15" uuid="e6bb4063-61f6-4d74-9758-cd8258825173"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalle_venta_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="384" y="0" width="50" height="15" uuid="6090e59f-798d-40f8-a8ab-ce3889536915"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalle_venta_precio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="434" y="0" width="50" height="15" uuid="9b9444ba-aff4-4c62-8d5a-fb7d64a6d800"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sub_total_venta}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="484" y="0" width="50" height="15" uuid="f7b72408-c374-42cf-b5fb-e906358ba111"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{valor_comision}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="29" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="416" y="0" width="68" height="16" uuid="5d567962-4b67-46aa-836a-4bcdab471458"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{suma_venta}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="484" y="0" width="60" height="16" uuid="ae40fbd9-d1de-48ed-8dbb-bffba9a4a2ce"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{suma_comision}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="24" width="555" height="1" uuid="e6ed1c53-534f-41c5-a9bd-47af3c64f277"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>
