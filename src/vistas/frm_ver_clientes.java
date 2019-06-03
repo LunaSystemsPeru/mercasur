@@ -201,6 +201,9 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_busKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_busKeyTyped(evt);
+            }
         });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -327,12 +330,7 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_busKeyPressed
 
     private void txt_busKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyReleased
-        String buscar = txt_bus.getText();
-        String query = "select id_cliente, documento, nombre, ventas, pagado "
-                + "from clientes "
-                + "where (documento like '%" + buscar + "%' or nombre like '%" + buscar + "%' or id_cliente = '" + buscar + "') and id_zona = '" + id_zona + "' "
-                + "order by nombre asc";
-        c_cliente.ver_clientes(t_clientes, query);
+       
     }//GEN-LAST:event_txt_busKeyReleased
 
     private void txt_kardex_descripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_kardex_descripcionActionPerformed
@@ -344,6 +342,16 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
         if (fila_seleccionada > -1) {
         }
     }//GEN-LAST:event_t_detalleMouseClicked
+
+    private void txt_busKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyTyped
+        // TODO add your handling code here:
+         String buscar = txt_bus.getText();
+        String query = "select id_cliente, documento, nombre, ventas, pagado "
+                + "from clientes "
+                + "where (documento like '%" + buscar + "%' or nombre like '%" + buscar + "%' or id_cliente = '" + buscar + "') and id_zona = '" + id_zona + "' "
+                + "order by nombre asc";
+        c_cliente.ver_clientes(t_clientes, query);
+    }//GEN-LAST:event_txt_busKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
