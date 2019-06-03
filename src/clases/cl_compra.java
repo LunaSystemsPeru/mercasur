@@ -251,7 +251,7 @@ public class cl_compra {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into compras "
-                + "Values ('" + codigo + "', '" + periodo + "', '" + fecha + "', '" + proveedor + "', '" + moneda + "', '" + tc_compra + "', "
+                + "Values ('" + periodo + "','" + codigo + "','" + fecha + "', '" + proveedor + "', '" + moneda + "', '" + tc_compra + "', "
                 + "'" + documento + "', '" + serie + "', '" + numero + "', '" + total + "', 0, 0, '" + usuario + "', current_time(), '" + glosa + "')";
         int resultado = c_conectar.actualiza(st, query);
 
@@ -313,56 +313,79 @@ public class cl_compra {
             mostrar.addColumn("Codigo");
             mostrar.addColumn("Fec. Com.");
             mostrar.addColumn("Documento");
-            mostrar.addColumn("Proveedor");
-            mostrar.addColumn("Moneda");
+            mostrar.addColumn("ruc_prov");
+            mostrar.addColumn("razon_prov");
             mostrar.addColumn("Total");
-            mostrar.addColumn("Por Pagar");
-            mostrar.addColumn("Base S/");
-            mostrar.addColumn("IGV S/");
-            mostrar.addColumn("Total S/");
-            mostrar.addColumn("Estado");
+            mostrar.addColumn("pagado");
+            mostrar.addColumn("estado");
+            
+            
 
-            Object fila[] = new Object[11];
+            Object fila[] = new Object[8];
             while (rs.next()) {
-                fila[0] = rs.getString("periodo") + c_varios.ceros_izquieda_numero(3, rs.getInt("idcompra"));
-                fila[1] = c_varios.formato_fecha_vista(rs.getString("fec_com"));
-                fila[2] = rs.getString("documento") + " / " + c_varios.ceros_izquieda_letras(4, rs.getString("serie")) + " - " + c_varios.ceros_izquieda_numero(7, rs.getInt("numero"));
-                fila[3] = rs.getString("ruc_proveedor") + " | " + rs.getString("raz_soc_pro");
-                fila[4] = rs.getString("corto");
+              fila[0] =  rs.getString("id_compra");//rs.getString("periodo") + c_varios.ceros_izquieda_numero(3, rs.getInt("idcompra"));
+                fila[1] = c_varios.formato_fecha_vista(rs.getString("fecha"));
+                fila[2] = rs.getString("documento");//rs.getString("documento") + " / " + c_varios.ceros_izquieda_letras(4, rs.getString("serie")) + " - " + c_varios.ceros_izquieda_numero(7, rs.getInt("numero"));
+                fila[3] = rs.getString("ruc_pro");//rs.getString("ruc_proveedor") + " | " + rs.getString("raz_soc_pro");
+                fila[4] = rs.getString("raz_soc_pro");
                 fila[5] = c_varios.formato_totales(rs.getDouble("total"));
                 fila[6] = c_varios.formato_numero(rs.getDouble("total") - rs.getDouble("pagado"));
                 Double base = rs.getDouble("total") * rs.getDouble("tc");
                 total = total + base;
                 fila[7] = c_varios.formato_totales(base / 1.18);
-                fila[8] = c_varios.formato_totales(base / 1.18 * 0.18);
-                fila[9] = c_varios.formato_totales(base);
-                if (rs.getString("estado").equals("0")) {
-                    fila[10] = "PENDIENTE";
-                } else {
-                    fila[10] = "PAGADO";
-                }
+//                fila[8] = c_varios.formato_totales(base / 1.18 * 0.18);
+//                fila[9] = c_varios.formato_totales(base);
+//                if (rs.getString("estado").equals("0")) {
+//                    fila[10] = "PENDIENTE";
+//                } else {
+//                    fila[10] = "PAGADO";
+//                }
                 mostrar.addRow(fila);
             }
             tabla.setModel(mostrar);
-            c_conectar.cerrar(rs);
-            c_conectar.cerrar(st);
+         
         } catch (SQLException ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(null, ex);
         }
-        tabla.getColumnModel().getColumn(0).setPreferredWidth(70);
-        tabla.getColumnModel().getColumn(1).setPreferredWidth(70);
-        tabla.getColumnModel().getColumn(2).setPreferredWidth(110);
-        tabla.getColumnModel().getColumn(3).setPreferredWidth(370);
-        tabla.getColumnModel().getColumn(4).setPreferredWidth(47);
-        tabla.getColumnModel().getColumn(5).setPreferredWidth(65);
-        tabla.getColumnModel().getColumn(6).setPreferredWidth(65);
+        tabla.getColumnModel().getColumn(0).setPreferredWidth(100);
+        tabla.getColumnModel().getColumn(1).setPreferredWidth(140);
+        tabla.getColumnModel().getColumn(2).setPreferredWidth(140);
+        tabla.getColumnModel().getColumn(3).setPreferredWidth(330);
+        tabla.getColumnModel().getColumn(4).setPreferredWidth(230);
+        tabla.getColumnModel().getColumn(5).setPreferredWidth(100);
+        tabla.getColumnModel().getColumn(6).setPreferredWidth(100);
         tabla.getColumnModel().getColumn(7).setPreferredWidth(65);
-        tabla.getColumnModel().getColumn(8).setPreferredWidth(65);
-        tabla.getColumnModel().getColumn(9).setPreferredWidth(65);
-        tabla.getColumnModel().getColumn(10).setPreferredWidth(90);
         tabla.setDefaultRenderer(Object.class, new render_tables.render_compras());
 
         return total;
     }
+   public void damecodigope(){
+       try {
+         Statement st = c_conectar.conexion();
+            String sql = "select ifnull(max(periodo)+1, 1) as periodo from compras";
+         ResultSet   rs = c_conectar.consulta(st, sql);
+            if (rs.next()) {
+                periodo = rs.getString("periodo");
+
+            }
+        } catch (SQLException e) {
+        }
+       
+
+       
+   }
+   public void damecodigocompras(){
+       try {
+         Statement st = c_conectar.conexion();
+            String sql = "select ifnull(max(id_compra)+1, 1) as id_compra from compras";
+         ResultSet   rs = c_conectar.consulta(st, sql);
+            if (rs.next()) {
+                codigo =rs.getInt("id_compra");
+
+            }
+        } catch (SQLException e) {
+        }
+   }
+
 }
