@@ -42,13 +42,12 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
     public frm_ver_compras() {
         initComponents();
         String periodo = c_varios.obtener_periodo();
-        String query = "select c.idcompra, c.periodo, c.fec_com, c.ruc_proveedor, p.raz_soc_pro, td.abreviado as documento, c.serie, c.numero, c.tc, m.corto, c.total, c.pagado, c.estado "
+        String query = "select c.id_compra, c.fecha, td.nombre, p.ruc_pro, p.raz_soc_pro, c.total, c.pagado, c.estado "
                 + "from compras as c "
-                + "inner join tipo_documento as td on c.idtido = td.id "
-                + "inner join moneda as m on c.idmoneda = m.idmon "
-                + "inner join proveedor as p on c.ruc_proveedor = p.ruc_pro "
-                + "where c.periodo = '" + periodo + "' "
-                + "order by c.periodo desc, c.idcompra desc";
+                + "inner join tipo_documento as td on c.id_documento = td.id_documento "
+                + "inner join monedas as m on c.id_moneda = m.id_moneda"
+                + "inner join proveedores as p on c.id_proveedor = p.id_proveedor where c.periodo = '"+periodo+"' "
+                + "order by c.periodo desc, c.id_compra desc";
         llenar_tabla(query);
     }
 
