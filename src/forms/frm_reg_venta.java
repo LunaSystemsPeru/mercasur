@@ -21,9 +21,13 @@ import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mercasur.frm_menu;
@@ -232,7 +236,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     }
                 }
             });
-            c_conectar.conectar();
+           // c_conectar.conectar();
             Statement st = c_conectar.conexion();
             String sql = "select p.id_producto, p.descripcion, p.costo_compra, p.precio_venta, p.cant_actual, "
                     + "um.descripcion as medida, m.nombre as marca "
@@ -498,6 +502,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/arrow_redo.png"))); // NOI18N
         jButton6.setText("Ver Clientes");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -912,18 +921,38 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
         for (int i = 0; i < contar_filas; i++) {
             double cantidad = Double.parseDouble(t_detalle.getValueAt(i, 2).toString());
-            double factor = Double.parseDouble(t_detalle.getValueAt(i, 8).toString());
+            double dfactor = Double.parseDouble(t_detalle.getValueAt(i, 8).toString());
             c_detalle.setId_producto(Integer.parseInt(t_detalle.getValueAt(i, 0).toString()));
-            c_detalle.setCantidad(cantidad * factor);
+            c_detalle.setCantidad(cantidad * dfactor);
             c_detalle.setPrecio(Double.parseDouble(t_detalle.getValueAt(i, 4).toString()));
             c_detalle.setId_unidad(Integer.parseInt(t_detalle.getValueAt(i, 6).toString()));
             c_detalle.setCosto(Double.parseDouble(t_detalle.getValueAt(i, 7).toString()));
 
             c_detalle.insertar();
         }
+
+        File miDir = new File(".");
+        try {
+            Map<String, Object> parametros = new HashMap<>();
+            String path = miDir.getCanonicalPath();
+            String direccion = path + "//reports//subreports//";
+            //String direccion = path + "\\reports\\subreports\\";
+            System.out.println(direccion);
+            parametros.put("SUBREPORT_DIR", direccion);
+            parametros.put("p_periodo", c_venta.getPeriodo());
+            parametros.put("p_id_venta", c_venta.getId_venta());
+            c_varios.ver_reporte("rpt_dos_documentos", parametros);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+
         limpiar_cliente();
 
     }//GEN-LAST:event_btn_grabarActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        cargar_clientes();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
