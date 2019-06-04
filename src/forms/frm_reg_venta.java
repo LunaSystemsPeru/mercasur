@@ -941,7 +941,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             parametros.put("SUBREPORT_DIR", direccion);
             parametros.put("p_periodo", c_venta.getPeriodo());
             parametros.put("p_id_venta", c_venta.getId_venta());
-            c_varios.ver_reporte("rpt_dos_documentos", parametros);
+            c_varios.imp_reporte("rpt_dos_documentos", parametros);
+            //c_varios.ver_reporte("rpt_dos_documentos", parametros);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
