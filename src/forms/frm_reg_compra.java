@@ -558,7 +558,7 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
             c_compra.setDocumento(id_tido);
             c_compra.setSerie(txt_ser.getText().trim().toUpperCase());
             c_compra.setNumero(Integer.parseInt(txt_ndoc.getText()));
-            c_compra.setProveedor(txt_ruc_proveedor.getText());
+            c_compra.setProveedor(c_proveedor.getId()+"");
             c_compra.setMoneda(id_moneda);
             c_compra.setUsuario(frm_menu.c_empleado.getId_empleado() + "");
             c_compra.setTc_compra(Double.parseDouble(txt_tc_compra.getText()));
@@ -576,8 +576,8 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void btn_cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarActionPerformed
-        frm_ver_compras ver_compras = new frm_ver_compras();
-        c_varios.llamar_ventana(ver_compras);
+       frm_ver_compras frm_ver=new frm_ver_compras();
+       c_varios.llamar_ventana(frm_ver);
         this.dispose();
     }//GEN-LAST:event_btn_cerrarActionPerformed
 
