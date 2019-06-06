@@ -5,6 +5,7 @@ import clases.cl_conectar;
 import clases.cl_empleado;
 import clases.cl_varios;
 import clases.cl_zona;
+import forms.frm_reg_compra;
 import forms.frm_reg_venta;
 import java.awt.Frame;
 import java.awt.Toolkit;

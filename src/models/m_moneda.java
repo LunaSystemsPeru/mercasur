@@ -26,13 +26,13 @@ public class m_moneda {
     public void cbx_moneda(JComboBox cbx_moneda) {
         try {
             Statement st = c_conectar.conexion();
-            String query = "select idmon, descripcion "
-                    + "from moneda "
+            String query = "select id_moneda, descripcion "
+                    + "from monedas "
                     + "order by descripcion asc";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
-                cbx_moneda.addItem(new cl_moneda(rs.getInt("idmon"), rs.getString("descripcion")));
+                cbx_moneda.addItem(new cl_moneda(rs.getInt("id_moneda"), rs.getString("descripcion")));
             }
 
             c_conectar.cerrar(st);

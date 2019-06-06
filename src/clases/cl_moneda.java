@@ -66,7 +66,7 @@ public class cl_moneda {
             Statement st = c_conectar.conexion();
             String query = "select * from "
                     + "moneda "
-                    + "where idmon = '" + codigo + "'";
+                    + "where id_moneda = '" + codigo + "'";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {

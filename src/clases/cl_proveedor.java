@@ -120,6 +120,14 @@ public class cl_proveedor {
         this.estado = estado;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public ArrayList cargar_rucs() {
         ArrayList rucs = new ArrayList();
 
@@ -148,13 +156,14 @@ public class cl_proveedor {
 
         try {
             Statement st = c_conectar.conexion();
-            String query = "select raz_soc_pro, dir_pro, telefono, web, email, total_pagado, total_compras "
+            String query = " select id_proveedor,raz_soc_pro, dir_pro, telefono, web, email, total_pagado, total_compras "
                     + "from proveedores "
                     + "where ruc_pro = '" + ruc + "'";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
                 existe = true;
+                id=rs.getInt("id_proveedor");
                 razon_social = rs.getString("raz_soc_pro");
                 direccion = rs.getString("dir_pro");
                 telefono = rs.getString("telefono");

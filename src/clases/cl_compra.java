@@ -177,9 +177,11 @@ public class cl_compra {
 
         try {
             Statement st = c_conectar.conexion();
-            String c_placas = "select periodo, idcompra "
-                    + "from compras "
-                    + "where ruc_proveedor = '" + proveedor + "' and idtido = '" + documento + "' and serie = '" + serie + "' and numero = '" + numero + "'";
+            String c_placas = "select c.periodo,c.id_compra\n" +
+"from compras as c\n" +
+"inner join proveedores as p on c.id_proveedor = p.id_proveedor \n" +
+"inner join tipo_documento as td on c.id_documento = td.id_documento \n" +
+"where p.ruc_pro='"+proveedor+"' and td.nombre='"+documento+"' AND c.serie='"+serie+"' and c.numero='"+numero+"'";
             ResultSet rs = c_conectar.consulta(st, c_placas);
 
             while (rs.next()) {
@@ -200,11 +202,11 @@ public class cl_compra {
 
         try {
             Statement st = c_conectar.conexion();
-            String query = "select ifnull(max(idcompra) + 1, 1) as codigo from compras where periodo = '" + periodo + "' ";
+            String query = "select ifnull(max(id_compra) + 1, 1) as id_compra from compras where periodo = '" + periodo + "' ";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
-                resultado = rs.getInt("codigo");
+                resultado = rs.getInt("id_compra");
             }
 
             c_conectar.cerrar(rs);
@@ -224,7 +226,7 @@ public class cl_compra {
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
-                codigo = rs.getInt("idcompra");
+                codigo = rs.getInt("id_compra");
                 periodo = rs.getString("periodo");
                 fecha = rs.getString("fec_com");
                 proveedor = rs.getString("ruc_proveedor");
@@ -250,9 +252,9 @@ public class cl_compra {
     public boolean insertar() {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
-        String query = "insert into compras "
-                + "Values ('" + periodo + "','" + codigo + "','" + fecha + "', '" + proveedor + "', '" + moneda + "', '" + tc_compra + "', "
-                + "'" + documento + "', '" + serie + "', '" + numero + "', '" + total + "', 0, 0, '" + usuario + "', current_time(), '" + glosa + "')";
+        String query = "INSERT INTO compras VALUES('"+periodo+"','"+codigo+"','"+fecha+"','"+moneda+"'"
+                + ",'"+tc_compra+"','"+glosa+"','"+proveedor+"','"+documento+"','"+serie+"','"+numero+"',"
+                + "'"+total+"','"+pagado+"','2',current_date(),'"+usuario+"')";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {
@@ -313,33 +315,37 @@ public class cl_compra {
             mostrar.addColumn("Codigo");
             mostrar.addColumn("Fec. Com.");
             mostrar.addColumn("Documento");
-            mostrar.addColumn("ruc_prov");
-            mostrar.addColumn("razon_prov");
-            mostrar.addColumn("Total");
-            mostrar.addColumn("pagado");
+            mostrar.addColumn("datos proevedor");
+            mostrar.addColumn("glosa");
+            mostrar.addColumn("total");
+            mostrar.addColumn("subtotal");
+            mostrar.addColumn("cts");
+            mostrar.addColumn("igv");
+            mostrar.addColumn("descuento");
             mostrar.addColumn("estado");
+          
             
             
 
-            Object fila[] = new Object[8];
+            Object fila[] = new Object[11];
             while (rs.next()) {
-              fila[0] =  rs.getString("id_compra");//rs.getString("periodo") + c_varios.ceros_izquieda_numero(3, rs.getInt("idcompra"));
+              fila[0] = rs.getString("periodo") + c_varios.ceros_izquieda_numero(3, rs.getInt("id_compra"));
                 fila[1] = c_varios.formato_fecha_vista(rs.getString("fecha"));
-                fila[2] = rs.getString("documento");//rs.getString("documento") + " / " + c_varios.ceros_izquieda_letras(4, rs.getString("serie")) + " - " + c_varios.ceros_izquieda_numero(7, rs.getInt("numero"));
-                fila[3] = rs.getString("ruc_pro");//rs.getString("ruc_proveedor") + " | " + rs.getString("raz_soc_pro");
-                fila[4] = rs.getString("raz_soc_pro");
+                fila[2] =rs.getString("abreviado") + " / " + c_varios.ceros_izquieda_letras(4, rs.getString("serie")) + " - " + c_varios.ceros_izquieda_numero(7, rs.getInt("numero"));
+                fila[3] = rs.getString("ruc_pro") + " | " + rs.getString("raz_soc_pro");
+                fila[4] = rs.getString("numero");
                 fila[5] = c_varios.formato_totales(rs.getDouble("total"));
-                fila[6] = c_varios.formato_numero(rs.getDouble("total") - rs.getDouble("pagado"));
-                Double base = rs.getDouble("total") * rs.getDouble("tc");
-                total = total + base;
-                fila[7] = c_varios.formato_totales(base / 1.18);
-//                fila[8] = c_varios.formato_totales(base / 1.18 * 0.18);
-//                fila[9] = c_varios.formato_totales(base);
-//                if (rs.getString("estado").equals("0")) {
-//                    fila[10] = "PENDIENTE";
-//                } else {
-//                    fila[10] = "PAGADO";
-//                }
+               fila[6] =c_varios.formato_numero(rs.getDouble("total") - rs.getDouble("pagado"));             
+               Double base = rs.getDouble("total") * rs.getDouble("numero");
+               total = total + base;
+               fila[7] = c_varios.formato_totales(base / 1.18);
+              fila[8] = c_varios.formato_totales(base / 1.18 * 0.18);
+              fila[9] = c_varios.formato_totales(base);
+               if (rs.getString("estado").equals("0")) {
+                    fila[10] = "PENDIENTE";
+                } else {
+                   fila[10] = "PAGADO";
+               }
                 mostrar.addRow(fila);
             }
             tabla.setModel(mostrar);
@@ -348,13 +354,16 @@ public class cl_compra {
             System.out.println(ex);
             JOptionPane.showMessageDialog(null, ex);
         }
-        tabla.getColumnModel().getColumn(0).setPreferredWidth(100);
-        tabla.getColumnModel().getColumn(1).setPreferredWidth(140);
-        tabla.getColumnModel().getColumn(2).setPreferredWidth(140);
-        tabla.getColumnModel().getColumn(3).setPreferredWidth(330);
-        tabla.getColumnModel().getColumn(4).setPreferredWidth(230);
-        tabla.getColumnModel().getColumn(5).setPreferredWidth(100);
-        tabla.getColumnModel().getColumn(6).setPreferredWidth(100);
+        tabla.getColumnModel().getColumn(0).setPreferredWidth(60);
+        tabla.getColumnModel().getColumn(1).setPreferredWidth(80);
+        tabla.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tabla.getColumnModel().getColumn(3).setPreferredWidth(100);
+        tabla.getColumnModel().getColumn(4).setPreferredWidth(90);
+        tabla.getColumnModel().getColumn(5).setPreferredWidth(60);
+        tabla.getColumnModel().getColumn(6).setPreferredWidth(50);
+        tabla.getColumnModel().getColumn(7).setPreferredWidth(65);
+         tabla.getColumnModel().getColumn(5).setPreferredWidth(60);
+        tabla.getColumnModel().getColumn(6).setPreferredWidth(30);
         tabla.getColumnModel().getColumn(7).setPreferredWidth(65);
         tabla.setDefaultRenderer(Object.class, new render_tables.render_compras());
 

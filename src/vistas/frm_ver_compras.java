@@ -42,12 +42,9 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
     public frm_ver_compras() {
         initComponents();
         String periodo = c_varios.obtener_periodo();
-        String query = "select c.id_compra, c.fecha, td.nombre, p.ruc_pro, p.raz_soc_pro, c.total, c.pagado, c.estado "
-                + "from compras as c "
-                + "inner join tipo_documento as td on c.id_documento = td.id_documento "
-                + "inner join monedas as m on c.id_moneda = m.id_moneda"
-                + "inner join proveedores as p on c.id_proveedor = p.id_proveedor where c.periodo = '"+periodo+"' "
-                + "order by c.periodo desc, c.id_compra desc";
+        String query = "select c.periodo, c.id_compra, c.fecha, td.nombre,td.abreviado, p.ruc_pro, p.raz_soc_pro, c.serie,c.numero,c.total, c.pagado, c.estado\n" +
+"from compras as c inner join tipo_documento as td on c.id_documento = td.id_documento \n" +
+"INNER JOIN proveedores as p ON c.id_proveedor=p.id_proveedor  ";
         llenar_tabla(query);
     }
 
@@ -578,7 +575,6 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -593,7 +589,7 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
                         .addComponent(btn_pag)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_reg))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_subtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -612,7 +608,8 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_total_deudas, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(jButton3))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -627,9 +624,9 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
                     .addComponent(cbx_est, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_pag, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_detalle, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
