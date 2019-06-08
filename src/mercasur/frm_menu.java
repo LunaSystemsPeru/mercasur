@@ -1006,12 +1006,12 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         frm_ver_compras ver_compras = new frm_ver_compras();
-        c_varios.llamar_ventana(ver_compras);
+        c_varios.llamar_ventana_completa(ver_compras);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         frm_ver_ventas ver_ventas = new frm_ver_ventas();
-        c_varios.llamar_ventana(ver_ventas);
+        c_varios.llamar_ventana_completa(ver_ventas);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void txt_j_montoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_j_montoKeyTyped
@@ -1047,7 +1047,7 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         frm_ver_ventas ver_ventas = new frm_ver_ventas();
-        c_varios.llamar_ventana(ver_ventas);
+        c_varios.llamar_ventana_completa(ver_ventas);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -1101,7 +1101,7 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         frm_ver_compras ver_compras = new frm_ver_compras();
-        c_varios.llamar_ventana(ver_compras);
+        c_varios.llamar_ventana_completa(ver_compras);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed

@@ -218,11 +218,11 @@ public class cl_productos {
                     return false;
                 }
             };
-            String query = "select k.id_kardex, k.fecha, k.ruc, k.datos_ruc, tm.nom_mov, td.abreviado as documento, k.serie_doc, k.numero_doc, k.cant_ing, k.cant_sal, k.fecha_registro "
+            String query = "select k.id_kardex, k.fecha, k.ruc, k.datos_ruc, tm.nombre as nom_mov, td.abreviado as documento, k.serie_doc, k.numero_doc, k.cant_ing, k.cant_sal, k.fecha_registro "
                     + "from kardex as k "
-                    + "inner join tipo_movimiento as tm on k.tipo_movimiento = tm.idtipo_movimiento "
-                    + "inner join tipo_documento as td on td.id = k.id_documento "
-                    + "where k.id_producto = '" + id_producto + "'"
+                    + "inner join tipo_movimiento as tm on k.id_tipo_movimiento = tm.id_tipo "
+                    + "inner join tipo_documento as td on td.id_documento = k.id_documento "
+                    + "where k.id_producto = '" + this.id_producto + "' "
                     + "order by k.fecha asc";
 
             Statement st = c_conectar.conexion();

@@ -171,17 +171,17 @@ public class cl_compra {
     public void setFecha_registro(String fecha_registro) {
         this.fecha_registro = fecha_registro;
     }
-    
+
     public boolean comprobar_documento() {
         boolean existe = false;
 
         try {
             Statement st = c_conectar.conexion();
-            String c_placas = "select c.periodo,c.id_compra\n" +
-"from compras as c\n" +
-"inner join proveedores as p on c.id_proveedor = p.id_proveedor \n" +
-"inner join tipo_documento as td on c.id_documento = td.id_documento \n" +
-"where p.ruc_pro='"+proveedor+"' and td.nombre='"+documento+"' AND c.serie='"+serie+"' and c.numero='"+numero+"'";
+            String c_placas = "select c.periodo,c.id_compra\n"
+                    + "from compras as c\n"
+                    + "inner join proveedores as p on c.id_proveedor = p.id_proveedor \n"
+                    + "inner join tipo_documento as td on c.id_documento = td.id_documento \n"
+                    + "where p.ruc_pro='" + proveedor + "' and td.nombre='" + documento + "' AND c.serie='" + serie + "' and c.numero='" + numero + "'";
             ResultSet rs = c_conectar.consulta(st, c_placas);
 
             while (rs.next()) {
@@ -197,16 +197,17 @@ public class cl_compra {
         return existe;
     }
 
-    public int obtener_codigo() {
-        int resultado = 0;
+    public void obtener_codigo() {
 
         try {
             Statement st = c_conectar.conexion();
-            String query = "select ifnull(max(id_compra) + 1, 1) as id_compra from compras where periodo = '" + periodo + "' ";
+            String query = "select ifnull(max(id_compra) + 1, 1) as id_compra "
+                    + "from compras "
+                    + "where periodo = '" + periodo + "' ";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
-                resultado = rs.getInt("id_compra");
+                codigo = rs.getInt("id_compra");
             }
 
             c_conectar.cerrar(rs);
@@ -215,31 +216,31 @@ public class cl_compra {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
 
-        return resultado;
     }
 
     public void datos_compra() {
         try {
             Statement st = c_conectar.conexion();
-            String query = "select idcompra, periodo, fec_com, ruc_proveedor, idmoneda, tc, idtido, serie, numero, total, estado, usuario, glosa, fec_reg "
-                    + "from compras where concat (periodo, lpad (idcompra, 3, 0)) = '" + cod_compra + "'";
+            String query = "select * "
+                    + "from compras "
+                    + "where concat (periodo, lpad (id_compra, 3, 0)) = '" + cod_compra + "'";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
                 codigo = rs.getInt("id_compra");
                 periodo = rs.getString("periodo");
-                fecha = rs.getString("fec_com");
-                proveedor = rs.getString("ruc_proveedor");
-                moneda = rs.getInt("idmoneda");
+                fecha = rs.getString("fecha");
+                proveedor = rs.getString("id_proveedor");
+                moneda = rs.getInt("id_moneda");
                 tc_compra = rs.getDouble("tc");
-                documento = rs.getInt("idtido");
+                documento = rs.getInt("id_documento");
                 serie = rs.getString("serie");
                 numero = rs.getInt("numero");
                 total = rs.getDouble("total");
                 estado = rs.getString("estado");
-                usuario = rs.getString("usuario");
+                usuario = rs.getString("id_empleado");
                 glosa = rs.getString("glosa");
-                fecha_registro = rs.getString("fec_reg");
+                fecha_registro = rs.getString("f_registro");
             }
 
             c_conectar.cerrar(rs);
@@ -252,9 +253,9 @@ public class cl_compra {
     public boolean insertar() {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
-        String query = "INSERT INTO compras VALUES('"+periodo+"','"+codigo+"','"+fecha+"','"+moneda+"'"
-                + ",'"+tc_compra+"','"+glosa+"','"+proveedor+"','"+documento+"','"+serie+"','"+numero+"',"
-                + "'"+total+"','"+pagado+"','2',current_date(),'"+usuario+"')";
+        String query = "INSERT INTO compras VALUES('" + periodo + "','" + codigo + "','" + fecha + "','" + moneda + "'"
+                + ",'" + tc_compra + "','" + glosa + "','" + proveedor + "','" + documento + "','" + serie + "','" + numero + "',"
+                + "'" + total + "','" + pagado + "','2',current_date(),'" + usuario + "')";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {
@@ -266,25 +267,10 @@ public class cl_compra {
         return grabado;
     }
 
-    public boolean update_pago() {
-        boolean grabado = false;
-        Statement st = c_conectar.conexion();
-        String query = "update compras set pagado = '" + pagado + "' where idcompra = '" + codigo + "' and periodo = '" + periodo + "'";
-        int resultado = c_conectar.actualiza(st, query);
-
-        if (resultado > -1) {
-            grabado = true;
-        }
-
-        c_conectar.cerrar(st);
-
-        return grabado;
-    }
-    
     public boolean eliminar() {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
-        String query = "delete from compras where concat(periodo, lpad(idcompra, 3, 0)) = '"+cod_compra+"' ";
+        String query = "delete from compras where concat(periodo, lpad(idcompra, 3, 0)) = '" + cod_compra + "' ";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {
@@ -315,86 +301,60 @@ public class cl_compra {
             mostrar.addColumn("Codigo");
             mostrar.addColumn("Fec. Com.");
             mostrar.addColumn("Documento");
-            mostrar.addColumn("datos proevedor");
-            mostrar.addColumn("glosa");
+            mostrar.addColumn("Proveedor");
+            mostrar.addColumn("Moneda");
             mostrar.addColumn("total");
-            mostrar.addColumn("subtotal");
-            mostrar.addColumn("cts");
+            mostrar.addColumn("Pendiente");
+            mostrar.addColumn("TC.");
+            mostrar.addColumn("SubTotal");
             mostrar.addColumn("igv");
-            mostrar.addColumn("descuento");
-            mostrar.addColumn("estado");
-          
-            
-            
+            mostrar.addColumn("Total");
+            mostrar.addColumn("Estado");
 
-            Object fila[] = new Object[11];
+            Object fila[] = new Object[12];
             while (rs.next()) {
-              fila[0] = rs.getString("periodo") + c_varios.ceros_izquieda_numero(3, rs.getInt("id_compra"));
+                fila[0] = rs.getString("periodo") + c_varios.ceros_izquieda_numero(3, rs.getInt("id_compra"));
                 fila[1] = c_varios.formato_fecha_vista(rs.getString("fecha"));
-                fila[2] =rs.getString("abreviado") + " / " + c_varios.ceros_izquieda_letras(4, rs.getString("serie")) + " - " + c_varios.ceros_izquieda_numero(7, rs.getInt("numero"));
+                fila[2] = rs.getString("abreviado") + " / " + c_varios.ceros_izquieda_letras(4, rs.getString("serie")) + " - " + c_varios.ceros_izquieda_numero(7, rs.getInt("numero"));
                 fila[3] = rs.getString("ruc_pro") + " | " + rs.getString("raz_soc_pro");
-                fila[4] = rs.getString("numero");
+                fila[4] = rs.getString("moneda");
                 fila[5] = c_varios.formato_totales(rs.getDouble("total"));
-               fila[6] =c_varios.formato_numero(rs.getDouble("total") - rs.getDouble("pagado"));             
-               Double base = rs.getDouble("total") * rs.getDouble("numero");
-               total = total + base;
-               fila[7] = c_varios.formato_totales(base / 1.18);
-              fila[8] = c_varios.formato_totales(base / 1.18 * 0.18);
-              fila[9] = c_varios.formato_totales(base);
-               if (rs.getString("estado").equals("0")) {
-                    fila[10] = "PENDIENTE";
+                fila[6] = c_varios.formato_numero(rs.getDouble("total") - rs.getDouble("pagado"));
+                fila[7] = c_varios.formato_tc(rs.getDouble("tc"));
+                Double base = rs.getDouble("total") * rs.getDouble("tc");
+                total = total + base;
+                fila[8] = c_varios.formato_totales(base / 1.18);
+                fila[9] = c_varios.formato_totales(base / 1.18 * 0.18);
+                fila[10] = c_varios.formato_totales(base);
+
+                if (rs.getString("estado").equals("0")) {
+                    fila[11] = "PENDIENTE";
                 } else {
-                   fila[10] = "PAGADO";
-               }
+                    fila[11] = "PAGADO";
+                }
                 mostrar.addRow(fila);
             }
             tabla.setModel(mostrar);
-         
+
         } catch (SQLException ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(null, ex);
         }
-        tabla.getColumnModel().getColumn(0).setPreferredWidth(60);
+        tabla.getColumnModel().getColumn(0).setPreferredWidth(100);
         tabla.getColumnModel().getColumn(1).setPreferredWidth(80);
-        tabla.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tabla.getColumnModel().getColumn(3).setPreferredWidth(100);
+        tabla.getColumnModel().getColumn(2).setPreferredWidth(150);
+        tabla.getColumnModel().getColumn(3).setPreferredWidth(400);
         tabla.getColumnModel().getColumn(4).setPreferredWidth(90);
-        tabla.getColumnModel().getColumn(5).setPreferredWidth(60);
-        tabla.getColumnModel().getColumn(6).setPreferredWidth(50);
-        tabla.getColumnModel().getColumn(7).setPreferredWidth(65);
-         tabla.getColumnModel().getColumn(5).setPreferredWidth(60);
-        tabla.getColumnModel().getColumn(6).setPreferredWidth(30);
-        tabla.getColumnModel().getColumn(7).setPreferredWidth(65);
+        tabla.getColumnModel().getColumn(5).setPreferredWidth(80);
+        tabla.getColumnModel().getColumn(6).setPreferredWidth(80);
+        tabla.getColumnModel().getColumn(7).setPreferredWidth(80);
+        tabla.getColumnModel().getColumn(8).setPreferredWidth(80);
+        tabla.getColumnModel().getColumn(9).setPreferredWidth(80);
+        tabla.getColumnModel().getColumn(10).setPreferredWidth(80);
+        tabla.getColumnModel().getColumn(11).setPreferredWidth(65);
         tabla.setDefaultRenderer(Object.class, new render_tables.render_compras());
 
         return total;
     }
-   public void damecodigope(){
-       try {
-         Statement st = c_conectar.conexion();
-            String sql = "select ifnull(max(periodo)+1, 1) as periodo from compras";
-         ResultSet   rs = c_conectar.consulta(st, sql);
-            if (rs.next()) {
-                periodo = rs.getString("periodo");
-
-            }
-        } catch (SQLException e) {
-        }
-       
-
-       
-   }
-   public void damecodigocompras(){
-       try {
-         Statement st = c_conectar.conexion();
-            String sql = "select ifnull(max(id_compra)+1, 1) as id_compra from compras";
-         ResultSet   rs = c_conectar.consulta(st, sql);
-            if (rs.next()) {
-                codigo =rs.getInt("id_compra");
-
-            }
-        } catch (SQLException e) {
-        }
-   }
 
 }

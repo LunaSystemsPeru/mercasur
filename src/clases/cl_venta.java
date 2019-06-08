@@ -229,6 +229,7 @@ public class cl_venta {
             mostrar.addColumn("id_venta");
             //Creando las filas para el JTable
             while (rs.next()) {
+                total += rs.getDouble("total");
                 Object[] fila = new Object[9];
                 fila[0] = rs.getString("periodo") + c_varios.ceros_izquieda_numero(4, rs.getInt("id_venta"));
                 fila[1] = c_varios.formato_fecha_vista(rs.getString("fecha_venta"));

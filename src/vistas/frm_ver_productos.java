@@ -58,6 +58,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         btn_kardex.setEnabled(true);
         btn_kardex_pdf.setEnabled(true);
         btn_mod.setEnabled(true);
+        btn_unidad.setEnabled(true);
     }
 
     private void desactivar_botones() {
@@ -65,6 +66,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         btn_kardex.setEnabled(false);
         btn_kardex_pdf.setEnabled(false);
         btn_mod.setEnabled(false);
+        btn_unidad.setEnabled(false);
     }
 
     /**
@@ -141,6 +143,8 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jd_unidad.setTitle("Presentaciones por Producto");
 
         jLabel3.setText("Descripcion");
 
@@ -342,6 +346,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
         btn_unidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/find.png"))); // NOI18N
         btn_unidad.setText("Presentaciones");
+        btn_unidad.setEnabled(false);
         btn_unidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_unidadActionPerformed(evt);
@@ -412,11 +417,13 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (txt_bus.getText().length() == 0) {
-                String query = "select p.idproducto, p.descripcion, p.grado, p.marca, p.modelo, p.cant_actual, p.cant_min, u.nombre_corto, p.precio_venta, p.estado "
+            if (txt_bus.getText().length() > 0) {
+                String busqueda = txt_bus.getText();
+                query = "select p.id_producto, p.descripcion, p.precio_venta, p.cant_actual, p.costo_compra, m.nombre as marca, m.comision, p.ultima_salida, "
+                        + "p.ultimo_ingreso, p.estado "
                         + "from productos as p "
-                        + "inner join und_medida as u on p.unidad_medida = u.id "
-                        + "order by p.descripcion asc, p.marca, p.grado asc ";
+                        + "inner join marcas as m on m.id_marca = p.id_marca "
+                        + "where p.descripcion like '%" + busqueda + "%'";
                 c_productos.ver_productos(t_productos, query);
                 lbl_encontrados.setText(t_productos.getRowCount() + "");
             }
@@ -456,15 +463,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_productosMouseClicked
 
     private void txt_busKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyReleased
-        String texto = txt_bus.getText();
-        query = "select p.idproducto, p.descripcion, p.grado, p.marca, p.modelo, p.cant_actual, p.cant_min, u.nombre_corto, p.precio_venta, p.estado "
-                + "from productos as p "
-                + "inner join und_medida as u on p.unidad_medida = u.id "
-                + "where p.idproducto = '" + texto + "' or p.descripcion like '%" + texto + "%' or p.grado like '%" + texto + "%' or p.marca like '%" + texto + "%' "
-                + "or p.modelo like '%" + texto + "%' or p.referencia like '%" + texto + "%' or p.caracteristicas like '%" + texto + "%'"
-                + "order by p.descripcion asc, p.marca, p.grado asc";
-        c_productos.ver_productos(t_productos, query);
-        lbl_encontrados.setText(t_productos.getRowCount() + "");
+
     }//GEN-LAST:event_txt_busKeyReleased
 
     private void btn_kardexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kardexActionPerformed
@@ -507,6 +506,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_kardex_pdfActionPerformed
 
     private void btn_unidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_unidadActionPerformed
+        desactivar_botones();
         jd_unidad.setModal(true);
         jd_unidad.setSize(482, 380);
         jd_unidad.setLocationRelativeTo(null);
@@ -529,7 +529,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     }
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
-
+        btn_guardar.setEnabled(false);
         llenar();
         u_producto.obtener_id();
         u_producto.insertar();

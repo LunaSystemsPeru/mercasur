@@ -90,7 +90,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             txt_buscar_cliente.requestFocus();
         } else {
             JOptionPane.showMessageDialog(null, "USTED NO TIENE ZONAS ASIGNADAS");
-            this.dispose();
         }
 
         modelo_detalle();
@@ -237,7 +236,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     }
                 }
             });
-           // c_conectar.conectar();
+            // c_conectar.conectar();
             Statement st = c_conectar.conexion();
             String sql = "select p.id_producto, p.descripcion, p.costo_compra, p.precio_venta, p.cant_actual, "
                     + "um.descripcion as medida, m.nombre as marca "
@@ -365,8 +364,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         t_detalle = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_eliminar = new javax.swing.JButton();
         btn_add_producto = new javax.swing.JButton();
 
         jd_zonas.setTitle("Seleccionar Zona");
@@ -644,15 +642,21 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        t_detalle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_detalleMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(t_detalle);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
-        jButton3.setText("Modificar");
-        jButton3.setEnabled(false);
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/bin_closed.png"))); // NOI18N
-        jButton2.setText("Eliminar");
-        jButton2.setEnabled(false);
+        btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/bin_closed.png"))); // NOI18N
+        btn_eliminar.setText("Eliminar");
+        btn_eliminar.setEnabled(false);
+        btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminarActionPerformed(evt);
+            }
+        });
 
         btn_add_producto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/add.png"))); // NOI18N
         btn_add_producto.setText("Agregar");
@@ -697,9 +701,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     .addComponent(jSeparator1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(btn_eliminar)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -729,11 +731,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -821,6 +821,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     cbx_unidad_producto.requestFocus();
                 }
             }
+        }
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            txt_buscar_producto.setText("");
+            limpiar_productos();
         }
     }//GEN-LAST:event_txt_buscar_productoKeyPressed
 
@@ -955,18 +960,29 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
 
         cargar_clientes();
+        txt_buscar_cliente.requestFocus();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        detalle.removeRow(t_detalle.getSelectedRow());
+        calcular_total();
+        btn_eliminar.setEnabled(false);
+        txt_buscar_producto.requestFocus();
+    }//GEN-LAST:event_btn_eliminarActionPerformed
+
+    private void t_detalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_detalleMouseClicked
+        btn_eliminar.setEnabled(true);
+    }//GEN-LAST:event_t_detalleMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add_producto;
     private javax.swing.JButton btn_crear;
+    private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_grabar;
     private javax.swing.JComboBox cbx_unidad_producto;
     private javax.swing.JComboBox<String> cbx_zona;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

@@ -19,11 +19,11 @@ public class render_compras extends DefaultTableCellRenderer {
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
         // SI EN CADA FILA DE LA TABLA LA CELDA 5 ES IGUAL A ACTIVO COLOR AZUL
-        if (String.valueOf(table.getValueAt(row, 10)).equals("PAGADO")) {
+        if (String.valueOf(table.getValueAt(row, 11)).equals("PAGADO")) {
             setBackground(Color.white);
             setForeground(Color.black);
         }
-        if (String.valueOf(table.getValueAt(row, 10)).equals("PENDIENTE")) {
+        if (String.valueOf(table.getValueAt(row, 11)).equals("PENDIENTE")) {
             setBackground(Color.BLACK);
             setForeground(Color.white);
         }

@@ -57,6 +57,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="jd_unidad">
+      <Properties>
+        <Property name="title" type="java.lang.String" value="Presentaciones por Producto"/>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -409,6 +412,7 @@
           <Image iconType="3" name="/recursos/find.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Presentaciones"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_unidadActionPerformed"/>

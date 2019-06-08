@@ -156,20 +156,23 @@ public class cl_proveedor {
 
         try {
             Statement st = c_conectar.conexion();
-            String query = " select id_proveedor,raz_soc_pro, dir_pro, telefono, web, email, total_pagado, total_compras "
+            String query = " select * "
                     + "from proveedores "
-                    + "where ruc_pro = '" + ruc + "'";
+                    + "where id_proveedor = '" + id + "'";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
                 existe = true;
-                id=rs.getInt("id_proveedor");
+                ruc = rs.getString("ruc_prov");
                 razon_social = rs.getString("raz_soc_pro");
+                nombre_comercial = rs.getString("nombre_comercial");
                 direccion = rs.getString("dir_pro");
                 telefono = rs.getString("telefono");
+                web = rs.getString("web");
                 email = rs.getString("email");
                 total_pagado = rs.getDouble("total_pagado");
                 total_compras = rs.getInt("total_compras");
+                estado = rs.getString("estado");
             }
 
             c_conectar.cerrar(rs);
@@ -201,9 +204,7 @@ public class cl_proveedor {
         return pagos;
     }
      
-     public int obtener_codigo() {
-        int resultado = 0;
-
+     public void obtener_codigo() {
         try {
             Statement st = c_conectar.conexion();
             String query = "select ifnull(max(id) + 1, 1) as codigo "
@@ -211,7 +212,7 @@ public class cl_proveedor {
             ResultSet rs = c_conectar.consulta(st, query);
             System.out.println(query);
             while (rs.next()) {
-                resultado = rs.getInt("codigo");
+                this.id = rs.getInt("codigo");
             }
 
             c_conectar.cerrar(rs);
@@ -219,8 +220,6 @@ public class cl_proveedor {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
-
-        return resultado;
     }
 
     public boolean insertar() {

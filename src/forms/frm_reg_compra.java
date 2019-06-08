@@ -564,7 +564,7 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
             int id_moneda = c_mon.getCodigo();
 
             c_compra.setPeriodo(txt_per.getText().trim());
-            c_compra.setCodigo(c_compra.obtener_codigo());
+            c_compra.obtener_codigo();
             c_compra.setDocumento(id_tido);
             c_compra.setSerie(txt_ser.getText().trim().toUpperCase());
             c_compra.setNumero(Integer.parseInt(txt_ndoc.getText()));

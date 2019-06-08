@@ -41,7 +41,8 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
                 + "from ventas as v "
                 + "inner join clientes as cl on cl.id_cliente = v.id_cliente and cl.id_zona = v.id_zona "
                 + "inner join zona as z on z.id_zona = cl.id_zona "
-                + "inner join tipo_documento as td on td.id_documento = v.id_documento";
+                + "inner join tipo_documento as td on td.id_documento = v.id_documento "
+                + "where v.fecha_venta = current_date()";
         double total = c_venta.ver_ventas(t_ventas, query);
         txt_tot.setText(c_varios.formato_totales(total));
         cbx_busqueda.setSelectedIndex(0);
@@ -534,7 +535,7 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
             }
         });
 
-        cbx_busqueda.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "FECHA", "CLIENTE", "VEHICULO", "NRO. BOLETA / FACTURA" }));
+        cbx_busqueda.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "FECHA", "CLIENTE", "NRO. BOLETA / FACTURA" }));
         cbx_busqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_busquedaActionPerformed(evt);
@@ -713,39 +714,34 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
                 if (cbx_busqueda.getSelectedIndex() == 0) {
                     if (busqueda.length() == 10) {
                         busqueda = c_varios.formato_fecha_mysql(busqueda);
-                        query = "select v.periodo, v.id, v.nro_placa, v.fecha_venta, td.abreviado as documento, v.serie_doc, v.nro_doc, c.documento as doc_cliente, v.nombre_cliente, v.kilometraje, v.total, v.descuento, v.pagado, v.estado "
+                        query = "select v.periodo, v.id_venta,v.fecha_venta, td.abreviado, v.serie_doc, v.nro_doc, v.total, v.estado, cl.documento, cl.nombre as nom_cliente, z.nombre as zona "
                                 + "from ventas as v "
-                                + "inner join tipo_documento as td on td.id = v.tipo_documento "
-                                + "inner join clientes as c on c.codigo = v.cliente "
+                                + "inner join clientes as cl on cl.id_cliente = v.id_cliente and cl.id_zona = v.id_zona "
+                                + "inner join zona as z on z.id_zona = cl.id_zona "
+                                + "inner join tipo_documento as td on td.id_documento = v.id_documento "
                                 + "where v.fecha_venta = '" + busqueda + "'";
                         System.out.println(query);
+
                     } else {
                         JOptionPane.showMessageDialog(null, "FECHA INCORRECTA");
                     }
                 }
                 if (cbx_busqueda.getSelectedIndex() == 1) {
-                    query = "select v.periodo, v.id, v.nro_placa, v.fecha_venta, td.abreviado as documento, v.serie_doc, v.nro_doc, c.documento as doc_cliente, v.nombre_cliente, v.kilometraje, v.total, v.descuento, v.pagado, v.estado "
+                    query = "select v.periodo, v.id_venta,v.fecha_venta, td.abreviado, v.serie_doc, v.nro_doc, v.total, v.estado, cl.documento, cl.nombre as nom_cliente, z.nombre as zona "
                             + "from ventas as v "
-                            + "inner join tipo_documento as td on td.id = v.tipo_documento "
-                            + "inner join clientes as c on c.codigo = v.cliente "
-                            + "where c.documento like '%" + busqueda + "%' or nombre_cliente like '%" + busqueda + "%'";
+                            + "inner join clientes as cl on cl.id_cliente = v.id_cliente and cl.id_zona = v.id_zona "
+                            + "inner join zona as z on z.id_zona = cl.id_zona "
+                            + "inner join tipo_documento as td on td.id_documento = v.id_documento "
+                            + "where cl.nombre like '%" + busqueda + "%'";
 
                 }
                 if (cbx_busqueda.getSelectedIndex() == 2) {
-                    query = "select v.periodo, v.id, v.nro_placa, v.fecha_venta, td.abreviado as documento, v.serie_doc, v.nro_doc, c.documento as doc_cliente, v.nombre_cliente, v.kilometraje, v.total, v.descuento, v.pagado, v.estado "
+                    query = "select v.periodo, v.id_venta,v.fecha_venta, td.abreviado, v.serie_doc, v.nro_doc, v.total, v.estado, cl.documento, cl.nombre as nom_cliente, z.nombre as zona "
                             + "from ventas as v "
-                            + "inner join tipo_documento as td on td.id = v.tipo_documento "
-                            + "inner join clientes as c on c.codigo = v.cliente "
-                            + "where nro_placa = '" + busqueda + "'";
-                }
-                if (cbx_busqueda.getSelectedIndex() == 3) {
-
-                    query = "select v.periodo, v.id, v.nro_placa, v.fecha_venta, td.abreviado as documento, v.serie_doc, v.nro_doc, c.documento as doc_cliente, v.nombre_cliente, v.kilometraje, v.total, v.descuento, v.pagado, v.estado "
-                            + "from ventas as v "
-                            + "inner join tipo_documento as td on td.id = v.tipo_documento "
-                            + "inner join clientes as c on c.codigo = v.cliente "
-                            + "where nro_doc = '" + busqueda + "'";
-
+                            + "inner join clientes as cl on cl.id_cliente = v.id_cliente and cl.id_zona = v.id_zona "
+                            + "inner join zona as z on z.id_zona = cl.id_zona "
+                            + "inner join tipo_documento as td on td.id_documento = v.id_documento "
+                            + "where v.nro_doc = '" + busqueda + "'";
                 }
 
                 double total = c_venta.ver_ventas(t_ventas, query);
@@ -770,7 +766,7 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
             if (dialogButton == JOptionPane.YES_OPTION) { //The ISSUE is here
                 String periodo = t_ventas.getValueAt(fila_seleccionada, 7).toString();
                 int id_venta = Integer.parseInt(t_ventas.getValueAt(fila_seleccionada, 8).toString());
-                
+
                 c_venta.setId_venta(id_venta);
                 c_venta.setPeriodo(periodo);
                 c_venta.datos_venta();

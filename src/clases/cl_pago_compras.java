@@ -125,11 +125,10 @@ public class cl_pago_compras {
             modelo_pago.addColumn("Monto M.N");
 
             Statement st = c_conectar.conexion();
-            String ver_pagos = "select p.id_pago, m.corto, p.id_moneda as moneda_pago, c.idmoneda as moneda_compra, p.monto, p.fec_pago, p.tc as compra, p.tipo_pago "
+            String ver_pagos = "select p.id_pago, p.monto, p.fecha, p.tc as tc "
                     + "from pagos_compra as p "
-                    + "inner join compras as c on c.periodo = p.periodo and c.idcompra = p.compra "
-                    + "inner join moneda as m on p.id_moneda = m.idmon "
-                    + "where p.compra = '" + compra + "' and p.periodo = '" + periodo + "'";
+                    + "inner join compras as c on c.periodo = p.periodo and c.id_compra = p.id_compra "
+                    + "where p.id_compra = '" + compra + "' and p.periodo = '" + periodo + "'";
             ResultSet rs = c_conectar.consulta(st, ver_pagos);
             Object fila_p[] = new Object[7];
             while (rs.next()) {
@@ -221,7 +220,7 @@ public class cl_pago_compras {
 
         return grabado;
     }
-    
+
     public boolean eliminar() {
         boolean grabado = false;
         Statement st = c_conectar.conexion();

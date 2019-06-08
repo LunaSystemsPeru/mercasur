@@ -702,11 +702,10 @@
     <Component class="javax.swing.JComboBox" name="cbx_busqueda">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
+          <StringArray count="3">
             <StringItem index="0" value="FECHA"/>
             <StringItem index="1" value="CLIENTE"/>
-            <StringItem index="2" value="VEHICULO"/>
-            <StringItem index="3" value="NRO. BOLETA / FACTURA"/>
+            <StringItem index="2" value="NRO. BOLETA / FACTURA"/>
           </StringArray>
         </Property>
       </Properties>

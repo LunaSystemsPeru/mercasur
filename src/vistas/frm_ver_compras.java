@@ -42,10 +42,14 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
     public frm_ver_compras() {
         initComponents();
         String periodo = c_varios.obtener_periodo();
-        String query = "select c.periodo, c.id_compra, c.fecha, td.nombre,td.abreviado, p.ruc_pro, p.raz_soc_pro, c.serie,c.numero,c.total, c.pagado, c.estado\n" +
-"from compras as c inner join tipo_documento as td on c.id_documento = td.id_documento \n" +
-"INNER JOIN proveedores as p ON c.id_proveedor=p.id_proveedor  ";
+        String query = "select c.periodo, c.id_compra, c.fecha, m.corto as moneda, c.tc, td.nombre,td.abreviado, p.ruc_pro, p.raz_soc_pro, c.serie,c.numero,c.total, c.pagado, c.estado "
+                + "from compras as c "
+                + "inner join tipo_documento as td on c.id_documento = td.id_documento "
+                + "inner join monedas as m on m.id_moneda = c.id_moneda "
+                + "INNER JOIN proveedores as p ON c.id_proveedor=p.id_proveedor "
+                + "where c.estado = 2 ";
         llenar_tabla(query);
+        System.out.println(query);
     }
 
     private void llenar_tabla(String query) {
@@ -625,7 +629,7 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
                     .addComponent(btn_pag, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_detalle, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
