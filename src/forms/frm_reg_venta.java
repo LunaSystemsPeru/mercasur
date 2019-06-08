@@ -36,6 +36,7 @@ import models.m_unidad_producto;
 import models.m_zonas;
 import nicon.notify.core.Notification;
 
+
 /**
  *
  * @author CALIDAD
@@ -952,6 +953,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_grabarActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+
         cargar_clientes();
     }//GEN-LAST:event_jButton6ActionPerformed
 

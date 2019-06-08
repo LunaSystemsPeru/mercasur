@@ -286,6 +286,7 @@ public class frm_reg_proveedor extends javax.swing.JDialog {
 
         if (JOptionPane.OK_OPTION == confirmado) {
 
+            c_proveedor.obtener_codigo();
             c_proveedor.setRuc(txt_ruc.getText());
             c_proveedor.setRazon_social(txt_razon_social.getText().toUpperCase().trim());
             c_proveedor.setNombre_comercial(txt_nombre_comercial.getText().toUpperCase().trim());

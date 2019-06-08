@@ -20,6 +20,10 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
 
     m_empleados m_empleados = new m_empleados();
     String query;
+    
+    int fila = -1;
+    
+    
 
     /**
      * Creates new form frm_ver_marcas
@@ -52,12 +56,13 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
         cbx_frm_empleado = new javax.swing.JComboBox<>();
         jToolBar1 = new javax.swing.JToolBar();
         btn_frm_grabar = new javax.swing.JButton();
+        btn_frm_modificar = new javax.swing.JButton();
         btn_frm_salir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_zonas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btn_modificar = new javax.swing.JButton();
 
         jLabel1.setText("Id Zona:");
 
@@ -105,6 +110,19 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
             }
         });
         jToolBar1.add(btn_frm_grabar);
+
+        btn_frm_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
+        btn_frm_modificar.setText("Modificar");
+        btn_frm_modificar.setEnabled(false);
+        btn_frm_modificar.setFocusable(false);
+        btn_frm_modificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_frm_modificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_frm_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_frm_modificarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_frm_modificar);
 
         btn_frm_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
         btn_frm_salir.setText("Salir");
@@ -177,6 +195,11 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        t_zonas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_zonasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(t_zonas);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/add.png"))); // NOI18N
@@ -195,9 +218,14 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
-        jButton3.setText("Modificar");
-        jButton3.setEnabled(false);
+        btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
+        btn_modificar.setText("Modificar");
+        btn_modificar.setEnabled(false);
+        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,7 +243,7 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(btn_modificar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -228,7 +256,7 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -246,6 +274,7 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
         m_empleados.llenar_combobox(cbx_frm_empleado);
         txt_frm_nombre.requestFocus();
         jd_formulario.setVisible(true);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_frm_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_frm_salirActionPerformed
@@ -295,14 +324,41 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btn_frm_grabarActionPerformed
 
+    private void t_zonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_zonasMouseClicked
+        // TODO add your handling code here:
+        fila = t_zonas.getSelectedRow();
+        btn_modificar.setEnabled(true);
+        
+        
+    }//GEN-LAST:event_t_zonasMouseClicked
+
+    private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
+        // TODO add your handling code here:
+        
+        jd_formulario.setSize(579, 240);
+        jd_formulario.setModal(true);
+        jd_formulario.setLocationRelativeTo(null);
+        m_empleados.llenar_combobox(cbx_frm_empleado);
+        txt_frm_nombre.requestFocus();
+        jd_formulario.setVisible(true);
+        
+        
+    }//GEN-LAST:event_btn_modificarActionPerformed
+
+    private void btn_frm_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_frm_modificarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btn_frm_modificarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_frm_grabar;
+    private javax.swing.JButton btn_frm_modificar;
     private javax.swing.JButton btn_frm_salir;
+    private javax.swing.JButton btn_modificar;
     private javax.swing.JComboBox<String> cbx_frm_empleado;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
