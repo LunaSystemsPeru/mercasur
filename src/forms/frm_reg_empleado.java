@@ -455,8 +455,19 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
     private void txt_contraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_contraseñaKeyPressed
         
         if (evt.getKeyCode() == KeyEvent.VK_ENTER){
-             this.btn_registrar.requestFocus();
-             btn_registrar.setEnabled(true);
+            if(txt_codigo.getText().length()>0){
+                 jButton3.setEnabled(true);
+                 btn_registrar.setEnabled(false);
+                 jButton3.requestFocus();
+            }
+            else{
+                
+                jButton3.setEnabled(false);
+                btn_registrar.setEnabled(true);
+                btn_registrar.requestFocus();
+                
+               
+            }
         }
     }//GEN-LAST:event_txt_contraseñaKeyPressed
 
