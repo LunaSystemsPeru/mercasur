@@ -27,7 +27,8 @@
      tipo_documento.`nombre` AS tipo_documento_nombre,
      detalle_venta.`id_producto` AS detalle_venta_id_producto,
      zona.`nombre` AS zona_nombre,
-     zona.`ciudad` AS zona_ciudad
+     zona.`ciudad` AS zona_ciudad,
+     ventas.`id_cliente` AS ventas_id_cliente
 FROM
      `ventas` ventas INNER JOIN `detalle_venta` detalle_venta ON ventas.`periodo` = detalle_venta.`periodo`
      AND ventas.`id_venta` = detalle_venta.`id_venta`
@@ -60,6 +61,7 @@ WHERE
 	<field name="detalle_venta_id_producto" class="java.lang.Integer"/>
 	<field name="zona_nombre" class="java.lang.String"/>
 	<field name="zona_ciudad" class="java.lang.String"/>
+	<field name="ventas_id_cliente" class="java.lang.Integer"/>
 	<variable name="subtotal" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{detalle_venta_cantidad} * $F{detalle_venta_precio}]]></variableExpression>
 	</variable>
@@ -165,19 +167,12 @@ WHERE
 				</textElement>
 				<text><![CDATA[Direcccion:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="425" y="93" width="56" height="16" uuid="5b013ef6-5ed6-4b47-95c8-6df0cc771d15"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Moneda:]]></text>
-			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="481" y="93" width="74" height="16" uuid="93cfc517-5476-4396-bc22-d2c93cb33bab"/>
+				<reportElement x="425" y="93" width="130" height="16" uuid="93cfc517-5476-4396-bc22-d2c93cb33bab"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA["SOLES"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Cod. Cliente:" + $F{ventas_id_cliente}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="109" width="56" height="16" uuid="d5f46ba6-656f-43fe-9023-b6c251b0ee00"/>
