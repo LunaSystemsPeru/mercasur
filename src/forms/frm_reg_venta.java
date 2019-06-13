@@ -308,7 +308,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             agregar_datos = true;
         }
 
-        if (contar_filas == 29) {
+        if (contar_filas == 10) {
             txt_buscar_producto.setEnabled(false);
             JOptionPane.showMessageDialog(null, "SE HA LLEGADO AL LIMITE DE 30 PRODUCTOS");
         }

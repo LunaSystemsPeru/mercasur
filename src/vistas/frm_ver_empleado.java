@@ -160,6 +160,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         fila = t_empleados.getSelectedRow();
         btn_modificar.setEnabled(true);
+        jButton1.setEnabled(false);
 
     }//GEN-LAST:event_t_empleadosMouseClicked
 
