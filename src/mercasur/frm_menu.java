@@ -1058,12 +1058,12 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         frm_ver_inventarios ver_inventarios = new frm_ver_inventarios();
-        c_varios.llamar_ventana(ver_inventarios);
+        c_varios.llamar_ventana_completa(ver_inventarios);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         frm_ver_clientes ver_clientes = new frm_ver_clientes();
-        c_varios.llamar_ventana(ver_clientes);
+        c_varios.llamar_ventana_completa(ver_clientes);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

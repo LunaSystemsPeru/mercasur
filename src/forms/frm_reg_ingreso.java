@@ -11,7 +11,6 @@ import clases.cl_conectar;
 import clases.cl_detalle_ingreso;
 import clases.cl_documento_tienda;
 import clases.cl_ingreso;
-import clases.cl_moneda;
 import clases.cl_productos;
 import clases.cl_proveedor;
 import clases.cl_tipo_documento;
@@ -26,7 +25,6 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mercasur.frm_menu;
-import models.m_moneda;
 import models.m_tipo_documento;
 import nicon.notify.core.Notification;
 import vistas.frm_ver_ingresos;
@@ -58,7 +56,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     double total_ingreso = 0;
     int total_items = 0;
 
-    Integer i;
+    Integer nro_fila;
 
     /**
      * Creates new form frm_reg_ingreso
@@ -785,6 +783,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel10)
@@ -800,9 +799,6 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                         .addComponent(btn_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_cerrar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(20, 20, 20)
@@ -887,7 +883,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_fechaKeyPressed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        detalle.removeRow(i);
+        detalle.removeRow(nro_fila);
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void btn_add_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_productoActionPerformed
@@ -947,7 +943,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_serie_docKeyPressed
 
     private void t_detalleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_detalleMousePressed
-        i = t_detalle.getSelectedRow();
+        nro_fila = t_detalle.getSelectedRow();
         activar_botones();
     }//GEN-LAST:event_t_detalleMousePressed
 
@@ -984,7 +980,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             c_ingreso.setNumero(Integer.parseInt(txt_numero_doc.getText()));
             c_ingreso.setSerie(txt_serie_doc.getText());
             c_ingreso.setId_documento(id_tido);
-            c_ingreso.setId_proveedor(txt_ruc_proveedor.getText());
+            c_ingreso.setId_proveedor(c_proveedor.getId() + "");
             c_ingreso.setTotal(total_ingreso);
             c_ingreso.setId_empleado(frm_menu.c_empleado.getId_empleado() + "");
 
@@ -1005,6 +1001,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                     c_detalle.setCantidad(Double.parseDouble(t_detalle.getValueAt(i, 2).toString()));
                     c_detalle.setCosto(Double.parseDouble(t_detalle.getValueAt(i, 5).toString()));
                     c_detalle.setPrecio(Double.parseDouble(t_detalle.getValueAt(i, 4).toString()));
+                    c_detalle.setId_unidad(1);
 
                     c_detalle.insertar();
                 }

@@ -45,7 +45,7 @@ public class frm_reg_cliente extends javax.swing.JDialog {
             txt_ndoc.setText(c_cliente.getDocumento());
             txt_nom.setText(c_cliente.getNombre());
             txt_dir.setText(c_cliente.getDireccion());
-            txt_tel.setText(c_cliente.getTelefono() + "");
+            txt_tel.setText(c_cliente.getReferencia()+ "");
             txt_tel1.setText(c_cliente.getCelular() + "");
             txt_ndoc.setEnabled(false);
             txt_nom.setEnabled(true);
@@ -60,7 +60,7 @@ public class frm_reg_cliente extends javax.swing.JDialog {
     private void llenar() {
         c_cliente.setDocumento(txt_ndoc.getText());
         c_cliente.setCelular(Integer.parseInt(txt_tel1.getText()));
-        c_cliente.setTelefono(Integer.parseInt(txt_tel.getText()));
+        c_cliente.setReferencia(txt_tel.getText());
         c_cliente.setNombre(txt_nom.getText().trim().toUpperCase());
         c_cliente.setDireccion(txt_dir.getText().trim().toUpperCase());
         c_cliente.setN_comercial(txt_nombre_comercial.getText().trim().toUpperCase());
@@ -134,14 +134,13 @@ public class frm_reg_cliente extends javax.swing.JDialog {
 
         jLabel5.setText("Referencia Dir.");
 
-        txt_tel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_tel.setEnabled(false);
         txt_tel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_telKeyPressed(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_telKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_telKeyPressed(evt);
             }
         });
 
@@ -381,11 +380,7 @@ public class frm_reg_cliente extends javax.swing.JDialog {
     }//GEN-LAST:event_txt_telKeyPressed
 
     private void txt_telKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_telKeyTyped
-        if (txt_tel.getText().length() == 9) {
-            evt.consume();
-        }
-        char car = evt.getKeyChar();
-        if ((car < '0' || car > '9')) {
+        if (txt_tel.getText().length() == 250) {
             evt.consume();
         }
     }//GEN-LAST:event_txt_telKeyTyped

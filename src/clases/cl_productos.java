@@ -247,7 +247,7 @@ public class cl_productos {
                 fila[1] = c_varios.formato_fecha_vista(rs.getString("fecha"));
                 fila[2] = rs.getString("nom_mov");
                 fila[3] = rs.getString("ruc") + " | " + rs.getString("datos_ruc");
-                fila[4] = rs.getString("documento") + " | " + c_varios.ceros_izquieda_letras(4, rs.getString("serie_doc")) + " - " + c_varios.ceros_izquieda_numero(7, rs.getInt("numero_doc"));
+                fila[4] = rs.getString("documento") + " | " + c_varios.ceros_izquieda_letras(4, rs.getString("serie_doc")) + " - " + c_varios.ceros_izquieda_numero(5, rs.getInt("numero_doc"));
                 fila[5] = c_varios.formato_totales(rs.getDouble("cant_ing"));
                 fila[6] = c_varios.formato_totales(rs.getDouble("cant_sal"));
                 fila[7] = c_varios.formato_totales(saldo);
@@ -259,13 +259,13 @@ public class cl_productos {
             c_conectar.cerrar(rs);
             tabla.setModel(mostrar);
             tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
-            tabla.getColumnModel().getColumn(1).setPreferredWidth(70);
-            tabla.getColumnModel().getColumn(2).setPreferredWidth(70);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(150);
             tabla.getColumnModel().getColumn(3).setPreferredWidth(320);
-            tabla.getColumnModel().getColumn(4).setPreferredWidth(120);
-            tabla.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tabla.getColumnModel().getColumn(6).setPreferredWidth(50);
-            tabla.getColumnModel().getColumn(7).setPreferredWidth(50);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(150);
+            tabla.getColumnModel().getColumn(5).setPreferredWidth(60);
+            tabla.getColumnModel().getColumn(6).setPreferredWidth(60);
+            tabla.getColumnModel().getColumn(7).setPreferredWidth(60);
             c_varios.centrar_celda(tabla, 0);
             c_varios.centrar_celda(tabla, 1);
             c_varios.centrar_celda(tabla, 2);

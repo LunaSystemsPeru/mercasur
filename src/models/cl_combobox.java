@@ -40,4 +40,25 @@ public class cl_combobox {
         return datos;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final cl_combobox other = (cl_combobox) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
 }

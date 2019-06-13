@@ -147,7 +147,9 @@ public class cl_ingreso {
 
         try {
             Statement st = c_conectar.conexion();
-            String query = "select ifnull(max(id_ingreso) + 1, 1) as codigo from ingresos where periodo = '" + periodo + "' ";
+            String query = "select ifnull(max(id_ingreso) + 1, 1) as codigo "
+                    + "from ingresos "
+                    + "where periodo = '" + periodo + "' ";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {

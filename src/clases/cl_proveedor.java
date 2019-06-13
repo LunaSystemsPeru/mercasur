@@ -163,7 +163,7 @@ public class cl_proveedor {
 
             while (rs.next()) {
                 existe = true;
-                ruc = rs.getString("ruc_prov");
+                ruc = rs.getString("ruc_pro");
                 razon_social = rs.getString("raz_soc_pro");
                 nombre_comercial = rs.getString("nombre_comercial");
                 direccion = rs.getString("dir_pro");
@@ -207,7 +207,7 @@ public class cl_proveedor {
      public void obtener_codigo() {
         try {
             Statement st = c_conectar.conexion();
-            String query = "select ifnull(max(id) + 1, 1) as codigo "
+            String query = "select ifnull(max(id_proveedor) + 1, 1) as codigo "
                     + "from proveedores";
             ResultSet rs = c_conectar.consulta(st, query);
             System.out.println(query);

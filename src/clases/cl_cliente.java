@@ -30,7 +30,7 @@ public class cl_cliente {
     private String nombre;
     private String n_comercial;
     private String direccion;
-    private int telefono;
+    private String referencia;
     private int celular;
     private double ventas;
     private double pagado;
@@ -97,12 +97,12 @@ public class cl_cliente {
         this.direccion = direccion;
     }
 
-    public int getTelefono() {
-        return telefono;
+    public String getReferencia() {
+        return referencia;
     }
 
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
     }
 
     public int getCelular() {
@@ -133,7 +133,7 @@ public class cl_cliente {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into clientes "
-                + "Values ('" + id_cliente + "', '" + id_zona + "', '" + documento + "', '" + nombre + "', '" + n_comercial + "', '" + direccion + "','" + telefono + "', '" + celular + "', '0', '0', '1')";
+                + "Values ('" + id_cliente + "', '" + id_zona + "', '" + documento + "', '" + nombre + "', '" + n_comercial + "', '" + direccion + "','" + referencia + "', '" + celular + "', '0', '0', '1')";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {
@@ -149,7 +149,7 @@ public class cl_cliente {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
         String query = "update clientes "
-                + "set nombre = '" + nombre + "', direccion = '" + direccion + "', telefono = '" + telefono + "', celular = '" + celular + "' "
+                + "set nombre = '" + nombre + "', direccion = '" + direccion + "', referencia = '" + referencia + "', celular = '" + celular + "' "
                 + "where id_cliente = '" + id_cliente + "' and id_zona = '" + id_zona + "'";
         int resultado = c_conectar.actualiza(st, query);
 
@@ -189,7 +189,7 @@ public class cl_cliente {
 
         try {
             Statement st = c_conectar.conexion();
-            String query = "select nombre, documento, nombre_comercial, direccion, telefono, celular, ventas, pagado "
+            String query = "select nombre, documento, nombre_comercial, direccion, referencia, celular, ventas, pagado "
                     + "from clientes "
                     + "where id_cliente = '" + id_cliente + "' and id_zona = '" + id_zona + "'";
             ResultSet rs = c_conectar.consulta(st, query);
@@ -200,7 +200,7 @@ public class cl_cliente {
                 n_comercial = rs.getString("nombre_comercial");
                 nombre = rs.getString("nombre").toUpperCase().trim();
                 direccion = rs.getString("direccion").toUpperCase().trim();
-                telefono = rs.getInt("telefono");
+                referencia = rs.getString("referencia");
                 celular = rs.getInt("celular");
                 ventas = rs.getDouble("ventas");
                 pagado = rs.getDouble("pagado");

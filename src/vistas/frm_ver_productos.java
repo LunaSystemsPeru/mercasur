@@ -7,7 +7,6 @@ package vistas;
 
 import clases.cl_producto_unidad;
 import clases.cl_productos;
-import clases.cl_und_medida;
 import clases.cl_varios;
 import forms.frm_reg_producto;
 import java.awt.Frame;
@@ -106,6 +105,8 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         btn_kardex = new javax.swing.JButton();
         btn_kardex_pdf = new javax.swing.JButton();
         btn_unidad = new javax.swing.JButton();
+
+        jd_kardex.setTitle("Ver Kardex del Producto");
 
         t_kardex.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -470,7 +471,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         if (i > -1) {
             desactivar_botones();
             jd_kardex.setModal(true);
-            jd_kardex.setSize(840, 380);
+            jd_kardex.setSize(900, 380);
             jd_kardex.setLocationRelativeTo(null);
             c_productos.setId_producto(Integer.parseInt(t_productos.getValueAt(i, 0).toString()));
             txt_kardex_descripcion.setText(t_productos.getValueAt(i, 1).toString());

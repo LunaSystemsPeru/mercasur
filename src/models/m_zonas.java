@@ -41,4 +41,25 @@ public class m_zonas {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
+    
+    public void cbx_todas_zona(JComboBox combobox) {
+        try {
+            combobox.removeAllItems();
+            Statement st = c_conectar.conexion();
+            String query = "select id_zona, nombre "
+                    + "from zona "
+                    + "order by nombre asc";
+            ResultSet rs = c_conectar.consulta(st, query);
+
+            while (rs.next()) {
+                combobox.addItem(new cl_combobox(rs.getInt("id_zona"), rs.getString("nombre").trim()));
+            }
+
+            c_conectar.cerrar(st);
+            c_conectar.cerrar(rs);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
 }

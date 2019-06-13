@@ -20,6 +20,7 @@ public class cl_detalle_ingreso {
     private double cantidad;
     private double costo;
     private double precio;
+    private int id_unidad;
 
     public cl_detalle_ingreso() {
     }
@@ -72,11 +73,19 @@ public class cl_detalle_ingreso {
         this.precio = precio;
     }
 
+    public int getId_unidad() {
+        return id_unidad;
+    }
+
+    public void setId_unidad(int id_unidad) {
+        this.id_unidad = id_unidad;
+    }
+
     public boolean insertar() {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into detalle_ingresos "
-                + "Values ('" + periodo + "', '" + ingreso + "', '" + producto + "', '" + cantidad + "', '" + costo + "', '" + precio + "')";
+                + "Values ('" + periodo + "', '" + ingreso + "', '" + producto + "', '" + cantidad + "', '" + costo + "', '" + precio + "', '" + id_unidad + "')";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {

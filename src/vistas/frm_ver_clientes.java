@@ -12,6 +12,8 @@ import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import mercasur.frm_menu;
+import models.cl_combobox;
+import models.m_zonas;
 
 /**
  *
@@ -23,13 +25,17 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
     cl_cliente c_cliente = new cl_cliente();
 
     int fila_seleccionada;
-    int id_zona = frm_menu.c_zona.getId_zona();
+    int id_zona;
+
+    m_zonas m_zona = new m_zonas();
 
     /**
      * Creates new form frm_ver_clientes
      */
     public frm_ver_clientes() {
         initComponents();
+
+        m_zona.cbx_todas_zona(cbx_zonas);
 
         String query = "select * "
                 + "from clientes "
@@ -72,6 +78,8 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         t_clientes = new javax.swing.JTable();
         txt_bus = new javax.swing.JTextField();
+        cbx_zonas = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         t_detalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -206,6 +214,25 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
             }
         });
 
+        cbx_zonas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbx_zonas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbx_zonasMouseClicked(evt);
+            }
+        });
+        cbx_zonas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_zonasActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Ver Clientes");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -217,13 +244,17 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_bus)
+                        .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(cbx_zonas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_modificar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_eliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_deuda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_modificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)))
                 .addContainerGap())
@@ -235,15 +266,17 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbx_zonas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_deuda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(btn_deuda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -330,7 +363,7 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_busKeyPressed
 
     private void txt_busKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyReleased
-       
+
     }//GEN-LAST:event_txt_busKeyReleased
 
     private void txt_kardex_descripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_kardex_descripcionActionPerformed
@@ -345,7 +378,7 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
 
     private void txt_busKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyTyped
         // TODO add your handling code here:
-         String buscar = txt_bus.getText();
+        String buscar = txt_bus.getText();
         String query = "select id_cliente, documento, nombre, ventas, pagado "
                 + "from clientes "
                 + "where (documento like '%" + buscar + "%' or nombre like '%" + buscar + "%' or id_cliente = '" + buscar + "') and id_zona = '" + id_zona + "' "
@@ -353,11 +386,32 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
         c_cliente.ver_clientes(t_clientes, query);
     }//GEN-LAST:event_txt_busKeyTyped
 
+    private void cbx_zonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbx_zonasMouseClicked
+
+    }//GEN-LAST:event_cbx_zonasMouseClicked
+
+    private void cbx_zonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_zonasActionPerformed
+
+    }//GEN-LAST:event_cbx_zonasActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+//ver clientes de esa zona
+        cl_combobox c_combo = (cl_combobox) cbx_zonas.getSelectedItem();
+        id_zona = c_combo.getId();
+        String query = "select * "
+                + "from clientes "
+                + "where id_zona = '" + id_zona + "' "
+                + "order by nombre asc ";
+        c_cliente.ver_clientes(t_clientes, query);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_deuda;
     private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_modificar;
+    private javax.swing.JComboBox<String> cbx_zonas;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

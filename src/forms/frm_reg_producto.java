@@ -28,13 +28,13 @@ public class frm_reg_producto extends javax.swing.JDialog {
     cl_und_medida c_unidad = new cl_und_medida();
     cl_producto_unidad c_punidad = new cl_producto_unidad();
     cl_marca c_marca = new cl_marca();
-    
+
     m_und_medida m_medida = new m_und_medida();
     m_marcas m_marca = new m_marcas();
-    
 
     /**
      * Creates new form frm_reg_producto
+     *
      * @param parent
      * @param modal
      */
@@ -45,10 +45,19 @@ public class frm_reg_producto extends javax.swing.JDialog {
         m_medida.cbx_und_medida(cbx_und);
         m_marca.llenar_combobox(cbx_marca);
 
-        if (c_producto.getId_producto()!= 0) {
+        if (c_producto.getId_producto() != 0) {
             c_producto.ver_datos_producto();
+            
             c_unidad.setId(c_producto.getId_unidad());
             c_unidad.obtener_datos();
+            cbx_und.setSelectedItem(new cl_combobox(c_unidad.getId(), c_unidad.getNombre()));
+            cbx_und.setEnabled(true);
+            
+            cbx_marca.setEnabled(true);
+            c_marca.setId(c_producto.getId_marca());
+            c_marca.obtener_datos();
+            cbx_marca.setSelectedItem(new cl_combobox(c_marca.getId(), c_marca.getNombre()));
+
             txt_des.setText(c_producto.getDescripcion().trim());
             txt_pcom.setText(c_varios.formato_numero(c_producto.getCosto()));
             txt_pven.setText(c_varios.formato_numero(c_producto.getPrecio()));
@@ -282,7 +291,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txt_pvenKeyPressed
 
-    private void llenar_unidad (){
+    private void llenar_unidad() {
         c_punidad.setNombre(cbx_und.getSelectedItem().toString());
         c_punidad.setFactor(1);
         c_punidad.setPrecio(c_producto.getPrecio());
@@ -290,7 +299,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
         c_punidad.obtener_id();
         c_punidad.insertar();
     }
-    
+
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         btn_registrar.setEnabled(false);
         int confirmado = JOptionPane.showConfirmDialog(null, "¿Esta Seguro de Guardar el Producto?");
