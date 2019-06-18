@@ -11,7 +11,6 @@ import forms.frm_reg_cliente;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-import mercasur.frm_menu;
 import models.cl_combobox;
 import models.m_zonas;
 
@@ -37,11 +36,19 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
 
         m_zona.cbx_todas_zona(cbx_zonas);
 
-        String query = "select * "
-                + "from clientes "
-                + "limit 0";
+        String query = "select c.id_cliente, c.id_zona, z.nombre as zona, c.documento, c.nombre, c.direccion, c.ventas, c.pagado "
+                + "from clientes as c "
+                + "inner join zona as z on z.id_zona = c.id_zona "
+                + "where c.pagado < c.ventas "
+                + "order by c.nombre asc";
         c_cliente.ver_clientes(t_clientes, query);
+        contar_resultados();
 
+    }
+
+    private void contar_resultados() {
+        int contar = 0;
+        lbl_contar.setText(t_clientes.getRowCount() + "");
     }
 
     private void sumar_deudas() {
@@ -80,6 +87,8 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
         txt_bus = new javax.swing.JTextField();
         cbx_zonas = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        lbl_contar = new javax.swing.JLabel();
 
         t_detalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -206,12 +215,6 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_busKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txt_busKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_busKeyTyped(evt);
-            }
         });
 
         cbx_zonas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -226,12 +229,17 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/find.png"))); // NOI18N
         jButton1.setText("Ver Clientes");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jLabel3.setText("Encontrados:");
+
+        lbl_contar.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -255,6 +263,10 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
                         .addComponent(btn_deuda)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_modificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_contar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)))
                 .addContainerGap())
@@ -275,7 +287,9 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
                     .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_deuda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(lbl_contar))
                 .addContainerGap())
         );
 
@@ -352,19 +366,17 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (txt_bus.getText().length() == 0) {
-                String query = "select id_cliente, documento, nombre, ventas, pagado "
-                        + "from clientes "
-                        + "where id_zona = '" + id_zona + "' "
-                        + "order by nombre asc";
+            if (txt_bus.getText().length() > 2) {
+                String buscar = txt_bus.getText().trim();
+                String query = "select c.id_cliente, c.id_zona, z.nombre as zona, c.documento, c.nombre, c.direccion, c.ventas, c.pagado "
+                        + "from clientes as c "
+                        + "inner join zona as z on z.id_zona = c.id_zona "
+                        + "where c.nombre like '%" + buscar + "%' "
+                        + "order by c.nombre asc";
                 c_cliente.ver_clientes(t_clientes, query);
             }
         }
     }//GEN-LAST:event_txt_busKeyPressed
-
-    private void txt_busKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyReleased
-
-    }//GEN-LAST:event_txt_busKeyReleased
 
     private void txt_kardex_descripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_kardex_descripcionActionPerformed
         // TODO add your handling code here:
@@ -376,16 +388,6 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_t_detalleMouseClicked
 
-    private void txt_busKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyTyped
-        // TODO add your handling code here:
-        String buscar = txt_bus.getText();
-        String query = "select id_cliente, documento, nombre, ventas, pagado "
-                + "from clientes "
-                + "where (documento like '%" + buscar + "%' or nombre like '%" + buscar + "%' or id_cliente = '" + buscar + "') and id_zona = '" + id_zona + "' "
-                + "order by nombre asc";
-        c_cliente.ver_clientes(t_clientes, query);
-    }//GEN-LAST:event_txt_busKeyTyped
-
     private void cbx_zonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbx_zonasMouseClicked
 
     }//GEN-LAST:event_cbx_zonasMouseClicked
@@ -395,14 +397,16 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbx_zonasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//ver clientes de esa zona
+        //ver clientes de esa zona
         cl_combobox c_combo = (cl_combobox) cbx_zonas.getSelectedItem();
         id_zona = c_combo.getId();
-        String query = "select * "
-                + "from clientes "
+        String query = "select c.id_cliente, c.id_zona, z.nombre as zona, c.documento, c.nombre, c.direccion, c.ventas, c.pagado "
+                + "from clientes as c "
+                + "inner join zona as z on z.id_zona = c.id_zona "
                 + "where id_zona = '" + id_zona + "' "
-                + "order by nombre asc ";
+                + "order by c.nombre asc";
         c_cliente.ver_clientes(t_clientes, query);
+        contar_resultados();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
@@ -415,10 +419,12 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JDialog jd_detalle;
     private javax.swing.JTextField jd_txt_deuda;
+    private javax.swing.JLabel lbl_contar;
     private javax.swing.JTable t_clientes;
     private javax.swing.JTable t_detalle;
     private javax.swing.JTextField txt_bus;

@@ -252,7 +252,7 @@ public class cl_cliente {
             tabla.setRowSorter(sorter);
 
             mostrar.addColumn("Codigo");
-            //mostrar.addColumn("Zona");
+            mostrar.addColumn("Zona");
             mostrar.addColumn("Documento / Nombre");
             mostrar.addColumn("Monto Ventas");
             mostrar.addColumn("Monto Deuda");
@@ -263,24 +263,25 @@ public class cl_cliente {
                 double dpagado = rs.getDouble("pagado");
                 double ddeuda = dventas - dpagado;
 
-                Object fila[] = new Object[5];
+                Object fila[] = new Object[6];
 
-                fila[0] = c_varios.ceros_izquieda_numero(6, rs.getInt("id_cliente"));
-                fila[1] = rs.getString("nombre").trim() + " | Nro Doc: " + rs.getString("documento").trim();
-                fila[2] = c_varios.formato_totales(dventas);
-                fila[3] = c_varios.formato_totales(ddeuda);
+                fila[0] = rs.getInt("id_zona") + "-" + rs.getInt("id_cliente");
+                fila[1] = rs.getString("zona");
+                fila[2] = rs.getString("nombre").trim() + " | Nro Doc: " + rs.getString("documento").trim();
+                fila[3] = c_varios.formato_totales(dventas);
+                fila[4] = c_varios.formato_totales(ddeuda);
                 if (dventas > 0 & ddeuda == 0) {
-                    fila[4] = "BUEN CLIENTE";
+                    fila[5] = "BUEN CLIENTE";
                 }
                 if (dventas > 0 & ddeuda > 0) {
-                    fila[4] = "DEUDOR";
+                    fila[5] = "DEUDOR";
                 }
 
                 if (ddeuda < 0) {
-                    fila[4] = "DEUDOR";
+                    fila[5] = "DEUDOR";
                 }
                 if (dventas == 0) {
-                    fila[4] = "INACTIVO";
+                    fila[5] = "INACTIVO";
                 }
                 mostrar.addRow(fila);
             }
@@ -289,10 +290,11 @@ public class cl_cliente {
             c_conectar.cerrar(rs);
             tabla.setModel(mostrar);
             tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
-            tabla.getColumnModel().getColumn(1).setPreferredWidth(500);
-            tabla.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(500);
             tabla.getColumnModel().getColumn(3).setPreferredWidth(80);
-            tabla.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(5).setPreferredWidth(100);
             tabla.setDefaultRenderer(Object.class, new render_tables.render_clientes());
         } catch (SQLException ex) {
             System.out.println(ex);

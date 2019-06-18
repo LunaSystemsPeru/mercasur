@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import models.m_zonas;
 import nicon.notify.core.Notification;
 import vistas.frm_ver_caja_diaria;
 import vistas.frm_ver_caja_mensual;
@@ -25,11 +24,11 @@ import vistas.frm_ver_compras;
 import vistas.frm_ver_empleado;
 import vistas.frm_ver_ingresos;
 import vistas.frm_ver_inventarios;
+import vistas.frm_ver_liquidacion_mercaderia;
 import vistas.frm_ver_marcas;
 import vistas.frm_ver_movimientos;
 import vistas.frm_ver_productos;
 import vistas.frm_ver_proveedores;
-import vistas.frm_ver_rpt_despacho;
 import vistas.frm_ver_ventas;
 import vistas.frm_ver_zonas;
 
@@ -74,6 +73,7 @@ public class frm_menu extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         obtener_version_pc();
+        llenar_fechas();
     }
 
     private void cargar_login() {
@@ -84,8 +84,15 @@ public class frm_menu extends javax.swing.JFrame {
     }
 
     private void obtener_version_pc() {
-        String version = c_varios.leer_archivo("version.cfg");
+        String version = c_varios.leer_archivo("version.txt");
         lbl_version.setText(version);
+    }
+    
+    private void llenar_fechas () {
+        txt_fecha_reportes.setText(c_varios.formato_fecha_vista(c_varios.getFechaActual()));
+        txt_d_fecha_fin.setText(c_varios.formato_fecha_vista(c_varios.getFechaActual()));
+        txt_d_fecha_inio.setText(c_varios.formato_fecha_vista(c_varios.getFechaActual()));
+        
     }
 
     /**
@@ -120,6 +127,12 @@ public class frm_menu extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txt_fecha_reportes = new javax.swing.JFormattedTextField();
         jButton3 = new javax.swing.JButton();
+        jd_fecha_doble = new javax.swing.JDialog();
+        txt_d_fecha_inio = new javax.swing.JFormattedTextField();
+        btn_d_buscar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        txt_d_fecha_fin = new javax.swing.JFormattedTextField();
+        jLabel9 = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jToolBar2 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
@@ -146,22 +159,22 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem31 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem30 = new javax.swing.JMenuItem();
         jMenuItem23 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
@@ -438,6 +451,80 @@ public class frm_menu extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jd_fecha_doble.setTitle("Buscar por Fechas");
+
+        try {
+            txt_d_fecha_inio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_d_fecha_inio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_d_fecha_inio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_d_fecha_inioKeyPressed(evt);
+            }
+        });
+
+        btn_d_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/magnifier.png"))); // NOI18N
+        btn_d_buscar.setText("Buscar");
+        btn_d_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_d_buscarActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Fecha de Inicio");
+
+        try {
+            txt_d_fecha_fin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_d_fecha_fin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_d_fecha_fin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_d_fecha_finKeyPressed(evt);
+            }
+        });
+
+        jLabel9.setText("Fecha de Fin");
+
+        javax.swing.GroupLayout jd_fecha_dobleLayout = new javax.swing.GroupLayout(jd_fecha_doble.getContentPane());
+        jd_fecha_doble.getContentPane().setLayout(jd_fecha_dobleLayout);
+        jd_fecha_dobleLayout.setHorizontalGroup(
+            jd_fecha_dobleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_fecha_dobleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_fecha_dobleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jd_fecha_dobleLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btn_d_buscar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jd_fecha_dobleLayout.createSequentialGroup()
+                        .addGroup(jd_fecha_dobleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jd_fecha_dobleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_d_fecha_fin, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txt_d_fecha_inio, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+        jd_fecha_dobleLayout.setVerticalGroup(
+            jd_fecha_dobleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_fecha_dobleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_fecha_dobleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_d_fecha_inio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_fecha_dobleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_d_fecha_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_d_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MercaSUR - Development by Luna Systems Peru");
         setIconImage(Toolkit.getDefaultToolkit().getImage("icono.jpg"));
@@ -682,6 +769,7 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem3);
 
+        jMenuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
         jMenuItem15.setText("Rpt. Consolidado Pedidos Diario Vendedores");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -690,14 +778,24 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem15);
 
-        jMenuItem7.setText("Rpt. Consolidado Comision Diario Vendedores");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem13.setText("Rpt. Consolidado Comision Vendedores");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                jMenuItem13ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem7);
+        jMenu1.add(jMenuItem13);
         jMenu1.add(jSeparator6);
+
+        jMenuItem31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem31.setText("Rpt. Ventas Vendedores ");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem31ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem31);
 
         jMenuItem25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
         jMenuItem25.setText("Rpt Utilidades por Dia");
@@ -733,9 +831,6 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenu4.setText("Inventario - Productos");
 
-        jMenuItem13.setText("Ver Clasificacion");
-        jMenu4.add(jMenuItem13);
-
         jMenuItem2.setText("Ver Marcas");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -770,14 +865,15 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu4.add(jMenuItem10);
         jMenu4.add(jSeparator7);
 
-        jMenuItem14.setText("Ver Despachos");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem30.setText("Ver Liquidacion Diaria");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
+                jMenuItem30ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem14);
+        jMenu4.add(jMenuItem30);
 
+        jMenuItem23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
         jMenuItem23.setText("Rpt. Consolidado Despacho Productos");
         jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -786,6 +882,7 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem23);
 
+        jMenuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
         jMenuItem16.setText("Rpt. Consolidado Despacho Cant. x Marcas");
         jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -794,6 +891,7 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem16);
 
+        jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
         jMenuItem17.setText("Rpt. Consolidado Despacho Comision x Marcas");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1152,15 +1250,8 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
     private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
-        Map<String, Object> parametros = new HashMap<>();
-        String rpt_fecha = JOptionPane.showInputDialog("Ingrese Fecha. Ejemplo: 25/07/2018");
-        if (rpt_fecha.length() == 10) {
-            parametros.put("p_fecha", c_varios.formato_fecha_mysql(rpt_fecha));
-            c_varios.ver_reporte("rpt_kardex_diario", parametros);
-        } else {
-            JOptionPane.showMessageDialog(null, "INGRESE UNA FECHA CORRECTA\nEJEMPLO: 25/07/2018");
-            jMenuItem27.doClick();
-        }
+        nombre_reporte = "rpt_ver_kardex_diario";
+        llamar_fecha_unica();
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
@@ -1184,16 +1275,18 @@ public class frm_menu extends javax.swing.JFrame {
         c_varios.llamar_ventana(frm_empleado);
     }//GEN-LAST:event_jMenuItem22ActionPerformed
 
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        frm_ver_rpt_despacho formulario = new frm_ver_rpt_despacho();
-        c_varios.llamar_ventana_completa(formulario);
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
-
     private void llamar_fecha_unica() {
         jd_fecha_unica.setSize(357, 102);
         jd_fecha_unica.setModal(true);
         jd_fecha_unica.setLocationRelativeTo(null);
         jd_fecha_unica.setVisible(true);
+    }
+    
+    private void llamar_fecha_doble() {
+        jd_fecha_doble.setSize(268, 178);
+        jd_fecha_doble.setModal(true);
+        jd_fecha_doble.setLocationRelativeTo(null);
+        jd_fecha_doble.setVisible(true);
     }
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
@@ -1224,11 +1317,6 @@ public class frm_menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        nombre_reporte = "rpt_comision_vendedor_dia";
-        llamar_fecha_unica();
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
         nombre_reporte = "rpt_despacho_proveedor_dia";
         llamar_fecha_unica();
@@ -1243,6 +1331,58 @@ public class frm_menu extends javax.swing.JFrame {
         nombre_reporte = "rpt_consolidado_despacho_productos";
         llamar_fecha_unica();
     }//GEN-LAST:event_jMenuItem23ActionPerformed
+
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+        frm_ver_liquidacion_mercaderia formulario = new frm_ver_liquidacion_mercaderia();
+        c_varios.llamar_ventana_completa(formulario);
+    }//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void btn_d_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_d_buscarActionPerformed
+            String rpt_fecha_inicio = c_varios.formato_fecha_mysql(txt_d_fecha_inio.getText());
+            String rpt_fecha_fin = c_varios.formato_fecha_mysql(txt_d_fecha_fin.getText());
+            File miDir = new File(".");
+            try {
+                Map<String, Object> parametros = new HashMap<>();
+                String path = miDir.getCanonicalPath();
+                String direccion = path + "//reports//subreports//";
+                //String direccion = path + "\\reports\\subreports\\";
+                System.out.println(direccion);
+                parametros.put("SUBREPORT_DIR", direccion);
+                parametros.put("p_fecha_inicio", rpt_fecha_inicio);
+                parametros.put("p_fecha_fin", rpt_fecha_fin);
+                c_varios.ver_reporte(nombre_reporte, parametros);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+            }
+            jd_fecha_doble.dispose();
+     
+    }//GEN-LAST:event_btn_d_buscarActionPerformed
+
+    private void txt_d_fecha_inioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_d_fecha_inioKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_d_fecha_inio.getText().length() == 10) {
+                txt_d_fecha_fin.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_d_fecha_inioKeyPressed
+
+    private void txt_d_fecha_finKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_d_fecha_finKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_d_fecha_fin.getText().length() == 10) {
+                btn_d_buscar.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_d_fecha_finKeyPressed
+
+    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+        nombre_reporte = "ver_ventas_vendedores_fechas";
+        llamar_fecha_doble();
+    }//GEN-LAST:event_jMenuItem31ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        nombre_reporte = "rpt_comision_vendedores_fechas";
+        llamar_fecha_doble();
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1289,6 +1429,7 @@ public class frm_menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_aperturar;
     private javax.swing.JButton btn_cerrar;
+    private javax.swing.JButton btn_d_buscar;
     private javax.swing.JButton btn_ingresar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -1312,6 +1453,8 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -1323,7 +1466,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
@@ -1341,10 +1483,11 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem30;
+    private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
@@ -1360,11 +1503,14 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JDialog jd_apertura;
+    private javax.swing.JDialog jd_fecha_doble;
     private javax.swing.JDialog jd_fecha_unica;
     private javax.swing.JDialog jd_login;
     private javax.swing.JLabel lbl_empleado;
     private javax.swing.JLabel lbl_version;
     private javax.swing.JPasswordField txt_contrasena;
+    private javax.swing.JFormattedTextField txt_d_fecha_fin;
+    private javax.swing.JFormattedTextField txt_d_fecha_inio;
     private javax.swing.JFormattedTextField txt_fecha_reportes;
     private javax.swing.JFormattedTextField txt_j_fecha;
     private javax.swing.JTextField txt_j_monto;

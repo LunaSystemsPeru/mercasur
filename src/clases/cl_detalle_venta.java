@@ -199,8 +199,8 @@ public class cl_detalle_venta {
             while (rs.next()) {
                 int factor = rs.getInt("factor");
                 double dcantidad = rs.getDouble("cantidad");
-double total_unidades = dcantidad * factor;
-int total_cajas = (int)total_unidades;
+                double total_unidades = dcantidad * factor;
+                int total_cajas = (int) total_unidades;
                 fila_p[0] = rs.getString("descripcion");
                 fila_p[1] = total_cajas;
                 fila_p[2] = rs.getString("cajas");
@@ -276,5 +276,71 @@ int total_cajas = (int)total_unidades;
             System.out.println(e.getLocalizedMessage());
         }
         return suma_pagado;
+    }
+
+    public void ver_liquidacion_diaria (JTable tabla, String fecha) {
+        String query = "select z.nombre as zona, td.abreviado as doc_sunat, v.serie_doc, v.nro_doc, p.descripcion, um.descripcion as unidad, dv.cantidad, dv.precio "
+                + "from detalle_venta as dv "
+                + "inner join ventas as v on v.periodo = dv.periodo and v.id_venta = dv.id_venta "
+                + "inner join tipo_documento as td on td.id_documento = v.id_documento "
+                + "inner join productos as p on p.id_producto = dv.id_producto "
+                + "inner join und_medida as um on um.id_unidad = p.id_unidad "
+                + "inner join zona as z on z.id_zona = v.id_zona";
+        
+        try {
+            DefaultTableModel modelo_pago = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            modelo_pago.addColumn("Zona");
+            modelo_pago.addColumn("Documento");
+            modelo_pago.addColumn("Producto");
+            modelo_pago.addColumn("C. Enviada");
+            modelo_pago.addColumn("C. Rechazo ");
+            modelo_pago.addColumn("U.M");
+            modelo_pago.addColumn("Precio");
+            modelo_pago.addColumn("Parcial Enviado");
+            modelo_pago.addColumn("Parcial Entregado");
+
+            Statement st = c_conectar.conexion();
+            ResultSet rs = c_conectar.consulta(st, query);
+            Object fila_p[] = new Object[9];
+            while (rs.next()) {
+                int pcantidad_enviado = rs.getInt("cantidad");
+                double pprecio = rs.getDouble("precio");
+                double pparcial = pcantidad_enviado * pprecio;
+
+                fila_p[0] = rs.getString("zona");
+                fila_p[1] = rs.getString("doc_sunat") + " | " + rs.getString("serie_doc") + " - " + rs.getString("nro_doc");
+                fila_p[2] = rs.getString("descripcion");
+                fila_p[3] = pcantidad_enviado;
+                fila_p[4] = "0";
+                fila_p[5] = rs.getString("unidad");
+                fila_p[6] = c_varios.formato_numero(pprecio);
+                fila_p[7] = c_varios.formato_numero(pparcial);
+                fila_p[8] = c_varios.formato_numero(pparcial);
+                modelo_pago.addRow(fila_p);
+            }
+            tabla.setModel(modelo_pago);
+            tabla.getColumnModel().getColumn(0).setPreferredWidth(100);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(400);
+            tabla.getColumnModel().getColumn(3).setPreferredWidth(70);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(70);
+            tabla.getColumnModel().getColumn(5).setPreferredWidth(70);
+            tabla.getColumnModel().getColumn(6).setPreferredWidth(70);
+            tabla.getColumnModel().getColumn(7).setPreferredWidth(70);
+            tabla.getColumnModel().getColumn(8).setPreferredWidth(70);
+            c_varios.centrar_celda(tabla, 0);
+            c_varios.centrar_celda(tabla, 1);
+            c_varios.derecha_celda(tabla, 3);
+            c_varios.derecha_celda(tabla, 4);
+            c_conectar.cerrar(rs);
+            c_conectar.cerrar(st);
+        } catch (SQLException | NumberFormatException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
     }
 }

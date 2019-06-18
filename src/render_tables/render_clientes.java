@@ -19,15 +19,15 @@ public class render_clientes extends DefaultTableCellRenderer {
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
         // SI EN CADA FILA DE LA TABLA LA CELDA 5 ES IGUAL A ACTIVO COLOR AZUL
-        if (String.valueOf(table.getValueAt(row, 4)).equals("DEUDOR")) {
+        if (String.valueOf(table.getValueAt(row, 5)).equals("DEUDOR")) {
             setBackground(Color.RED);
             setForeground(Color.white);
         }
-        if (String.valueOf(table.getValueAt(row, 4)).equals("INACTIVO")) {
+        if (String.valueOf(table.getValueAt(row, 5)).equals("INACTIVO")) {
             setBackground(Color.black);
             setForeground(Color.white);
         }
-        if (String.valueOf(table.getValueAt(row, 4)).equals("BUEN CLIENTE")) {
+        if (String.valueOf(table.getValueAt(row, 5)).equals("BUEN CLIENTE")) {
             setBackground(Color.white);
             setForeground(Color.black);
         }
@@ -36,15 +36,18 @@ public class render_clientes extends DefaultTableCellRenderer {
             setHorizontalAlignment(SwingConstants.CENTER);
         }
         if (column == 1) {
-            setHorizontalAlignment(SwingConstants.LEFT);
+            setHorizontalAlignment(SwingConstants.CENTER);
         }
         if (column == 2) {
-            setHorizontalAlignment(SwingConstants.RIGHT);
+            setHorizontalAlignment(SwingConstants.LEFT);
         }
         if (column == 3) {
             setHorizontalAlignment(SwingConstants.RIGHT);
         }
         if (column == 4) {
+            setHorizontalAlignment(SwingConstants.RIGHT);
+        }
+        if (column == 5) {
             setHorizontalAlignment(SwingConstants.CENTER);
         }
 

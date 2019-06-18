@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_comision_dia_productos" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4aedf916-883f-448a-85f2-905d2d0d4189">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -14,17 +15,14 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     sum(detalle_venta.`cantidad`) AS detalle_venta_cantidad,
-     productos.`descripcion` AS productos_descripcion,
-     detalle_venta.`precio` AS detalle_venta_precio,
-     detalle_venta.`costo` AS detalle_venta_costo,
+     sum(detalle_venta.cantidad) AS detalle_venta_cantidad,
+     productos.descripcion AS productos_descripcion,
+     detalle_venta.precio AS detalle_venta_precio,
      marcas.`comision` AS marcas_comision,
      detalle_venta.`id_producto` AS detalle_venta_id_producto,
      ventas.`fecha_venta` AS ventas_fecha_venta,
      ventas.`id_zona` AS ventas_id_zona,
-     ventas.`id_empleado` AS ventas_id_empleado,
-     detalle_venta.`id_unidad` AS detalle_venta_id_unidad,
-     marcas.`comision_mayor` AS marcas_comision_mayor
+     ventas.`id_empleado` AS ventas_id_empleado
 FROM
      `productos` productos INNER JOIN `detalle_venta` detalle_venta ON productos.`id_producto` = detalle_venta.`id_producto`
      INNER JOIN `marcas` marcas ON productos.`id_marca` = marcas.`id_marca`
@@ -38,22 +36,39 @@ GROUP BY
      detalle_venta.id_producto,
      detalle_venta.precio]]>
 	</queryString>
-	<field name="detalle_venta_cantidad" class="java.math.BigDecimal"/>
-	<field name="productos_descripcion" class="java.lang.String"/>
-	<field name="detalle_venta_precio" class="java.math.BigDecimal"/>
-	<field name="detalle_venta_costo" class="java.lang.Double"/>
-	<field name="marcas_comision" class="java.math.BigDecimal"/>
-	<field name="detalle_venta_id_producto" class="java.lang.Integer"/>
-	<field name="ventas_fecha_venta" class="java.sql.Date"/>
-	<field name="ventas_id_zona" class="java.lang.Integer"/>
-	<field name="ventas_id_empleado" class="java.lang.Integer"/>
-	<field name="detalle_venta_id_unidad" class="java.lang.Integer"/>
-	<field name="marcas_comision_mayor" class="java.lang.Double"/>
+	<field name="detalle_venta_cantidad" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="detalle_venta_cantidad"/>
+	</field>
+	<field name="productos_descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="productos_descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="detalle_venta_precio" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="detalle_venta_precio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_venta"/>
+	</field>
+	<field name="marcas_comision" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="marcas_comision"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="marcas"/>
+	</field>
+	<field name="detalle_venta_id_producto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="detalle_venta_id_producto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_venta"/>
+	</field>
+	<field name="ventas_fecha_venta" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="ventas_fecha_venta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ventas"/>
+	</field>
+	<field name="ventas_id_zona" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ventas_id_zona"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ventas"/>
+	</field>
+	<field name="ventas_id_empleado" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ventas_id_empleado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ventas"/>
+	</field>
 	<variable name="sub_total_venta" class="java.lang.Double">
 		<variableExpression><![CDATA[$F{detalle_venta_cantidad} * $F{detalle_venta_precio}]]></variableExpression>
-	</variable>
-	<variable name="sub_total_compra" class="java.lang.String">
-		<variableExpression><![CDATA[$F{detalle_venta_cantidad} * $F{detalle_venta_costo}]]></variableExpression>
 	</variable>
 	<variable name="valor_comision" class="java.lang.Double">
 		<variableExpression><![CDATA[$F{detalle_venta_cantidad} * $F{detalle_venta_precio} * $F{marcas_comision} / 100]]></variableExpression>
@@ -122,13 +137,6 @@ GROUP BY
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalle_venta_id_producto}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="67" y="0" width="267" height="15" uuid="ec4b7b2b-996f-435d-81dc-2a1626bc500a"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{productos_descripcion}]]></textFieldExpression>
-			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="334" y="0" width="50" height="15" uuid="e6bb4063-61f6-4d74-9758-cd8258825173"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -156,6 +164,12 @@ GROUP BY
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{valor_comision}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="67" y="0" width="267" height="15" uuid="764e4322-3e6d-48cc-a1e8-ba0b998a9148">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="640edd09-a8e4-4f71-817b-02359a3e0e06"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{productos_descripcion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

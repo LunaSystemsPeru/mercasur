@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_comision_vendedores_fechas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f90b63e4-51eb-4100-94b6-64e13483d2d4">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="270"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="718"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="192.168.1.41"/>
+	<parameter name="p_fecha_inicio" class="java.lang.String"/>
+	<parameter name="p_fecha_fin" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT mercasur.empleados.nombres,
+	mercasur.empleados.ape_pat,
+	mercasur.empleados.ape_mat,
+	mercasur.ventas.id_empleado,
+    mercasur.empleados.nick, 
+    count(ventas.id_documento) as total_pedidos, 
+    count(DISTINCT(ventas.id_cliente)) as total_clientes, 
+    sum(ventas.total) as total
+FROM mercasur.ventas
+	INNER JOIN mercasur.empleados ON 
+	 mercasur.ventas.id_empleado = mercasur.empleados.id_empleado
+	 where ventas.fecha_venta between  $P{p_fecha_inicio} and  $P{p_fecha_fin} 
+	 	 group by ventas.id_empleado]]>
+	</queryString>
+	<field name="nombres" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empleados"/>
+	</field>
+	<field name="ape_pat" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ape_pat"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empleados"/>
+	</field>
+	<field name="ape_mat" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ape_mat"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empleados"/>
+	</field>
+	<field name="id_empleado" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_empleado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ventas"/>
+	</field>
+	<field name="nick" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nick"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empleados"/>
+	</field>
+	<field name="total_pedidos" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="total_pedidos"/>
+	</field>
+	<field name="total_clientes" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="total_clientes"/>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="74" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="0" width="470" height="30" uuid="c566b08b-8cf4-4959-b868-960862650ac2"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calculo de Comision por Vendedores]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="30" width="320" height="20" uuid="5125f7c9-3e52-4343-99bc-51510064fc1c"/>
+				<textFieldExpression><![CDATA["Fecha de Inicio: " + $P{p_fecha_inicio} + " Fecha de Fin: " + $P{p_fecha_fin}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="70" height="74" uuid="87a454be-388b-4bab-8d07-64b2571c54f3"/>
+				<imageExpression><![CDATA["mercasur_logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="53" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="550" height="20" uuid="c5cc032e-0f36-4bf9-a832-b7289cf86a30">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cbf52c00-a842-4439-aa52-a517c2d83131"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Vendedor: "  + $F{ape_pat} + " " + $F{ape_mat} + " " + $F{nombres}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="33" width="550" height="20" uuid="ad1818b6-e104-42b4-bdfa-f719faec7ab2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="p_id_empleado">
+					<subreportParameterExpression><![CDATA[$F{id_empleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_inicio">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_inicio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_fin">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_fin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rpt_detalle_comision_vendedores.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="490">
+			<lineChart>
+				<chart evaluationTime="Report">
+					<reportElement x="2" y="4" width="550" height="250" uuid="302caedc-8604-4451-9b84-79a9f85f3f72"/>
+					<chartTitle>
+						<titleExpression><![CDATA["Grafica Comparativa de Pedidos y Clientes"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Total Pedidos"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nick}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{total_pedidos}]]></valueExpression>
+						<labelExpression><![CDATA[$F{nick}]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Total Clientes"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nick}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{total_clientes}]]></valueExpression>
+						<labelExpression><![CDATA[$F{nick}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="2" y="290" width="550" height="200" uuid="28d01395-0156-4cd1-a88e-c3fb7fbbd3b5"/>
+					<chartTitle>
+						<titleExpression><![CDATA["Grafica Total de Ventas por Vendedor"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Total Ventas"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nick}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{total}]]></valueExpression>
+						<labelExpression><![CDATA[$F{nick}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_comision_vendedor_dia" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2e729111-cd50-4066-ad6d-a59b92f3f2a5">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="192.168.1.41"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="p_fecha" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\ANDY\\Documents\\NetBeansProjects\\reports\\subreports\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[" //home//luis//NetBeansProjects//mercasur//reports\\subreports\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -22,10 +25,10 @@
 FROM
      `zona` zona INNER JOIN `ventas` ventas ON zona.`id_zona` = ventas.`id_zona`
      INNER JOIN `empleados` empleados ON ventas.`id_empleado` = empleados.`id_empleado`
-     AND empleados.`id_empleado` = zona.`id_empleado`
+     AND empleados.`id_empleado` = zona.`id_empleado` 
 WHERE
-     ventas.fecha_venta = $P{p_fecha}
-group by ventas.id_empleado and ventas.id_zona]]>
+     ventas.fecha_venta = $P{p_fecha} 
+group by ventas.id_empleado, ventas.id_zona]]>
 	</queryString>
 	<field name="zona_nombre" class="java.lang.String"/>
 	<field name="empleados_dni" class="java.lang.String"/>
