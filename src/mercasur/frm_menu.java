@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -52,6 +53,7 @@ public class frm_menu extends javax.swing.JFrame {
     public static cl_zona c_zona = new cl_zona();
 
     String nombre_reporte = "";
+    String tipo_reporte = "pdf";
 
     /**
      * Creates new form frm_menu
@@ -87,12 +89,12 @@ public class frm_menu extends javax.swing.JFrame {
         String version = c_varios.leer_archivo("version.txt");
         lbl_version.setText(version);
     }
-    
-    private void llenar_fechas () {
+
+    private void llenar_fechas() {
         txt_fecha_reportes.setText(c_varios.formato_fecha_vista(c_varios.getFechaActual()));
         txt_d_fecha_fin.setText(c_varios.formato_fecha_vista(c_varios.getFechaActual()));
         txt_d_fecha_inio.setText(c_varios.formato_fecha_vista(c_varios.getFechaActual()));
-        
+
     }
 
     /**
@@ -160,8 +162,11 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jMenuItem31 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -182,7 +187,6 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
-        jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem27 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
@@ -730,7 +734,7 @@ public class frm_menu extends javax.swing.JFrame {
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 447, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 435, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -786,6 +790,23 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem13);
+
+        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem14.setText("Rpt. Detallado de Productos por Marcas");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem14);
+
+        jMenuItem21.setText("Rpt. Detallado de Productos por Marcas por Vendedores");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem21);
         jMenu1.add(jSeparator6);
 
         jMenuItem31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
@@ -796,6 +817,16 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem31);
+
+        jMenuItem7.setForeground(new java.awt.Color(0, 102, 0));
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem7.setText("Rpt. Detallado Ventas por Zonas por Productos");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem7);
 
         jMenuItem25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
         jMenuItem25.setText("Rpt Utilidades por Dia");
@@ -927,15 +958,6 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem20);
-
-        jMenuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem21.setText("Rpt. Productos en Tienda");
-        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem21ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem21);
 
         jMenuItem27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
         jMenuItem27.setText("Rpt. Kardex Diario");
@@ -1232,11 +1254,6 @@ public class frm_menu extends javax.swing.JFrame {
         c_varios.ver_reporte_excel("rpt_productos_mayores_excel", parametros, "EXCEL_INVENTARIO_MAYORES");
     }//GEN-LAST:event_jMenuItem20ActionPerformed
 
-    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
-        Map<String, Object> parametros = new HashMap<>();
-        c_varios.ver_reporte("rpt_productos_listado", parametros);
-    }//GEN-LAST:event_jMenuItem21ActionPerformed
-
     private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
         nombre_reporte = "rpt_consolidado_utilidad_dia";
         llamar_fecha_unica();
@@ -1281,7 +1298,7 @@ public class frm_menu extends javax.swing.JFrame {
         jd_fecha_unica.setLocationRelativeTo(null);
         jd_fecha_unica.setVisible(true);
     }
-    
+
     private void llamar_fecha_doble() {
         jd_fecha_doble.setSize(268, 178);
         jd_fecha_doble.setModal(true);
@@ -1338,24 +1355,31 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
     private void btn_d_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_d_buscarActionPerformed
-            String rpt_fecha_inicio = c_varios.formato_fecha_mysql(txt_d_fecha_inio.getText());
-            String rpt_fecha_fin = c_varios.formato_fecha_mysql(txt_d_fecha_fin.getText());
-            File miDir = new File(".");
-            try {
-                Map<String, Object> parametros = new HashMap<>();
-                String path = miDir.getCanonicalPath();
-                String direccion = path + "//reports//subreports//";
-                //String direccion = path + "\\reports\\subreports\\";
-                System.out.println(direccion);
-                parametros.put("SUBREPORT_DIR", direccion);
-                parametros.put("p_fecha_inicio", rpt_fecha_inicio);
-                parametros.put("p_fecha_fin", rpt_fecha_fin);
+        String rpt_fecha_inicio = c_varios.formato_fecha_mysql(txt_d_fecha_inio.getText());
+        String rpt_fecha_fin = c_varios.formato_fecha_mysql(txt_d_fecha_fin.getText());
+        File miDir = new File(".");
+        try {
+            Map<String, Object> parametros = new HashMap<>();
+            String path = miDir.getCanonicalPath();
+            String direccion = path + "//reports//subreports//";
+            //String direccion = path + "\\reports\\subreports\\";
+            System.out.println(direccion);
+            parametros.put("REPORT_LOCALE", new Locale("en", "US"));
+            parametros.put("SUBREPORT_DIR", direccion);
+            parametros.put("p_fecha_inicio", rpt_fecha_inicio);
+            parametros.put("p_fecha_fin", rpt_fecha_fin);
+            if (tipo_reporte.equals("pdf")) {
                 c_varios.ver_reporte(nombre_reporte, parametros);
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
             }
-            jd_fecha_doble.dispose();
-     
+            if (tipo_reporte.equals("xls")) {
+                c_varios.ver_reporte_excel(nombre_reporte, parametros, nombre_reporte);
+            }
+            tipo_reporte = "pdf";
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        jd_fecha_doble.dispose();
+
     }//GEN-LAST:event_btn_d_buscarActionPerformed
 
     private void txt_d_fecha_inioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_d_fecha_inioKeyPressed
@@ -1383,6 +1407,22 @@ public class frm_menu extends javax.swing.JFrame {
         nombre_reporte = "rpt_comision_vendedores_fechas";
         llamar_fecha_doble();
     }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        nombre_reporte = "rpt_ventas_zona_fechas";
+        tipo_reporte = "xls";
+        llamar_fecha_doble();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+         nombre_reporte = "rpt_productos_marca_fechas";
+        llamar_fecha_doble();
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        nombre_reporte = "rpt_productos_marca_vendedor";
+        llamar_fecha_doble();
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1466,6 +1506,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
@@ -1488,6 +1529,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;

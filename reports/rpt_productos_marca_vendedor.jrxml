@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_productos_marca_vendedor" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="593a44a5-50a1-4159-9418-6220068e2d0c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="192.168.1.41"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\eliseo\\Downloads\\programacion\\2019\\mercasur\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_inicio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_fin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     empleados.`nombres` AS empleados_nombres,
+     empleados.`ape_pat` AS empleados_ape_pat,
+     empleados.`ape_mat` AS empleados_ape_mat,
+     empleados.`id_empleado` AS empleados_id_empleado
+FROM
+     `ventas` ventas INNER JOIN `detalle_venta` detalle_venta ON ventas.`periodo` = detalle_venta.`periodo`
+     AND ventas.`id_venta` = detalle_venta.`id_venta`
+     INNER JOIN `empleados` empleados ON ventas.`id_empleado` = empleados.`id_empleado`
+WHERE
+     ventas.`fecha_venta` BETWEEN $P{p_fecha_inicio} AND $P{p_fecha_fin}
+GROUP BY ventas.id_empleado]]>
+	</queryString>
+	<field name="empleados_nombres" class="java.lang.String"/>
+	<field name="empleados_ape_pat" class="java.lang.String"/>
+	<field name="empleados_ape_mat" class="java.lang.String"/>
+	<field name="empleados_id_empleado" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="77" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="87" height="77" uuid="9bd9495b-6c91-44ab-8ee4-a5e0da1b099b"/>
+				<imageExpression><![CDATA["https://scontent.ftru2-1.fna.fbcdn.net/v/t1.0-9/42614832_1024097204437069_4554792158615306240_n.jpg?_nc_cat=100&_nc_ht=scontent.ftru2-1.fna&oh=387f4ddfe58691c2419631cc732f26cc&oe=5D96B635"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="87" y="10" width="468" height="40" uuid="6d24d4f5-c4ba-49f9-9d6b-cbe2f5e8288c"/>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte Detallado de Productos por Marcas por Vendedores]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="239" height="20" uuid="961be32a-1f71-411e-932b-4092314aff73"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empleados_nombres} +" " +$F{empleados_ape_pat} + " " + $F{empleados_ape_mat}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<subreport>
+				<reportElement x="26" y="0" width="529" height="30" uuid="b2ec8bb3-9ca6-47a5-a97d-65f1be8c2df3"/>
+				<subreportParameter name="p_id_empleado">
+					<subreportParameterExpression><![CDATA[$F{empleados_id_empleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_inicio">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_inicio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_fin">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_fin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rpt_detalle_productos_marca_vendedor.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

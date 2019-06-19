@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_detalle_productos_marca_vendedor" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9c5631cc-5699-457f-9e0a-dbc13a51b871">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="192.168.1.41"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="p_id_empleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_inicio" class="java.lang.String"/>
+	<parameter name="p_fecha_fin" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     tipo_documento.`abreviado` AS tipo_documento_abreviado,
+     ventas.`serie_doc` AS ventas_serie_doc,
+     ventas.`nro_doc` AS ventas_nro_doc,
+     detalle_venta.`cantidad` AS detalle_venta_cantidad,
+     detalle_venta.`precio` AS detalle_venta_precio,
+     ventas.`fecha_venta` AS ventas_fecha_venta,
+     productos.`descripcion` AS productos_descripcion,
+     marcas.`nombre` AS marcas_nombre,
+     empleados.`id_empleado` AS empleados_id_empleado
+FROM
+     `tipo_documento` tipo_documento INNER JOIN `ventas` ventas ON tipo_documento.`id_documento` = ventas.`id_documento`
+     INNER JOIN `detalle_venta` detalle_venta ON ventas.`periodo` = detalle_venta.`periodo`
+     AND ventas.`id_venta` = detalle_venta.`id_venta`
+     INNER JOIN `empleados` empleados ON ventas.`id_empleado` = empleados.`id_empleado`
+     INNER JOIN `productos` productos ON detalle_venta.`id_producto` = productos.`id_producto`
+     INNER JOIN `proveedores` proveedores ON productos.`id_proveedor` = proveedores.`id_proveedor`
+     INNER JOIN `marcas` marcas ON productos.`id_marca` = marcas.`id_marca`
+WHERE
+     empleados.id_empleado = $P{p_id_empleado} and ventas.fecha_venta between  $P{p_fecha_inicio}  and  $P{p_fecha_fin} 
+order by marcas.nombre asc, productos.descripcion asc]]>
+	</queryString>
+	<field name="tipo_documento_abreviado" class="java.lang.String"/>
+	<field name="ventas_serie_doc" class="java.lang.String"/>
+	<field name="ventas_nro_doc" class="java.lang.Integer"/>
+	<field name="detalle_venta_cantidad" class="java.lang.Double"/>
+	<field name="detalle_venta_precio" class="java.lang.Double"/>
+	<field name="ventas_fecha_venta" class="java.sql.Date"/>
+	<field name="productos_descripcion" class="java.lang.String"/>
+	<field name="marcas_nombre" class="java.lang.String"/>
+	<field name="empleados_id_empleado" class="java.lang.Integer"/>
+	<variable name="parcial" class="java.lang.String"/>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="59" y="0" width="60" height="20" uuid="a487b619-5665-4c88-84e1-1792e8ef717f"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="119" y="0" width="67" height="20" uuid="f775d645-946f-43fa-85c3-866e077809ed"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="0" width="197" height="20" uuid="5cc363ce-0f2a-4478-acbb-9aa1b23f7121"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Productos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="383" y="0" width="55" height="20" uuid="ed7fd000-d617-47af-9fb6-8b73fe78e907"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="438" y="0" width="60" height="20" uuid="1b7527be-e687-42da-ac71-ca7a88c9cae1"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="498" y="0" width="46" height="20" uuid="1b377bc9-9e82-4673-a17d-8edf6f9fefc7"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parcial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="58" height="20" uuid="f4aeec81-d9f5-46a6-81e8-5b5c308fbad7"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Marcas]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="59" y="1" width="60" height="20" uuid="3778d779-53bf-429a-b81a-41e72e0e865f"/>
+				<textFieldExpression><![CDATA[$F{ventas_fecha_venta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="0" width="67" height="20" uuid="6da1aa07-7699-4114-9aa8-52d8d0681606"/>
+				<textFieldExpression><![CDATA[$F{tipo_documento_abreviado} + "-"+ $F{ventas_serie_doc} +"-" + $F{ventas_nro_doc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="186" y="0" width="197" height="20" uuid="d66ac4e2-d129-420a-ad39-3c0b655b3c78"/>
+				<textFieldExpression><![CDATA[$F{productos_descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="383" y="0" width="55" height="20" uuid="5abe0b3b-beaf-46cb-a449-a26cbabeb2a4"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{detalle_venta_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="439" y="1" width="60" height="20" uuid="b1e14a9c-c60d-4db2-ac76-7321f3f8f3d8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{detalle_venta_precio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="499" y="1" width="45" height="20" uuid="cfc6ec2b-eb5b-472a-8f40-90d7108d8a3a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{detalle_venta_cantidad} * $F{detalle_venta_precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="0" width="58" height="20" uuid="9297cc43-2e16-469d-9709-08ae0f45f5d7"/>
+				<textFieldExpression><![CDATA[$F{marcas_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

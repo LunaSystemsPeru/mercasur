@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_productos_marca_fechas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39ca714f-3e42-4073-90cb-0fefe87fcb06">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="192.168.1.41"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/luis/NetBeansProjects/mercasur/mercasur_git/reports/subreports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_inicio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_fin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     marcas.`nombre` AS marcas_nombre,
+     marcas.`id_marca` AS marcas_id_marca
+FROM
+     `ventas` ventas INNER JOIN `detalle_venta` detalle_venta ON ventas.`periodo` = detalle_venta.`periodo`
+     AND ventas.`id_venta` = detalle_venta.`id_venta`
+     INNER JOIN `productos` productos ON detalle_venta.`id_producto` = productos.`id_producto`
+     INNER JOIN `marcas` marcas ON productos.`id_marca` = marcas.`id_marca`
+WHERE
+     ventas.`fecha_venta` BETWEEN $P{p_fecha_inicio} AND $P{p_fecha_fin}
+GROUP BY marcas.id_marca]]>
+	</queryString>
+	<field name="marcas_nombre" class="java.lang.String"/>
+	<field name="marcas_id_marca" class="java.lang.Integer"/>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="87" y="24" width="468" height="32" uuid="beaf5079-8820-4ca4-8fce-f31e2e453cf9"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte Detallado Productos por Proveedor (Marca)]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="2" width="87" height="77" uuid="382b186f-1c76-4bb8-8f32-cecc50b4d477"/>
+				<imageExpression><![CDATA["https://scontent.ftru2-1.fna.fbcdn.net/v/t1.0-9/42614832_1024097204437069_4554792158615306240_n.jpg?_nc_cat=100&_nc_ht=scontent.ftru2-1.fna&oh=387f4ddfe58691c2419631cc732f26cc&oe=5D96B635"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="22" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="124" height="20" uuid="5ba9f08a-45cd-4b81-b407-9330674b2f0c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{marcas_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<subreport>
+				<reportElement x="12" y="0" width="530" height="20" uuid="451461d0-c10d-4f3e-b1b8-1a3808fc88be">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="p_id_marca">
+					<subreportParameterExpression><![CDATA[$F{marcas_id_marca}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_inicio">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_inicio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_fecha_fin">
+					<subreportParameterExpression><![CDATA[$P{p_fecha_fin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rpt_detalle_productos_marca.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21" splitType="Stretch"/>
+	</columnFooter>
+</jasperReport>

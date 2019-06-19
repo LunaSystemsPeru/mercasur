@@ -145,7 +145,7 @@ public class cl_varios {
 
         return m_fecha;
     }
-    
+
     /**
      * da formato a hora (05:20:30 PM)
      *
@@ -292,6 +292,11 @@ public class cl_varios {
                 /**
                  * 3- export to Excel sheet
                  */
+
+                Date ahora = new Date();
+                SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+                String fecha_com = formateador.format(ahora);
+
                 JRXlsExporter exporter = new JRXlsExporter();
 
                 exporter.setParameter(JRExporterParameter.INPUT_FILE_NAME,
@@ -299,13 +304,13 @@ public class cl_varios {
                 exporter.setParameter(JRXlsExporterParameter.IS_IGNORE_CELL_BORDER, false);
                 exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, false);
                 exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
-                        "temp//" + salida + ".xls");
+                        "temp//" + salida + fecha_com + ".xls");
 
                 exporter.exportReport();
-                JOptionPane.showMessageDialog(null, "REPORTE GENERADO, REVISE EN LA CARPETA DEL SISTEMA LUBRIPOS/TEMP");
+                JOptionPane.showMessageDialog(null, "REPORTE GENERADO, REVISE EN LA CARPETA DEL SISTEMA */TEMP");
 
                 try {
-                    File file = new File("temp//" + salida + ".xls");
+                    File file = new File("temp//" + salida + fecha_com + ".xls");
                     Desktop.getDesktop().open(file);
                 } catch (IOException e) {
                     System.out.print(e + " -- error io");
@@ -384,14 +389,14 @@ public class cl_varios {
                     (desktopSize.height - jInternalFrameSize.height) / 2);
         }
     }
-    
+
     public void llamar_ventana_completa(JInternalFrame ventana) {
         if (verificar_existencia(ventana)) {
             mercasur.frm_menu.jDesktopPane1.add(ventana);
             ventana.show();
 
             Dimension desktopSize = mercasur.frm_menu.jDesktopPane1.getSize();
-            
+
             int ancho = (int) (desktopSize.getWidth() / 1.1);
             int alto = (int) (desktopSize.getHeight() / 1.25);
             ventana.setSize(ancho, alto);
