@@ -184,6 +184,12 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
 
         setTitle("Ver Zonas ");
 
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
+
         t_zonas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -341,7 +347,7 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
         m_empleados.llenar_combobox(cbx_frm_empleado);
         txt_frm_nombre.requestFocus();
         jd_formulario.setVisible(true);
-        
+        btn_frm_modificar.setEnabled(true);
         
     }//GEN-LAST:event_btn_modificarActionPerformed
 
@@ -349,6 +355,10 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_btn_frm_modificarActionPerformed
+
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
