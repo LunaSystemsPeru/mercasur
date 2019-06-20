@@ -904,8 +904,12 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem30);
 
+<<<<<<< Upstream, based on origin/master
         jMenuItem23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
         jMenuItem23.setText("Rpt. Consolidado Despacho Productos");
+=======
+        jMenuItem23.setText(" Rpt. Consolidado Despacho Productos");
+>>>>>>> ac6c256 actualiar
         jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem23ActionPerformed(evt);
@@ -1028,7 +1032,7 @@ public class frm_menu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
