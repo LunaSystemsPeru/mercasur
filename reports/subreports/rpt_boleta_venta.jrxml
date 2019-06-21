@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_boleta_venta" language="groovy" pageWidth="555" pageHeight="401" orientation="Landscape" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryWithPageHeaderAndFooter="true" uuid="74be6869-a601-4069-82f4-ac0daa0be346">
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_boleta_venta" pageWidth="555" pageHeight="380" orientation="Landscape" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryWithPageHeaderAndFooter="true" uuid="74be6869-a601-4069-82f4-ac0daa0be346">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="192.168.1.41"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="p_letras_numero" class="java.lang.String"/>
 	<parameter name="p_periodo" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="p_id_venta" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="p_codigo_qr" class="java.lang.String"/>
+	<parameter name="p_hash" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      ventas.`fecha_venta` AS ventas_fecha_venta,
@@ -51,8 +65,8 @@ WHERE
 	<field name="clientes_nombre" class="java.lang.String"/>
 	<field name="clientes_direccion" class="java.lang.String"/>
 	<field name="productos_descripcion" class="java.lang.String"/>
-	<field name="detalle_venta_cantidad" class="java.math.BigDecimal"/>
-	<field name="detalle_venta_precio" class="java.math.BigDecimal"/>
+	<field name="detalle_venta_cantidad" class="java.lang.Double"/>
+	<field name="detalle_venta_precio" class="java.lang.Double"/>
 	<field name="und_medida_nombre_corto" class="java.lang.String"/>
 	<field name="marcas_nombre" class="java.lang.String"/>
 	<field name="ventas_total" class="java.lang.Double"/>
@@ -71,27 +85,27 @@ WHERE
 	<pageHeader>
 		<band height="128" splitType="Stretch">
 			<rectangle>
-				<reportElement x="408" y="0" width="147" height="64" backcolor="#E65C01" uuid="b95740d8-22e6-4519-b0eb-9265d9cb8a1f"/>
+				<reportElement x="359" y="0" width="196" height="64" backcolor="#E65C01" uuid="b95740d8-22e6-4519-b0eb-9265d9cb8a1f"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="425" y="2" width="113" height="20" forecolor="#FFFFFF" uuid="34efa2be-79a1-4b6e-9671-5dbbfddae60a"/>
+				<reportElement x="373" y="2" width="168" height="20" forecolor="#FFFFFF" uuid="34efa2be-79a1-4b6e-9671-5dbbfddae60a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RUC: 20604301964]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="425" y="22" width="113" height="20" forecolor="#FFFFFF" uuid="284501ab-e5fd-43c8-a630-845e6b229384"/>
+				<reportElement x="373" y="22" width="168" height="20" forecolor="#FFFFFF" uuid="284501ab-e5fd-43c8-a630-845e6b229384"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{tipo_documento_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{tipo_documento_nombre} + " ELECTRONICA"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="425" y="42" width="113" height="20" forecolor="#FFFFFF" uuid="b0b4ba73-cd0d-47f2-8dc3-0889af3b998b"/>
+				<reportElement x="373" y="42" width="168" height="20" forecolor="#FFFFFF" uuid="b0b4ba73-cd0d-47f2-8dc3-0889af3b998b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
@@ -107,9 +121,9 @@ WHERE
 			<staticText>
 				<reportElement x="81" y="16" width="217" height="26" uuid="70e40a0e-8419-406a-b116-a0aaf050acc0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
-				<text><![CDATA[NRO. SN INT. BB38 MERCADO LA PERLA (2DA.ENTRADA DE MERCADO - TERCER PASAJE]]></text>
+				<text><![CDATA[NRO. SN INT. BB38 MERCADO LA PERLA (2DA.ENTRADA DE MERCADO - TERCER PASAJE)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="81" y="42" width="217" height="16" uuid="f5c55b10-eca7-4791-97d4-8cafc2dd6d0f"/>
@@ -167,13 +181,6 @@ WHERE
 				</textElement>
 				<text><![CDATA[Direcccion:]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="425" y="93" width="130" height="16" uuid="93cfc517-5476-4396-bc22-d2c93cb33bab"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Cod. Cliente:" + $F{ventas_id_cliente}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="0" y="109" width="56" height="16" uuid="d5f46ba6-656f-43fe-9023-b6c251b0ee00"/>
 				<textElement verticalAlignment="Middle">
@@ -196,7 +203,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{empleados_nick}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="0" y="0" width="81" height="75" uuid="b5974072-016c-4cbc-8e0a-e444638b1170"/>
+				<reportElement x="0" y="0" width="75" height="75" uuid="b5974072-016c-4cbc-8e0a-e444638b1170"/>
 				<imageExpression><![CDATA["https://scontent.ftru2-3.fna.fbcdn.net/v/t1.0-9/42614832_1024097204437069_4554792158615306240_n.jpg?_nc_cat=100&_nc_ht=scontent.ftru2-3.fna&oh=874c98f7c6b1a6180dd512a5abc0ed3f&oe=5D96B635"]]></imageExpression>
 			</image>
 			<staticText>
@@ -206,6 +213,20 @@ WHERE
 				</textElement>
 				<text><![CDATA[Vendedor:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="408" y="93" width="73" height="16" uuid="cbf34b5b-c387-46c3-b88b-af0a0bbe35c4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cod. Cliente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="481" y="93" width="74" height="16" uuid="f9092479-f0b2-458e-bafa-548ca5486ecd"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ventas_id_cliente}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -309,22 +330,25 @@ WHERE
 	<columnFooter>
 		<band height="84">
 			<staticText>
-				<reportElement x="81" y="68" width="45" height="16" uuid="fffa528a-9569-4813-8377-b25fadb37202"/>
+				<reportElement x="90" y="68" width="36" height="16" uuid="fffa528a-9569-4813-8377-b25fadb37202"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SON:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="126" y="68" width="429" height="16" uuid="4545afab-d44d-464d-8a53-79ff1b95886f"/>
+				<reportElement x="135" y="68" width="420" height="16" uuid="4545afab-d44d-464d-8a53-79ff1b95886f"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA["CIENTO CINCUENTA Y 00/100 SOLES"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{p_letras_numero}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="0" y="10" width="81" height="74" uuid="9cd75e39-549c-4939-8120-f211af918153"/>
-				<imageExpression><![CDATA["https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/QRc%C3%B3digo_portada_wikipedia_espa%C3%B1ol.png/220px-QRc%C3%B3digo_portada_wikipedia_espa%C3%B1ol.png"]]></imageExpression>
+				<reportElement x="0" y="4" width="80" height="80" uuid="9cd75e39-549c-4939-8120-f211af918153">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{p_codigo_qr}]]></imageExpression>
 			</image>
 			<textField pattern="#,##0.00">
 				<reportElement x="481" y="20" width="74" height="16" uuid="4862ca42-46dc-4ec0-84a8-426258912106"/>
@@ -345,7 +369,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[IGV]]></text>
+				<text><![CDATA[IGV:]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
 				<reportElement x="481" y="36" width="74" height="16" uuid="176501f3-723e-4b09-b6e3-822c34dd1cac"/>
@@ -369,18 +393,26 @@ WHERE
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="81" y="10" width="278" height="16" uuid="9e0653aa-9baf-4815-ae6f-40eb8b1cacd7"/>
+				<reportElement x="90" y="5" width="269" height="16" uuid="9e0653aa-9baf-4815-ae6f-40eb8b1cacd7"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Representacion Impresa de la boleta Electronica]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="81" y="26" width="278" height="16" uuid="f8a96769-672e-46bf-a849-48248bb46b14"/>
+			<textField>
+				<reportElement x="90" y="21" width="331" height="16" uuid="d885ad6f-2d05-4cfd-b97d-86d9155eb120"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[Hash: esfdfs64d5gf4d5gvfd54gdf5g14fd54g]]></text>
+				<textFieldExpression><![CDATA["Hash: " + $P{p_hash}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="90" y="37" width="331" height="31" uuid="550e0d4d-4ee3-4b03-a517-9e9ef40a26a4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Para validar su documento electrónico ingrese a
+ emercasur.lunasystemsperu.com]]></text>
 			</staticText>
 		</band>
 	</columnFooter>

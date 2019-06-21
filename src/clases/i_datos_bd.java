@@ -15,7 +15,7 @@ public interface i_datos_bd {
     String bd = "mercasur";
     String user = "root_lsp";
     String password = "root/*123";
-    String servidor = "lunasystemsperu.com"; 
+    String servidor = "192.168.1.41"; 
     
     //esta ip es vari
 // no quiero que sea variable

@@ -6,7 +6,7 @@
 package forms;
 
 import clases.cl_cliente;
-import clases.cl_json_entidad;
+import clases_varios.cl_json_entidad;
 import clases.cl_varios;
 import java.awt.event.KeyEvent;
 import java.security.SecureRandom;

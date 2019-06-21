@@ -5,6 +5,7 @@
  */
 package forms;
 
+import clases_varios.cl_PeticionPost;
 import clases.cl_cliente;
 import clases.cl_conectar;
 import clases.cl_detalle_venta;
@@ -17,6 +18,7 @@ import clases.cl_venta;
 import clases.cl_zona;
 import clases_autocomplete.cl_ac_clientes;
 import clases_autocomplete.cl_ac_productos;
+import clases_varios.cl_numero_a_letras;
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.Frame;
@@ -54,6 +56,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     cl_venta c_venta = new cl_venta();
     cl_detalle_venta c_detalle = new cl_detalle_venta();
+    
+    cl_PeticionPost c_peticion = new cl_PeticionPost();
 
     TextAutoCompleter tac_clientes = null;
     TextAutoCompleter tac_productos = null;
@@ -66,6 +70,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     double precio_nuevo;
     boolean existe_producto = false;
     boolean existe_cliente = false;
+    double total;
 
     m_zonas m_zona = new m_zonas();
     m_unidad_producto m_unidades = new m_unidad_producto();
@@ -155,6 +160,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             double dfactor = Double.parseDouble(t_detalle.getValueAt(i, 8).toString());
             total_filas += (cantidad * precio * factor);
         }
+        total = total_filas;
         lbl_total.setText("total: S/ " + c_varios.formato_totales(total_filas));
 
     }
@@ -941,17 +947,23 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     }
 
     private void btn_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_grabarActionPerformed
+        btn_grabar.setEnabled(false); 
+        
         c_venta.setFecha(c_varios.getFechaActual());
         c_venta.setId_cliente(c_cliente.getId_cliente());
         c_venta.setId_zona(id_zona);
         c_venta.setPeriodo(c_varios.obtener_periodo());
         c_venta.obtener_codigo();
-        c_venta.setId_documento(11);
+        if (txt_doc_cliente.getText().length()==11) {
+            c_venta.setId_documento(4);
+        } else {
+            c_venta.setId_documento(3);
+        }
         c_doc_tienda.setId(c_venta.getId_documento());
         c_doc_tienda.datos_documento();
         c_venta.setSerie_doc(c_doc_tienda.getSerie());
         c_venta.setNumero_doc(c_doc_tienda.getNumero());
-        c_venta.setTotal(0);
+        c_venta.setTotal(total);
         c_venta.setPagado(0);
         c_venta.setId_empleado(id_empleado);
 
@@ -973,6 +985,23 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
             c_detalle.insertar();
         }
+        
+        //enviar boleta
+        String[] envio_sunat = c_peticion.enviar_documento(c_venta.getId_venta()+"", c_venta.getPeriodo(), c_venta.getId_documento());
+        String nombre_archivo = envio_sunat[0];
+        String url_codigo_qr = envio_sunat[2];
+        String hash = envio_sunat[3];
+        String estatus = envio_sunat[5];
+        if (estatus.equals("error")) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al recibir el comprobante");
+        }
+        //guardar 
+        
+        //tranformar numeros a letras
+        cl_numero_a_letras c_letras = new cl_numero_a_letras();
+        String letras_numeros = c_letras.Convertir(c_venta.getTotal()+"", true) + " SOLES";
+        System.out.println(letras_numeros);
+        System.out.println(url_codigo_qr);
 
         File miDir = new File(".");
         try {
@@ -984,8 +1013,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             parametros.put("SUBREPORT_DIR", direccion);
             parametros.put("p_periodo", c_venta.getPeriodo());
             parametros.put("p_id_venta", c_venta.getId_venta());
-            c_varios.imp_reporte("rpt_dos_documentos", parametros);
-            //c_varios.ver_reporte("rpt_dos_documentos", parametros);
+            parametros.put("p_letras_numero", letras_numeros);
+            parametros.put("p_codigo_qr", url_codigo_qr);
+            parametros.put("p_hash", hash);
+           c_varios.imp_reporte("rpt_dos_documentos", parametros);
+           //c_varios.ver_reporte("rpt_dos_documentos", parametros);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }

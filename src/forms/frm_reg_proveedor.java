@@ -5,7 +5,7 @@
  */
 package forms;
 
-import clases.cl_json_entidad;
+import clases_varios.cl_json_entidad;
 import clases.cl_proveedor;
 import clases.cl_varios;
 import com.mxrck.autocompleter.AutoCompleterCallback;
