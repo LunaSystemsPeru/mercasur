@@ -60,7 +60,7 @@ public class cl_PeticionPost {
     }
 
     public String[] enviar_documento(String id_venta, String periodo, int tipo_documento) {
-        String SERVER_PATH = "http://localhost/clientes/mercasur/intranet/greenter/generates/";
+        String SERVER_PATH = "http://lunasystemsperu.com/clientes/mercasur/intranet/greenter/generates/";
         String url = null;
         String[] datos = new String[6];
         // open a connection to the site

@@ -61,7 +61,7 @@ public class cl_producto_unidad {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();
     }
 
     public double getPrecio() {
@@ -163,6 +163,39 @@ public class cl_producto_unidad {
         Statement st = c_conectar.conexion();
         String query = "insert into producto_unidades "
                 + "Values ('" + id_producto + "', '" + id_unidad + "', '" + nombre + "','" + factor + "','" + precio + "')";
+        int resultado = c_conectar.actualiza(st, query);
+
+        if (resultado > -1) {
+            grabado = true;
+        }
+
+        c_conectar.cerrar(st);
+
+        return grabado;
+    }
+
+    public boolean modificar() {
+        boolean grabado = false;
+        Statement st = c_conectar.conexion();
+        String query = "update producto_unidades "
+                + "set nombre =  '" + nombre + "', factor =  '" + factor + "', precio = '" + precio + "' "
+                + "where id_producto = '" + id_producto + "' and id_unidad = '" + id_unidad + "'";
+        int resultado = c_conectar.actualiza(st, query);
+
+        if (resultado > -1) {
+            grabado = true;
+        }
+
+        c_conectar.cerrar(st);
+
+        return grabado;
+    }
+    
+    public boolean eliminar() {
+        boolean grabado = false;
+        Statement st = c_conectar.conexion();
+        String query = "delete from producto_unidades "
+                + "where id_producto = '" + id_producto + "' and id_unidad = '" + id_unidad + "'";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {

@@ -77,10 +77,6 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
         txt_kardex_descripcion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jd_txt_deuda = new javax.swing.JTextField();
-        btn_eliminar = new javax.swing.JButton();
-        btn_modificar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        btn_deuda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_clientes = new javax.swing.JTable();
@@ -89,6 +85,11 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         lbl_contar = new javax.swing.JLabel();
+        jToolBar1 = new javax.swing.JToolBar();
+        btn_modificar = new javax.swing.JButton();
+        btn_deuda = new javax.swing.JButton();
+        btn_eliminar = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         t_detalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -154,41 +155,6 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
 
         setTitle("Listado de Clientes");
 
-        btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/bin_closed.png"))); // NOI18N
-        btn_eliminar.setText("Eliminar");
-        btn_eliminar.setEnabled(false);
-        btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_eliminarActionPerformed(evt);
-            }
-        });
-
-        btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
-        btn_modificar.setText("Modifcar");
-        btn_modificar.setEnabled(false);
-        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_modificarActionPerformed(evt);
-            }
-        });
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
-        jButton3.setText("Cerrar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        btn_deuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
-        btn_deuda.setText("Ver Deudas Detallada");
-        btn_deuda.setEnabled(false);
-        btn_deuda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_deudaActionPerformed(evt);
-            }
-        });
-
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/find.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
@@ -241,6 +207,55 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
 
         lbl_contar.setText("0");
 
+        jToolBar1.setFloatable(false);
+
+        btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
+        btn_modificar.setText("Modifcar");
+        btn_modificar.setEnabled(false);
+        btn_modificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_modificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_modificar);
+
+        btn_deuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
+        btn_deuda.setText("Ver Deudas Detallada");
+        btn_deuda.setEnabled(false);
+        btn_deuda.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_deuda.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_deuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deudaActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_deuda);
+
+        btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/bin_closed.png"))); // NOI18N
+        btn_eliminar.setText("Eliminar");
+        btn_eliminar.setEnabled(false);
+        btn_eliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_eliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_eliminar);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
+        jButton3.setText("Cerrar");
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -258,36 +273,27 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_eliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_deuda)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_modificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbl_contar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_zonas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_deuda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(lbl_contar))
                 .addContainerGap())
@@ -366,7 +372,7 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (txt_bus.getText().length() > 2) {
+            if (txt_bus.getText().length() > 0) {
                 String buscar = txt_bus.getText().trim();
                 String query = "select c.id_cliente, c.id_zona, z.nombre as zona, c.documento, c.nombre, c.direccion, c.ventas, c.pagado "
                         + "from clientes as c "
@@ -403,7 +409,7 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
         String query = "select c.id_cliente, c.id_zona, z.nombre as zona, c.documento, c.nombre, c.direccion, c.ventas, c.pagado "
                 + "from clientes as c "
                 + "inner join zona as z on z.id_zona = c.id_zona "
-                + "where id_zona = '" + id_zona + "' "
+                + "where c.id_zona = '" + id_zona + "' "
                 + "order by c.nombre asc";
         c_cliente.ver_clientes(t_clientes, query);
         contar_resultados();
@@ -422,6 +428,7 @@ public class frm_ver_clientes extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JDialog jd_detalle;
     private javax.swing.JTextField jd_txt_deuda;
     private javax.swing.JLabel lbl_contar;

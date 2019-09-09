@@ -116,7 +116,7 @@ public class cl_cobro_ventas {
         boolean grabado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into cobro_ventas "
-                + "Values ('" + periodo + "', '" + venta + "', '" + codigo + "', '" + monto + "', '" + fecha + "', '" + tipo + "', '" + frm_menu.c_empleado.getId_empleado() + "')";
+                + "Values ('" + periodo + "', '" + venta + "', '" + codigo + "', '" + monto + "', '" + fecha + "', '" + tipo + "', '" + frm_menu.c_empleado.getId_empleado()+ "')";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {

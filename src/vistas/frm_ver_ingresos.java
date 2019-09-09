@@ -49,11 +49,14 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
         t_ingresos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txt_bus = new javax.swing.JTextField();
-        txt_reg = new javax.swing.JButton();
-        txt_close = new javax.swing.JButton();
-        btn_det = new javax.swing.JButton();
-        btn_eli = new javax.swing.JButton();
         cbx_bus = new javax.swing.JComboBox();
+        jToolBar1 = new javax.swing.JToolBar();
+        txt_reg = new javax.swing.JButton();
+        btn_det = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        btn_eli = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        txt_close = new javax.swing.JButton();
 
         setTitle("Ingreso de Productos");
 
@@ -79,46 +82,62 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
             }
         });
 
-        txt_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/add.png"))); // NOI18N
-        txt_reg.setText("Registrar");
-        txt_reg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_regActionPerformed(evt);
-            }
-        });
-
-        txt_close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
-        txt_close.setText("Cerrar");
-        txt_close.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_closeActionPerformed(evt);
-            }
-        });
-
-        btn_det.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
-        btn_det.setText("Ver Detalle");
-        btn_det.setEnabled(false);
-        btn_det.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_detActionPerformed(evt);
-            }
-        });
-
-        btn_eli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/bin_closed.png"))); // NOI18N
-        btn_eli.setText("Eliminar");
-        btn_eli.setEnabled(false);
-        btn_eli.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_eliActionPerformed(evt);
-            }
-        });
-
         cbx_bus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PROVEEDOR", "NRO. DOCUMENTO", "PERIODO (AÑOMES) (AAAAMM)", "FECHA (DD/MM/AAAA)" }));
         cbx_bus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_busActionPerformed(evt);
             }
         });
+
+        jToolBar1.setFloatable(false);
+
+        txt_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/add.png"))); // NOI18N
+        txt_reg.setText("Registrar");
+        txt_reg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        txt_reg.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        txt_reg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_regActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(txt_reg);
+
+        btn_det.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
+        btn_det.setText("Ver Detalle");
+        btn_det.setEnabled(false);
+        btn_det.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_det.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_det.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_detActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_det);
+        jToolBar1.add(jSeparator2);
+
+        btn_eli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/bin_closed.png"))); // NOI18N
+        btn_eli.setText("Eliminar");
+        btn_eli.setEnabled(false);
+        btn_eli.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_eli.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_eli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_eli);
+        jToolBar1.add(jSeparator1);
+
+        txt_close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
+        txt_close.setText("Cerrar");
+        txt_close.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        txt_close.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        txt_close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_closeActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(txt_close);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,36 +150,24 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_reg))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_det)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_eli)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_close)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_bus)))
                 .addContainerGap())
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_close, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_det, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_eli, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -240,6 +247,9 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox cbx_bus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable t_ingresos;
     private javax.swing.JTextField txt_bus;
     private javax.swing.JButton txt_close;

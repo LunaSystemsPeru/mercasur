@@ -309,7 +309,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         jLabel16 = new javax.swing.JLabel();
         txt_cantidad_producto = new javax.swing.JTextField();
         txt_und_medida = new javax.swing.JTextField();
-        btn_crear_producto1 = new javax.swing.JButton();
+        btn_recargar_productos = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         lbl_total_items = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -649,10 +649,10 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         txt_und_medida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_und_medida.setEnabled(false);
 
-        btn_crear_producto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/arrow_redo.png"))); // NOI18N
-        btn_crear_producto1.addActionListener(new java.awt.event.ActionListener() {
+        btn_recargar_productos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/arrow_redo.png"))); // NOI18N
+        btn_recargar_productos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_crear_producto1ActionPerformed(evt);
+                btn_recargar_productosActionPerformed(evt);
             }
         });
 
@@ -671,7 +671,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_crear_producto1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_recargar_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_crear_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -712,7 +712,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btn_crear_producto1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_recargar_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1100,9 +1100,9 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txt_cantidad_productoKeyPressed
 
-    private void btn_crear_producto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_crear_producto1ActionPerformed
+    private void btn_recargar_productosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_recargar_productosActionPerformed
         cargar_productos();
-    }//GEN-LAST:event_btn_crear_producto1ActionPerformed
+    }//GEN-LAST:event_btn_recargar_productosActionPerformed
 
     private void btn_crear_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_crear_proveedorActionPerformed
         Frame f = JOptionPane.getRootFrame();
@@ -1135,7 +1135,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                 } else {
                     cargar_productos();
                     jTabbedPane1.setSelectedIndex(1);
-                    btn_add_producto.setEnabled(true);
+                    btn_crear_producto.setEnabled(true);
                     txt_buscar_producto.setEnabled(true);
                     txt_buscar_producto.requestFocus();
                 }
@@ -1151,9 +1151,9 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_cambiar_precio;
     private javax.swing.JButton btn_cerrar;
     private javax.swing.JButton btn_crear_producto;
-    private javax.swing.JButton btn_crear_producto1;
     private javax.swing.JButton btn_crear_proveedor;
     private javax.swing.JButton btn_eliminar;
+    private javax.swing.JButton btn_recargar_productos;
     public static javax.swing.JButton btn_registrar;
     public static javax.swing.JComboBox cbx_tido;
     private javax.swing.JLabel jLabel1;

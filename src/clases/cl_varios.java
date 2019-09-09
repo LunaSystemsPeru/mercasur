@@ -6,7 +6,6 @@
  */
 package clases;
 
-import groovyjarjarantlr.StringUtils;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -27,7 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +48,6 @@ import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
-import org.codehaus.groovy.ast.ClassHelper;
 
 /**
  *
@@ -266,11 +263,13 @@ public class cl_varios {
     public void imp_reporte(String filename, Map<String, Object> parametros) {
         Connection st = con.conx();
 
+        String separator = File.separator;
+
         try {
             JasperReport jasperReport;
             JasperPrint jasperPrint;
 
-            jasperReport = JasperCompileManager.compileReport("reports//" + filename + ".jrxml");
+            jasperReport = JasperCompileManager.compileReport("reports" + separator + filename + ".jrxml");
             jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, st);
             JasperPrintManager.printReport(jasperPrint, false);
         } catch (JRException ex) {
@@ -281,8 +280,9 @@ public class cl_varios {
 
     public void ver_reporte_excel(String filename, Map<String, Object> parametros, String salida) {
         Connection st = con.conx();
+        String separator = File.separator;
 
-        String sourceFileName = "reports//" + filename + ".jasper";
+        String sourceFileName = "reports" + separator + filename + ".jasper";
         String printFileName = null;
 
         try {
@@ -304,13 +304,13 @@ public class cl_varios {
                 exporter.setParameter(JRXlsExporterParameter.IS_IGNORE_CELL_BORDER, false);
                 exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, false);
                 exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
-                        "temp//" + salida + fecha_com + ".xls");
+                        "temp" + separator + salida + fecha_com + ".xls");
 
                 exporter.exportReport();
                 JOptionPane.showMessageDialog(null, "REPORTE GENERADO, REVISE EN LA CARPETA DEL SISTEMA */TEMP");
 
                 try {
-                    File file = new File("temp//" + salida + fecha_com + ".xls");
+                    File file = new File("temp" + separator + salida + fecha_com + ".xls");
                     Desktop.getDesktop().open(file);
                 } catch (IOException e) {
                     System.out.print(e + " -- error io");
@@ -442,6 +442,7 @@ public class cl_varios {
 
     public void ver_reporte(String filename, Map<String, Object> parametros) {
         Connection st = con.conx();
+        String reparator = File.separator;
 
         try {
             Date ahora = new Date();
@@ -450,12 +451,12 @@ public class cl_varios {
             JasperReport jasperReport;
             JasperPrint jasperPrint;
 
-            jasperReport = JasperCompileManager.compileReport("reports//" + filename + ".jrxml");
+            jasperReport = JasperCompileManager.compileReport("reports" + reparator + filename + ".jrxml");
             jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, st);
-            JasperExportManager.exportReportToPdfFile(jasperPrint, "temp/" + filename + "_" + fecha_com + ".pdf");
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "temp" + reparator + filename + "_" + fecha_com + ".pdf");
 
             try {
-                File file = new File("temp/" + filename + "_" + fecha_com + ".pdf");
+                File file = new File("temp" + reparator + filename + "_" + fecha_com + ".pdf");
 
                 Desktop.getDesktop().open(file);
             } catch (IOException e) {

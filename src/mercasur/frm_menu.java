@@ -2,13 +2,14 @@ package mercasur;
 
 import clases.cl_caja_chica;
 import clases.cl_conectar;
-import clases.cl_empleado;
+import clases.cl_empleados;
 import clases.cl_varios;
 import clases.cl_zona;
-import forms.frm_reg_compra;
 import forms.frm_reg_venta;
 import java.awt.Frame;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.Locale;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import nicon.notify.core.Notification;
 import vistas.frm_ver_caja_diaria;
 import vistas.frm_ver_caja_mensual;
@@ -30,6 +32,7 @@ import vistas.frm_ver_marcas;
 import vistas.frm_ver_movimientos;
 import vistas.frm_ver_productos;
 import vistas.frm_ver_proveedores;
+import vistas.frm_ver_vehiculos;
 import vistas.frm_ver_ventas;
 import vistas.frm_ver_zonas;
 
@@ -49,7 +52,7 @@ public class frm_menu extends javax.swing.JFrame {
 
     cl_caja_chica c_caja = new cl_caja_chica();
 
-    public static cl_empleado c_empleado = new cl_empleado();
+    public static cl_empleados c_empleado = new cl_empleados();
     public static cl_zona c_zona = new cl_zona();
 
     String nombre_reporte = "";
@@ -63,6 +66,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         //if (c_conectar.verificar_conexion()) {
         if (c_conectar.conectar()) {
+            autoconectar();
             cargar_login();
         } else {
             JOptionPane.showMessageDialog(null, "ERROR!! , NO ES POSIBLE CONECTAR A LA BASE DE DATOS");
@@ -95,6 +99,20 @@ public class frm_menu extends javax.swing.JFrame {
         txt_d_fecha_fin.setText(c_varios.formato_fecha_vista(c_varios.getFechaActual()));
         txt_d_fecha_inio.setText(c_varios.formato_fecha_vista(c_varios.getFechaActual()));
 
+    }
+
+    private void autoconectar() {
+        try {
+            Timer timer = new Timer(55000, new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    c_conectar.autoconectar();
+                }
+            });
+            timer.start();
+            timer.setRepeats(true);
+        } catch (Exception e) {
+            System.out.println("Error grave " + e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -144,7 +162,6 @@ public class frm_menu extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jButton9 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -195,6 +212,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
+        jMenuItem32 = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
         jMenuItem26 = new javax.swing.JMenuItem();
 
@@ -634,19 +652,6 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jToolBar2.add(jButton7);
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/147250.png"))); // NOI18N
-        jButton8.setText("Movimiento Dia");
-        jButton8.setBorderPainted(false);
-        jButton8.setFocusable(false);
-        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(jButton8);
-
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/148766.png"))); // NOI18N
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -659,7 +664,7 @@ public class frm_menu extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(217, Short.MAX_VALUE)
+                .addContainerGap(337, Short.MAX_VALUE)
                 .addComponent(jButton9)
                 .addContainerGap())
         );
@@ -673,16 +678,16 @@ public class frm_menu extends javax.swing.JFrame {
 
         jToolBar2.add(jPanel4);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/user.png"))); // NOI18N
         jLabel5.setText("Usuario:");
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         lbl_empleado.setText("lbl_usuario");
 
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/store-icon.png"))); // NOI18N
         jLabel7.setText("Version:");
 
-        lbl_version.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lbl_version.setText("lbl_version");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -695,7 +700,7 @@ public class frm_menu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_empleado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -705,19 +710,14 @@ public class frm_menu extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(lbl_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.CENTER, jPanel5Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_version, javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_version, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jDesktopPane1.setLayer(jToolBar2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -1008,8 +1008,21 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem22);
 
-        jMenuItem24.setText("Permisos de Usuario");
+        jMenuItem24.setText("Vehiculos");
+        jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem24ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem24);
+
+        jMenuItem32.setText("Pedido");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem32);
         jMenu5.add(jSeparator8);
 
         jMenuItem26.setText("Respaldo de la Informacion");
@@ -1043,6 +1056,7 @@ public class frm_menu extends javax.swing.JFrame {
             if (txt_usuario.getText().length() > 0) {
                 c_empleado.setNick(txt_usuario.getText().trim());
                 if (c_empleado.validar_usuario()) {
+                    c_empleado.cargar_datos();
                     txt_contrasena.setText("");
                     txt_contrasena.setEnabled(true);
                     txt_contrasena.requestFocus();
@@ -1061,7 +1075,6 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         jd_login.setVisible(false);
-        c_empleado.cargar_datos();
         //Notification.show("Bienvenido", "BIENVENIDO SR(A): " + c_empleado.getNombres() + "  " + c_empleado.getApe_pat() + " " + c_empleado.getApe_mat());
         lbl_empleado.setText(c_empleado.getNombres() + "  " + c_empleado.getApe_pat() + " " + c_empleado.getApe_mat());
         c_caja.setFecha(c_varios.getFechaActual());
@@ -1191,11 +1204,6 @@ public class frm_menu extends javax.swing.JFrame {
         c_varios.llamar_ventana(ver_proveedores);
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        frm_ver_movimientos ver_movimientos = new frm_ver_movimientos();
-        c_varios.llamar_ventana(ver_movimientos);
-    }//GEN-LAST:event_jButton8ActionPerformed
-
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         Frame f = JOptionPane.getRootFrame();
         frm_ver_caja_diaria.fecha = c_varios.getFechaActual();
@@ -1320,7 +1328,8 @@ public class frm_menu extends javax.swing.JFrame {
             try {
                 Map<String, Object> parametros = new HashMap<>();
                 String path = miDir.getCanonicalPath();
-                String direccion = path + "//reports//subreports//";
+                String separator = File.separator;
+                String direccion = path + separator + "reports" + separator + "subreports" + separator;
                 //String direccion = path + "\\reports\\subreports\\";
                 System.out.println(direccion);
                 parametros.put("SUBREPORT_DIR", direccion);
@@ -1362,8 +1371,8 @@ public class frm_menu extends javax.swing.JFrame {
         try {
             Map<String, Object> parametros = new HashMap<>();
             String path = miDir.getCanonicalPath();
-            String direccion = path + "//reports//subreports//";
-            //String direccion = path + "\\reports\\subreports\\";
+            String separator = File.separator;
+            String direccion = path + separator + "reports" + separator + "subreports" + separator;
             System.out.println(direccion);
             parametros.put("REPORT_LOCALE", new Locale("en", "US"));
             parametros.put("SUBREPORT_DIR", direccion);
@@ -1416,7 +1425,7 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-         nombre_reporte = "rpt_productos_marca_fechas";
+        nombre_reporte = "rpt_productos_marca_fechas";
         llamar_fecha_doble();
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
@@ -1424,6 +1433,16 @@ public class frm_menu extends javax.swing.JFrame {
         nombre_reporte = "rpt_productos_marca_vendedor";
         llamar_fecha_doble();
     }//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+        frm_reg_venta formulario = new frm_reg_venta();
+        c_varios.llamar_ventana_completa(formulario);
+    }//GEN-LAST:event_jMenuItem32ActionPerformed
+
+    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+        frm_ver_vehiculos formulario = new frm_ver_vehiculos();
+        c_varios.llamar_ventana_completa(formulario);
+    }//GEN-LAST:event_jMenuItem24ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1480,7 +1499,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     public static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
@@ -1527,6 +1545,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem31;
+    private javax.swing.JMenuItem jMenuItem32;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

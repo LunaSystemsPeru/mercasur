@@ -9,30 +9,32 @@ import vistas.frm_ver_empleado;
 import clases.cl_varios;
 import clases.cl_empleados;
 import java.awt.event.KeyEvent;
+
 public class frm_reg_empleado extends javax.swing.JInternalFrame {
 
     cl_varios c_varios = new cl_varios();
     cl_empleados c_empleados = new cl_empleados();
     public static String accion;
     public static int id_empleados;
-    
 
     public frm_reg_empleado() {
         initComponents();
-        txt_nombre.setEnabled(false);
-        txt_ape_pat.setEnabled(false);
-        txt_ape_mat.setEnabled(false);
-        txt_direccion.setEnabled(false);
-        txt_correo.setEnabled(false);
-        txt_telefono.setEnabled(false);
-        txt_fecha_nacimiento.setEnabled(false);
-        txt_nick.setEnabled(false);
-        txt_contraseña.setEnabled(false);
-        btn_registrar.setEnabled(false);
+        if (accion.equals("grabar")) {
+            txt_nombre.setEnabled(false);
+            txt_ape_pat.setEnabled(false);
+            txt_ape_mat.setEnabled(false);
+            txt_direccion.setEnabled(false);
+            txt_correo.setEnabled(false);
+            txt_telefono.setEnabled(false);
+            txt_fecha_nacimiento.setEnabled(false);
+            txt_nick.setEnabled(false);
+            txt_contraseña.setEnabled(false);
+            btn_registrar.setEnabled(false);
+        }
         if (accion.equals("modificar")) {
-            c_empleados.setId_empleados(id_empleados);
+            c_empleados.setId_empleado(id_empleados);
             c_empleados.cargar_datos();
-            txt_codigo.setText(String.valueOf(c_empleados.getId_empleados()));
+            txt_codigo.setText(String.valueOf(c_empleados.getId_empleado()));
             txt_nombre.setText(c_empleados.getNombres());
             txt_dni.setText(c_empleados.getDni());
             txt_ape_pat.setText(c_empleados.getApe_pat());
@@ -40,12 +42,12 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
             txt_direccion.setText(c_empleados.getDireccion());
             txt_correo.setText(c_empleados.getCorreo());
             txt_telefono.setText(c_empleados.getTelefono());
-            txt_fecha_nacimiento.setText(c_empleados.getFecha_nacimiento());
+            txt_fecha_nacimiento.setText(c_varios.formato_fecha_vista(c_empleados.getFecha_nacimiento()));
             txt_nick.setText(c_empleados.getNick());
-            txt_contraseña.setText(c_empleados.getContraseña());
+            txt_contraseña.setText(c_empleados.getContrasena());
             jButton3.setEnabled(true);
             btn_registrar.setEnabled(false);
-            
+
         }
 
     }
@@ -53,10 +55,10 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
     private void llenar() {
         if (accion.equals("registrar")) {
             txt_codigo.setText(String.valueOf(c_empleados.obtener_codigo()));
-        } 
+        }
         if (accion.equals("modificar")) {
-            c_empleados.setId_empleados(Integer.parseInt(txt_codigo.getText()));
-        } 
+            c_empleados.setId_empleado(Integer.parseInt(txt_codigo.getText()));
+        }
         c_empleados.setDni(txt_dni.getText());
         c_empleados.setNombres(txt_nombre.getText());
         c_empleados.setApe_pat(txt_ape_pat.getText());
@@ -64,11 +66,11 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         c_empleados.setDireccion(txt_direccion.getText());
         c_empleados.setCorreo(txt_correo.getText());
         c_empleados.setTelefono(txt_telefono.getText());
-        
+
         String fecha_nacimento = txt_fecha_nacimiento.getText();
         String nueva_fecha = c_varios.formato_fecha_mysql(fecha_nacimento);
         c_empleados.setFecha_nacimiento(nueva_fecha);
-        
+
         c_empleados.setNick(txt_nick.getText());
         c_empleados.setContraseña(txt_contraseña.getText());
 
@@ -100,11 +102,12 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         txt_nick = new javax.swing.JTextField();
         txt_contraseña = new javax.swing.JTextField();
         txt_dni = new javax.swing.JTextField();
-        btn_cer1 = new javax.swing.JButton();
-        btn_registrar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         txt_fecha_nacimiento = new javax.swing.JFormattedTextField();
+        jToolBar1 = new javax.swing.JToolBar();
+        btn_registrar = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        btn_cer1 = new javax.swing.JButton();
 
         btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
         btn_cer.setText("Cerrar");
@@ -199,32 +202,6 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_cer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
-        btn_cer1.setText("Cerrar");
-        btn_cer1.setFocusable(false);
-        btn_cer1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_cer1ActionPerformed(evt);
-            }
-        });
-
-        btn_registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/add.png"))); // NOI18N
-        btn_registrar.setText("Registrar");
-        btn_registrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_registrarActionPerformed(evt);
-            }
-        });
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
-        jButton3.setText("Modificar");
-        jButton3.setEnabled(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jLabel12.setText("Fec. Nacimiento");
 
         try {
@@ -239,6 +216,43 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
             }
         });
 
+        jToolBar1.setFloatable(false);
+
+        btn_registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/add.png"))); // NOI18N
+        btn_registrar.setText("Registrar");
+        btn_registrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_registrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_registrar);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
+        jButton3.setText("Modificar");
+        jButton3.setEnabled(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton3);
+
+        btn_cer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
+        btn_cer1.setText("Cerrar");
+        btn_cer1.setFocusable(false);
+        btn_cer1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_cer1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_cer1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cer1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_cer1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,58 +260,52 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_nombre)
+                            .addComponent(txt_ape_pat)
+                            .addComponent(txt_ape_mat)
+                            .addComponent(txt_nick)
+                            .addComponent(txt_contraseña)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txt_nombre)
-                                            .addComponent(txt_ape_pat)
-                                            .addComponent(txt_ape_mat)
-                                            .addComponent(txt_nick)
-                                            .addComponent(txt_contraseña)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                    .addComponent(txt_fecha_nacimiento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                                    .addComponent(txt_dni, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(txt_telefono, javax.swing.GroupLayout.Alignment.LEADING))
-                                                .addGap(0, 41, Short.MAX_VALUE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addComponent(btn_cer1))
-                            .addComponent(txt_direccion)
-                            .addComponent(txt_correo)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_registrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
-                .addContainerGap())
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txt_fecha_nacimiento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                    .addComponent(txt_dni, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_telefono, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(0, 47, Short.MAX_VALUE)))
+                        .addContainerGap(164, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(230, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txt_correo)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txt_direccion)
+                        .addContainerGap())))
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_cer1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -338,10 +346,6 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -381,23 +385,24 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
 
     private void txt_fecha_nacimientoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecha_nacimientoKeyPressed
         // TODO add your handling code here:
-        String fecha = txt_nombre.getText().charAt(0) + txt_ape_pat.getText().replace(" ","") + txt_ape_mat.getText().charAt(0);      
+        String fecha = txt_nombre.getText().charAt(0) + txt_ape_pat.getText().replace(" ", "") + txt_ape_mat.getText().charAt(0);
         //System.out.println(n);
         txt_nick.setText(fecha);
-        if (evt.getKeyChar() == KeyEvent.VK_ENTER)
-             this.txt_contraseña.requestFocus();
-             txt_contraseña.setEnabled(true);
-        
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            this.txt_contraseña.requestFocus();
+        }
+        txt_contraseña.setEnabled(true);
+
     }//GEN-LAST:event_txt_fecha_nacimientoKeyPressed
 
     private void txt_dniKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dniKeyPressed
 
-          if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-             this.txt_nombre.requestFocus();
-             txt_nombre.setEnabled(true);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.txt_nombre.requestFocus();
+            txt_nombre.setEnabled(true);
 
         }
-        
+
     }//GEN-LAST:event_txt_dniKeyPressed
 
     private void txt_dniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_dniActionPerformed
@@ -405,68 +410,66 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_dniActionPerformed
 
     private void txt_nombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombreKeyPressed
-        
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
-             this.txt_ape_pat.requestFocus();
-             txt_ape_pat.setEnabled(true);
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.txt_ape_pat.requestFocus();
+            txt_ape_pat.setEnabled(true);
         }
     }//GEN-LAST:event_txt_nombreKeyPressed
 
     private void txt_ape_patKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ape_patKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
-             this.txt_ape_mat.requestFocus();
-             txt_ape_mat.setEnabled(true);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.txt_ape_mat.requestFocus();
+            txt_ape_mat.setEnabled(true);
         }
     }//GEN-LAST:event_txt_ape_patKeyPressed
 
     private void txt_ape_matKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ape_matKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
-             this.txt_direccion.requestFocus();
-             txt_direccion.setEnabled(true);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.txt_direccion.requestFocus();
+            txt_direccion.setEnabled(true);
         }
     }//GEN-LAST:event_txt_ape_matKeyPressed
 
     private void txt_direccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_direccionKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
-             this.txt_correo.requestFocus();
-             txt_correo.setEnabled(true);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.txt_correo.requestFocus();
+            txt_correo.setEnabled(true);
         }
     }//GEN-LAST:event_txt_direccionKeyPressed
 
     private void txt_correoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_correoKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
-             this.txt_telefono.requestFocus();
-             txt_telefono.setEnabled(true);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.txt_telefono.requestFocus();
+            txt_telefono.setEnabled(true);
         }
     }//GEN-LAST:event_txt_correoKeyPressed
 
     private void txt_telefonoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_telefonoKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
-             this.txt_fecha_nacimiento.requestFocus();
-             txt_fecha_nacimiento.setEnabled(true);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.txt_fecha_nacimiento.requestFocus();
+            txt_fecha_nacimiento.setEnabled(true);
         }
     }//GEN-LAST:event_txt_telefonoKeyPressed
 
     private void txt_contraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_contraseñaKeyPressed
-        
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
-            if(txt_codigo.getText().length()>0){
-                 jButton3.setEnabled(true);
-                 btn_registrar.setEnabled(false);
-                 jButton3.requestFocus();
-            }
-            else{
-                
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_codigo.getText().length() > 0) {
+                jButton3.setEnabled(true);
+                btn_registrar.setEnabled(false);
+                jButton3.requestFocus();
+            } else {
+
                 jButton3.setEnabled(false);
                 btn_registrar.setEnabled(true);
                 btn_registrar.requestFocus();
-                
-               
+
             }
         }
     }//GEN-LAST:event_txt_contraseñaKeyPressed
@@ -489,6 +492,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextField txt_ape_mat;
     private javax.swing.JTextField txt_ape_pat;
     private javax.swing.JTextField txt_codigo;

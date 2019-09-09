@@ -1,4 +1,4 @@
-                                               package clases;
+package clases;
 
 import java.net.Socket;
 import java.sql.Connection;
@@ -23,7 +23,7 @@ public class cl_conectar implements i_datos_bd {
     // Ruta del servidor.
     // String server = "jdbc:mysql://lunasystemsperu.com:3306/" + bd;
     String server = "jdbc:mysql://" + servidor + ":3306/" + bd;
- 
+
     /**
      * Método para realizar consultas de actualización, creación o eliminación.
      *
@@ -92,6 +92,22 @@ public class cl_conectar implements i_datos_bd {
             //System.exit(0);
         }
         return hecho;
+    }
+    
+    public void autoconectar() {
+        boolean existe = false;
+        try {
+            Statement st = this.conexion();
+            String query = "select 1 ";
+            ResultSet rs = this.consulta(st, query);
+            if (rs.next()) {
+                existe = true;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            this.conectar();
+        }
+        //return existe;
     }
 
     public boolean verificar_conexion() {

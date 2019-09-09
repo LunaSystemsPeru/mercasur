@@ -50,7 +50,7 @@ public class cl_zona {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();
     }
 
     public String getCiudad() {
@@ -58,7 +58,7 @@ public class cl_zona {
     }
 
     public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+        this.ciudad = ciudad.toUpperCase();
     }
 
     public int getId_empleado() {
@@ -152,18 +152,19 @@ public class cl_zona {
             RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(mostrar);
             tabla.setRowSorter(sorter);
 
-            mostrar.addColumn("Codigo");
-            mostrar.addColumn("Nombre");
+            mostrar.addColumn("Id Zona");
+            mostrar.addColumn("Vendedor");
+            mostrar.addColumn("Zona");
             mostrar.addColumn("Ciudad");
-            mostrar.addColumn("Empleado");
 
             while (rs.next()) {
                 Object fila[] = new Object[4];
+                String empleado = rs.getString("ape_pat") + " " + rs.getString("ape_mat") + " " + rs.getString("nombres");
 
                 fila[0] = rs.getInt("id_zona");
-                fila[1] = rs.getString("nombre").trim();
-                fila[2] = rs.getString("ciudad").trim();
-                fila[3] = rs.getString("nick").trim();
+                fila[1] = empleado;
+                fila[2] = rs.getString("nombre").trim();
+                fila[3] = rs.getString("ciudad").trim();
                 mostrar.addRow(fila);
             }
 
@@ -171,9 +172,9 @@ public class cl_zona {
             c_conectar.cerrar(rs);
             tabla.setModel(mostrar);
             tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
-            tabla.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tabla.getColumnModel().getColumn(2).setPreferredWidth(80);
-            tabla.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(300);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(180);
+            tabla.getColumnModel().getColumn(3).setPreferredWidth(150);
         } catch (SQLException ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(null, ex);
@@ -185,6 +186,23 @@ public class cl_zona {
         Statement st = c_conectar.conexion();
         String query = "insert into zona "
                 + "Values ('" + id_zona + "', '" + nombre + "', '" + ciudad + "','" + id_empleado + "')";
+        int resultado = c_conectar.actualiza(st, query);
+
+        if (resultado > -1) {
+            grabado = true;
+        }
+
+        c_conectar.cerrar(st);
+
+        return grabado;
+    }
+
+    public boolean modificar() {
+        boolean grabado = false;
+        Statement st = c_conectar.conexion();
+        String query = "update zona "
+                + "set nombre = '" + nombre + "', ciudad = '" + ciudad + "', id_empleado = '" + id_empleado + "' "
+                + "where id_zona = '" + id_zona + "'";
         int resultado = c_conectar.actualiza(st, query);
 
         if (resultado > -1) {

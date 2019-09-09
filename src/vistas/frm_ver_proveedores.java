@@ -45,25 +45,19 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btn_modificar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txt_buscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_proveedor = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
+        jToolBar1 = new javax.swing.JToolBar();
+        btn_modificar = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
         btn_ver_compras = new javax.swing.JButton();
         btn_ver_productos = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        jButton3 = new javax.swing.JButton();
 
         setTitle("Ver Proveedores");
-
-        btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
-        btn_modificar.setText("Modifcar");
-        btn_modificar.setEnabled(false);
-        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_modificarActionPerformed(evt);
-            }
-        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/find.png"))); // NOI18N
         jLabel1.setText("Buscar:");
@@ -104,31 +98,56 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
             t_proveedor.getColumnModel().getColumn(3).setPreferredWidth(40);
         }
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
-        jButton3.setText("Cerrar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jToolBar1.setFloatable(false);
+
+        btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
+        btn_modificar.setText("Modifcar");
+        btn_modificar.setEnabled(false);
+        btn_modificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_modificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btn_modificarActionPerformed(evt);
             }
         });
+        jToolBar1.add(btn_modificar);
+        jToolBar1.add(jSeparator2);
 
         btn_ver_compras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
         btn_ver_compras.setText("Ver Compras");
         btn_ver_compras.setEnabled(false);
+        btn_ver_compras.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_ver_compras.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn_ver_compras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_ver_comprasActionPerformed(evt);
             }
         });
+        jToolBar1.add(btn_ver_compras);
 
         btn_ver_productos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
         btn_ver_productos.setText("Ver Ingresos");
         btn_ver_productos.setEnabled(false);
+        btn_ver_productos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_ver_productos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn_ver_productos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_ver_productosActionPerformed(evt);
             }
         });
+        jToolBar1.add(btn_ver_productos);
+        jToolBar1.add(jSeparator1);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
+        jButton3.setText("Cerrar");
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,31 +161,20 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_modificar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_ver_compras)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_ver_productos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_ver_compras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_ver_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -244,8 +252,8 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
                 Map<String, Object> parametros = new HashMap<>();
                 String rpt_proveedor = c_proveedor.getRuc();
                 String path = miDir.getCanonicalPath();
-                String direccion = path + "//reports//subreports//";
-                //String direccion = path + "\\reports\\subreports\\";
+                String separator = File.separator;
+                String direccion = path + separator + "reports" + separator + "subreports" + separator;
                 System.out.println(direccion);
                 //    parametros.put("SUBREPORT_DIR", direccion);
                 parametros.put("proveedor", rpt_proveedor);
@@ -270,6 +278,9 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable t_proveedor;
     private javax.swing.JTextField txt_buscar;
     // End of variables declaration//GEN-END:variables

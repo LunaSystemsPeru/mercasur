@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class cl_empleados {
 
     cl_conectar c_conectar = new cl_conectar();
-    private int id_empleados;
+    private int id_empleado;
     private String dni;
     private String nombres;
     private String ape_pat;
@@ -21,7 +21,7 @@ public class cl_empleados {
     private String telefono;
     private String fecha_nacimiento;
     private String nick;
-    private String contraseña;
+    private String contrasena;
     private String estado;
     private Statement st;
     private ResultSet rs;
@@ -29,15 +29,15 @@ public class cl_empleados {
     public cl_empleados() {
     }
 
-    public int getId_empleados() {
-        return id_empleados;
+    public int getId_empleado() {
+        return id_empleado;
     }
 
     /**
-     * @param id_empleados the id_empleados to set
+     * @param id_empleado the id_empleado to set
      */
-    public void setId_empleados(int id_empleados) {
-        this.id_empleados = id_empleados;
+    public void setId_empleado(int id_empleado) {
+        this.id_empleado = id_empleado;
     }
 
     /**
@@ -65,7 +65,7 @@ public class cl_empleados {
      * @param nombres the nombres to set
      */
     public void setNombres(String nombres) {
-        this.nombres = nombres;
+        this.nombres = nombres.toUpperCase();
     }
 
     /**
@@ -79,7 +79,7 @@ public class cl_empleados {
      * @param ape_pat the ape_pat to set
      */
     public void setApe_pat(String ape_pat) {
-        this.ape_pat = ape_pat;
+        this.ape_pat = ape_pat.toUpperCase();
     }
 
     /**
@@ -93,7 +93,7 @@ public class cl_empleados {
      * @param ape_mat the ape_mat to set
      */
     public void setApe_mat(String ape_mat) {
-        this.ape_mat = ape_mat;
+        this.ape_mat = ape_mat.toUpperCase();
     }
 
     /**
@@ -107,7 +107,7 @@ public class cl_empleados {
      * @param direccion the direccion to set
      */
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        this.direccion = direccion.toUpperCase();
     }
 
     /**
@@ -163,21 +163,21 @@ public class cl_empleados {
      * @param nick the nick to set
      */
     public void setNick(String nick) {
-        this.nick = nick;
+        this.nick = nick.toLowerCase();
     }
 
     /**
      * @return the contraseña
      */
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
     /**
-     * @param contraseña the contraseña to set
+     * @param contrasena the contrasena to set
      */
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContraseña(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     /**
@@ -210,14 +210,20 @@ public class cl_empleados {
 
             mostrar.addColumn("Codigo");
             mostrar.addColumn("Usuario");
-            mostrar.addColumn("datos del empleado");
+            mostrar.addColumn("DNI");
+            mostrar.addColumn("Apellidos y Nombres");
+            mostrar.addColumn("Telefono");
+            mostrar.addColumn("Fecha Nac.");
 
             while (rs.next()) {
-                Object fila[] = new Object[3];
+                Object fila[] = new Object[6];
 
                 fila[0] = rs.getInt("id_empleado");
                 fila[1] = rs.getString("nick");
-                fila[2] = rs.getString("nombres") + " " + rs.getString("ape_pat") + " " + rs.getString("ape_mat").trim();
+                fila[2] = rs.getString("dni");
+                fila[3] = rs.getString("ape_pat") + " " + rs.getString("ape_mat").trim() + " " + rs.getString("nombres");
+                fila[4] = rs.getString("telefono");
+                fila[5] = rs.getString("fecha_nacimiento");
 
                 mostrar.addRow(fila);
             }
@@ -225,9 +231,12 @@ public class cl_empleados {
             c_conectar.cerrar(st);
             c_conectar.cerrar(rs);
             tabla.setModel(mostrar);
-            tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tabla.getColumnModel().getColumn(0).setPreferredWidth(30);
             tabla.getColumnModel().getColumn(1).setPreferredWidth(80);
-            tabla.getColumnModel().getColumn(2).setPreferredWidth(180);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(3).setPreferredWidth(300);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tabla.getColumnModel().getColumn(5).setPreferredWidth(100);
 
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -239,8 +248,8 @@ public class cl_empleados {
         boolean grabar = false;
         try {
             st = c_conectar.conexion();
-            String squly = "insert into empleados values('" + id_empleados + "','" + dni + "','" + nombres + "','" + ape_pat + "','" + ape_mat + "',"
-                    + "'" + direccion + "','" + correo + "','" + telefono + "','" + fecha_nacimiento + "','" + nick + "','" + contraseña + "','1')";
+            String squly = "insert into empleados values('" + id_empleado + "','" + dni + "','" + nombres + "','" + ape_pat + "','" + ape_mat + "',"
+                    + "'" + direccion + "','" + correo + "','" + telefono + "','" + fecha_nacimiento + "','" + nick + "','" + contrasena + "','1')";
             int respuesta = c_conectar.actualiza(st, squly);
             if (respuesta > -1) {
                 grabar = true;
@@ -259,8 +268,8 @@ public class cl_empleados {
             String sql = "select ifnull(max(id_empleado)+1, 1) as id_empleado from empleados";
             rs = c_conectar.consulta(st, sql);
             if (rs.next()) {
-                id_empleados = rs.getInt("id_empleado");
-                codigo = id_empleados;
+                id_empleado = rs.getInt("id_empleado");
+                codigo = id_empleado;
 
             }
         } catch (SQLException e) {
@@ -278,8 +287,8 @@ public class cl_empleados {
             String Sql = "update empleados "
                     + "set dni='" + dni + "',nombres='" + nombres + "',ape_pat='" + ape_pat + "',ape_mat='" + ape_mat + "',"
                     + "direccion='" + direccion + "',correo='" + correo + "',telefono='" + telefono + "',fecha_nacimiento='" + fecha_nacimiento + "',"
-                    + " nick='" + nick + "',contrasena='" + contraseña + "' "
-                    + "where id_empleado = '" + id_empleados + "'";
+                    + " nick='" + nick + "',contrasena='" + contrasena + "' "
+                    + "where id_empleado = '" + id_empleado + "'";
             int respuesta = c_conectar.actualiza(st, Sql);
             if (respuesta > -1) {
                 modificar = true;
@@ -296,12 +305,12 @@ public class cl_empleados {
             st = c_conectar.conexion();
             String query = "select * "
                     + "from empleados "
-                    + "where id_empleado = '" + id_empleados
+                    + "where id_empleado = '" + id_empleado
                     + "'";
             rs = c_conectar.consulta(st, query);
 
             if (rs.next()) {
-                id_empleados = rs.getInt("id_empleado");
+                id_empleado = rs.getInt("id_empleado");
                 dni = rs.getString("dni");
                 nombres = rs.getString("nombres");
                 ape_pat = rs.getString("ape_pat");
@@ -311,7 +320,7 @@ public class cl_empleados {
                 telefono = rs.getString("telefono");
                 fecha_nacimiento = rs.getString("fecha_nacimiento");
                 nick = rs.getString("nick");
-                contraseña = rs.getString("contrasena");
+                contrasena = rs.getString("contrasena");
                 estado = rs.getString("estado");
                 existe = true;
             }
@@ -321,6 +330,27 @@ public class cl_empleados {
         } catch (SQLException e) {
             System.out.println(e.getLocalizedMessage());
         }
+
+        return existe;
+    }
+
+    public boolean validar_usuario() {
+        boolean existe = false;
+        try {
+            st = c_conectar.conexion();
+            String sql = "select id_empleado "
+                    + "from empleados "
+                    + "where nick = '" + nick + "'";
+            rs = c_conectar.consulta(st, sql);
+            if (rs.next()) {
+                id_empleado = rs.getInt("id_empleado");
+                existe = true;
+
+            }
+        } catch (SQLException e) {
+        }
+        c_conectar.cerrar(st);
+        c_conectar.cerrar(rs);
 
         return existe;
     }

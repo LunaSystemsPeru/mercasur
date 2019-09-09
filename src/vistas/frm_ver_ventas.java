@@ -9,7 +9,9 @@ import clases.cl_cobro_ventas;
 import clases.cl_detalle_venta;
 import clases.cl_varios;
 import clases.cl_venta;
+import clases_hilos.cl_enviar_venta;
 import java.awt.event.KeyEvent;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 /**
@@ -109,15 +111,20 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
         cbx_busqueda = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_ventas = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txt_tot = new javax.swing.JTextField();
-        btn_anu = new javax.swing.JButton();
         cbx_estado = new javax.swing.JComboBox();
-        btn_ver_detalle = new javax.swing.JButton();
-        btn_ver_cobro = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         txt_total_deudas = new javax.swing.JTextField();
+        jToolBar1 = new javax.swing.JToolBar();
+        btn_ver_cobro = new javax.swing.JButton();
+        btn_ver_detalle = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
+        btn_ver_pdf = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        btn_anu = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        jButton2 = new javax.swing.JButton();
 
         jd_ver_pagos.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         jd_ver_pagos.setTitle("Detalle de Pagos");
@@ -555,11 +562,11 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
         ));
         t_ventas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         t_ventas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t_ventasMouseClicked(evt);
-            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_ventasMousePressed(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_ventasMouseClicked(evt);
             }
         });
         t_ventas.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -569,27 +576,10 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(t_ventas);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
-        jButton2.setText("Cerrar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Total:");
+        jLabel2.setText("Total Ventas:");
 
         txt_tot.setEditable(false);
         txt_tot.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-
-        btn_anu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/bin_closed.png"))); // NOI18N
-        btn_anu.setText("Anular");
-        btn_anu.setEnabled(false);
-        btn_anu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_anuActionPerformed(evt);
-            }
-        });
 
         cbx_estado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PAGADOS", "POR COBRAR", "ANULADOS", "TODOS" }));
         cbx_estado.addActionListener(new java.awt.event.ActionListener() {
@@ -598,28 +588,75 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_ver_detalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
-        btn_ver_detalle.setText("Ver Detalle");
-        btn_ver_detalle.setEnabled(false);
-        btn_ver_detalle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_ver_detalleActionPerformed(evt);
-            }
-        });
+        jLabel9.setText("TOTAL DEUDAS:");
+
+        txt_total_deudas.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_total_deudas.setFocusable(false);
+
+        jToolBar1.setFloatable(false);
 
         btn_ver_cobro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
         btn_ver_cobro.setText("Ver Pagos");
         btn_ver_cobro.setEnabled(false);
+        btn_ver_cobro.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_ver_cobro.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn_ver_cobro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_ver_cobroActionPerformed(evt);
             }
         });
+        jToolBar1.add(btn_ver_cobro);
 
-        jLabel9.setText("TOTAL DEUDAS:");
+        btn_ver_detalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
+        btn_ver_detalle.setText("Ver Detalle");
+        btn_ver_detalle.setEnabled(false);
+        btn_ver_detalle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_ver_detalle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_ver_detalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ver_detalleActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_ver_detalle);
+        jToolBar1.add(jSeparator3);
 
-        txt_total_deudas.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txt_total_deudas.setFocusable(false);
+        btn_ver_pdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/clipboard_text.png"))); // NOI18N
+        btn_ver_pdf.setText("Ver PDF");
+        btn_ver_pdf.setEnabled(false);
+        btn_ver_pdf.setFocusable(false);
+        btn_ver_pdf.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_ver_pdf.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_ver_pdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ver_pdfActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_ver_pdf);
+        jToolBar1.add(jSeparator2);
+
+        btn_anu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/bin_closed.png"))); // NOI18N
+        btn_anu.setText("Anular");
+        btn_anu.setEnabled(false);
+        btn_anu.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_anu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_anu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_anuActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_anu);
+        jToolBar1.add(jSeparator1);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
+        jButton2.setText("Cerrar");
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -631,53 +668,42 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
-                        .addComponent(cbx_estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_ver_cobro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_ver_detalle))
+                        .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 408, Short.MAX_VALUE)
+                        .addComponent(cbx_estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_anu)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
-                        .addComponent(txt_total_deudas, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(txt_total_deudas, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbx_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cbx_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_ver_detalle, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_ver_cobro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_total_deudas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_anu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(txt_total_deudas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -761,8 +787,7 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
             btn_ver_detalle.setEnabled(false);
             btn_anu.setEnabled(false);
 
-            int dialogButton = JOptionPane.YES_NO_OPTION;
-            JOptionPane.showConfirmDialog(null, "Desea eliminar el registro seleccionado??", "Atencion", dialogButton);
+            int dialogButton = JOptionPane.showConfirmDialog(null, "Desea eliminar el registro seleccionado??", "Atencion", JOptionPane.OK_CANCEL_OPTION);
             if (dialogButton == JOptionPane.YES_OPTION) { //The ISSUE is here
                 String periodo = t_ventas.getValueAt(fila_seleccionada, 7).toString();
                 int id_venta = Integer.parseInt(t_ventas.getValueAt(fila_seleccionada, 8).toString());
@@ -835,10 +860,12 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
             btn_ver_cobro.setEnabled(false);
             btn_ver_detalle.setEnabled(false);
             btn_anu.setEnabled(false);
+            btn_ver_pdf.setEnabled(false);
         } else {
             btn_ver_cobro.setEnabled(true);
             btn_ver_detalle.setEnabled(true);
             btn_anu.setEnabled(true);
+            btn_ver_pdf.setEnabled(true);
         }
     }//GEN-LAST:event_t_ventasMouseClicked
 
@@ -983,6 +1010,28 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btn_jd_eliminar_pagoActionPerformed
 
+    private void btn_ver_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ver_pdfActionPerformed
+        //cargar datos de venta
+        String periodo = t_ventas.getValueAt(fila_seleccionada, 7).toString();
+        int id_venta = Integer.parseInt(t_ventas.getValueAt(fila_seleccionada, 8).toString());
+
+        c_venta.setId_venta(id_venta);
+        c_venta.setPeriodo(periodo);
+        c_venta.datos_venta();
+
+        //nviar datos a cl_enviar venta
+        cl_enviar_venta c_enviar = new cl_enviar_venta();
+        c_enviar.setId_venta(c_venta.getId_venta());
+        c_enviar.setId_tido(c_venta.getId_documento());
+        c_enviar.setPeriodo(c_venta.getPeriodo());
+        c_enviar.setTotal(c_venta.getTotal());
+        
+        //llamar a ver pdf
+        c_enviar.imprimir_nota(2);
+        
+         btn_ver_pdf.setEnabled(false);
+    }//GEN-LAST:event_btn_ver_pdfActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_anu;
@@ -993,6 +1042,7 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_jda_registrar;
     private javax.swing.JButton btn_ver_cobro;
     private javax.swing.JButton btn_ver_detalle;
+    private javax.swing.JButton btn_ver_pdf;
     private javax.swing.JComboBox cbx_busqueda;
     private javax.swing.JComboBox cbx_estado;
     private javax.swing.JComboBox cbx_jda_tipopago;
@@ -1020,6 +1070,10 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JDialog jd_reg_pago;
     private javax.swing.JDialog jd_ver_detalle_venta;
     private javax.swing.JDialog jd_ver_pagos;

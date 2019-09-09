@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import clases.cl_empleados;
 import clases.cl_zona;
 import java.awt.event.KeyEvent;
 import models.cl_combobox;
@@ -17,22 +18,22 @@ import models.m_empleados;
 public class frm_ver_zonas extends javax.swing.JInternalFrame {
 
     cl_zona c_zona = new cl_zona();
+    cl_empleados c_empleado;
 
     m_empleados m_empleados = new m_empleados();
     String query;
-    
+
     int fila = -1;
-    
-    
 
     /**
      * Creates new form frm_ver_marcas
      */
     public frm_ver_zonas() {
         initComponents();
-        query = "select z.id_zona, z.nombre, z.ciudad, e.nick "
+        query = "select z.id_zona, z.nombre, z.ciudad, e.nick, e.ape_pat, e.ape_mat, e.nombres "
                 + "from zona as z "
-                + "inner join empleados as e on e.id_empleado = z.id_empleado ";
+                + "inner join empleados as e on e.id_empleado = z.id_empleado "
+                + "order by e.ape_pat, e.ape_mat, e.nombres, z.nombre asc";
         c_zona.ver_zonas(t_zonas, query);
     }
 
@@ -60,9 +61,16 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
         btn_frm_salir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_zonas = new javax.swing.JTable();
+        jToolBar2 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         btn_modificar = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        jButton2 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        txt_buscar = new javax.swing.JTextField();
 
         jLabel1.setText("Id Zona:");
 
@@ -201,6 +209,7 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        t_zonas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         t_zonas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 t_zonasMouseClicked(evt);
@@ -208,28 +217,64 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(t_zonas);
 
+        jToolBar2.setFloatable(false);
+
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/add.png"))); // NOI18N
         jButton1.setText("Agregar");
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        jToolBar2.add(jButton1);
+
+        btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
+        btn_modificar.setText("Modificar");
+        btn_modificar.setEnabled(false);
+        btn_modificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_modificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificarActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btn_modificar);
+        jToolBar2.add(jSeparator2);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel.png"))); // NOI18N
         jButton2.setText("Cerrar");
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+        jToolBar2.add(jButton2);
+        jToolBar2.add(jSeparator1);
 
-        btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/application_edit.png"))); // NOI18N
-        btn_modificar.setText("Modificar");
-        btn_modificar.setEnabled(false);
-        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel6.setText("Ayuda:   Presione enter para buscar");
+        jToolBar2.add(jLabel6);
+
+        jLabel5.setText("Buscar por:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "VENDEDOR", "ZONA", "CIUDAD" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_modificarActionPerformed(evt);
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jComboBox1KeyPressed(evt);
+            }
+        });
+
+        txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_buscarKeyPressed(evt);
             }
         });
 
@@ -237,32 +282,30 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(179, 463, Short.MAX_VALUE)
-                        .addComponent(jButton2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_modificar)))
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_buscar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -280,7 +323,7 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
         m_empleados.llenar_combobox(cbx_frm_empleado);
         txt_frm_nombre.requestFocus();
         jd_formulario.setVisible(true);
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_frm_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_frm_salirActionPerformed
@@ -312,6 +355,15 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_cbx_frm_empleadoKeyPressed
 
+    private void limpiar() {
+        txt_frm_nombre.setText("");
+        txt_frm_ciudad.setText("");
+        txt_frm_id.setText("");
+        txt_frm_ciudad.setEnabled(false);
+        cbx_frm_empleado.setEnabled(false);
+        btn_frm_grabar.setEnabled(false);
+    }
+
     private void btn_frm_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_frm_grabarActionPerformed
         //
         c_zona.setNombre(txt_frm_nombre.getText());
@@ -324,6 +376,7 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
 
         if (c_zona.insertar()) {
             c_zona.ver_zonas(t_zonas, query);
+            limpiar();
             jd_formulario.dispose();
         }
 
@@ -334,31 +387,103 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         fila = t_zonas.getSelectedRow();
         btn_modificar.setEnabled(true);
-        
-        
+
+
     }//GEN-LAST:event_t_zonasMouseClicked
 
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
-        // TODO add your handling code here:
-        
-        jd_formulario.setSize(579, 240);
-        jd_formulario.setModal(true);
-        jd_formulario.setLocationRelativeTo(null);
-        m_empleados.llenar_combobox(cbx_frm_empleado);
-        txt_frm_nombre.requestFocus();
-        jd_formulario.setVisible(true);
-        btn_frm_modificar.setEnabled(true);
-        
+        if (fila > -1) {
+            btn_modificar.setEnabled(false);
+
+            c_zona.setId_zona(Integer.parseInt(t_zonas.getValueAt(fila, 0).toString()));
+            c_zona.cargar_datos();
+
+            txt_frm_id.setText(c_zona.getId_zona() + "");
+            txt_frm_nombre.setText(c_zona.getNombre());
+            txt_frm_ciudad.setText(c_zona.getCiudad());
+
+            c_empleado = new cl_empleados();
+            c_empleado.setId_empleado(c_zona.getId_empleado());
+            c_empleado.cargar_datos();
+
+            txt_frm_ciudad.setEnabled(true);
+            cbx_frm_empleado.setEnabled(true);
+
+            String nom_empleado = c_empleado.getApe_pat() + " " + c_empleado.getApe_mat() + " " + c_empleado.getNombres();
+            cbx_frm_empleado.getModel().setSelectedItem(new cl_combobox(c_empleado.getId_empleado(), nom_empleado));
+
+            jd_formulario.setSize(579, 240);
+            jd_formulario.setModal(true);
+            jd_formulario.setLocationRelativeTo(null);
+
+            txt_frm_nombre.requestFocus();
+            jd_formulario.setVisible(true);
+            btn_frm_modificar.setEnabled(true);
+        }
     }//GEN-LAST:event_btn_modificarActionPerformed
 
     private void btn_frm_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_frm_modificarActionPerformed
-        // TODO add your handling code here:
-        
+        c_zona.setNombre(txt_frm_nombre.getText());
+        c_zona.setCiudad(txt_frm_ciudad.getText());
+
+        cl_combobox c_combo = (cl_combobox) cbx_frm_empleado.getSelectedItem();
+        c_zona.setId_empleado(c_combo.getId());
+
+        if (c_zona.modificar()) {
+            c_zona.ver_zonas(t_zonas, query);
+            limpiar();
+            jd_formulario.dispose();
+        }
+
     }//GEN-LAST:event_btn_frm_modificarActionPerformed
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jScrollPane1MouseClicked
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        txt_buscar.setText("");
+        txt_buscar.requestFocus();
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txt_buscar.setText("");
+            txt_buscar.requestFocus();
+        }
+    }//GEN-LAST:event_jComboBox1KeyPressed
+
+    private void txt_buscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String texto = txt_buscar.getText();
+            int tipo_busqueda = jComboBox1.getSelectedIndex();
+            if (tipo_busqueda == 0) {
+                query = "select z.id_zona, z.nombre, z.ciudad, e.nick, e.ape_pat, e.ape_mat, e.nombres "
+                        + "from zona as z "
+                        + "inner join empleados as e on e.id_empleado = z.id_empleado "
+                        + "where concat(e.ape_pat, ' ',e.ape_mat, ' ', e.nombres) like '%" + texto + "%' "
+                        + "order by e.ape_pat, e.ape_mat, e.nombres, z.nombre asc";
+
+            }
+            if (tipo_busqueda == 1) {
+                query = "select z.id_zona, z.nombre, z.ciudad, e.nick, e.ape_pat, e.ape_mat, e.nombres "
+                        + "from zona as z "
+                        + "inner join empleados as e on e.id_empleado = z.id_empleado "
+                        + "where nombre like '%" + texto + "%' "
+                        + "order by e.ape_pat, e.ape_mat, e.nombres, z.nombre asc";
+
+            }
+            if (tipo_busqueda == 2) {
+                query = "select z.id_zona, z.nombre, z.ciudad, e.nick, e.ape_pat, e.ape_mat, e.nombres "
+                        + "from zona as z "
+                        + "inner join empleados as e on e.id_empleado = z.id_empleado "
+                        + "where ciudad like '%" + texto + "%' "
+                        + "order by e.ape_pat, e.ape_mat, e.nombres, z.nombre asc";
+
+            }
+            c_zona.ver_zonas(t_zonas, query);
+        }
+    }//GEN-LAST:event_txt_buscarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -369,14 +494,21 @@ public class frm_ver_zonas extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbx_frm_empleado;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JDialog jd_formulario;
     private javax.swing.JTable t_zonas;
+    private javax.swing.JTextField txt_buscar;
     private javax.swing.JTextField txt_frm_ciudad;
     private javax.swing.JTextField txt_frm_id;
     private javax.swing.JTextField txt_frm_nombre;

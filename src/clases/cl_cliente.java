@@ -78,7 +78,7 @@ public class cl_cliente {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();
     }
 
     public String getN_comercial() {
@@ -86,7 +86,7 @@ public class cl_cliente {
     }
 
     public void setN_comercial(String n_comercial) {
-        this.n_comercial = n_comercial;
+        this.n_comercial = n_comercial.toUpperCase();
     }
 
     public String getDireccion() {
@@ -94,7 +94,7 @@ public class cl_cliente {
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        this.direccion = direccion.toUpperCase();
     }
 
     public String getReferencia() {
@@ -102,7 +102,7 @@ public class cl_cliente {
     }
 
     public void setReferencia(String referencia) {
-        this.referencia = referencia;
+        this.referencia = referencia.toUpperCase();
     }
 
     public int getCelular() {
